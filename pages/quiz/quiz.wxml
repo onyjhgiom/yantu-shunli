@@ -1,0 +1,46 @@
+<view class="page {{themeCls}} page--tight">
+  <view class="hero">
+    <view class="hero__t serif">刷题</view>
+    <view class="hero__s">408 专业课离线题库 · 错题自动入错题本</view>
+  </view>
+
+  <view class="card">
+    <view class="card__head"><text class="card__title">科目（专项）</text></view>
+    <view class="opts">
+      <view class="opt {{subject === item.key ? 'on' : ''}}" wx:for="{{subjects}}" wx:key="key" data-field="subject" data-val="{{item.key}}" bindtap="pick">{{item.name}}</view>
+    </view>
+  </view>
+
+  <view class="card">
+    <view class="card__head"><text class="card__title">来源</text></view>
+    <view class="opts">
+      <view class="opt {{kind === item.key ? 'on' : ''}}" wx:for="{{kinds}}" wx:key="key" data-field="kind" data-val="{{item.key}}" bindtap="pick">{{item.name}}</view>
+    </view>
+  </view>
+
+  <view class="card">
+    <view class="card__head"><text class="card__title">题型</text></view>
+    <view class="opts">
+      <view class="opt {{type === item.key ? 'on' : ''}}" wx:for="{{types}}" wx:key="key" data-field="type" data-val="{{item.key}}" bindtap="pick">{{item.name}}</view>
+    </view>
+  </view>
+
+  <view class="card">
+    <view class="card__head"><text class="card__title">模式</text></view>
+    <view class="opts">
+      <view class="opt {{mode === item.key ? 'on' : ''}}" wx:for="{{modes}}" wx:key="key" data-field="mode" data-val="{{item.key}}" bindtap="pick">{{item.name}}</view>
+    </view>
+  </view>
+
+  <view class="card">
+    <view class="card__head"><text class="card__title">题量</text></view>
+    <view class="opts">
+      <view class="opt {{count === item ? 'on' : ''}}" wx:for="{{counts}}" wx:key="*this" data-field="count" data-val="{{item}}" bindtap="pick">{{item}} 题</view>
+    </view>
+  </view>
+
+  <view class="summary">符合条件的题目：<text class="num">{{totalCount}}</text> 道</view>
+
+  <view class="btn btn--primary btn--block btn--lg" bindtap="start">开始刷题</view>
+  <view class="btn btn--ghost btn--block" bindtap="goMistake">查看错题本（{{mistakeCount}}）</view>
+</view>

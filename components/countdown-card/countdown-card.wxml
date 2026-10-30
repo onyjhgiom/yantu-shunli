@@ -1,0 +1,18 @@
+<view class="cd card">
+  <view class="cd__label">距离 {{year}} 考研初试</view>
+  <view class="cd__days">
+    <text class="cd__num serif">{{days}}</text>
+    <text class="cd__unit">天</text>
+  </view>
+  <view class="cd__goal" wx:if="{{university}}">
+    <text class="cd__pin">◆</text>
+    <text class="cd__school">{{university}}{{major ? ' · ' + major : ''}}</text>
+    <text wx:if="{{totalScore}}" class="cd__score">目标总分 {{totalScore}}</text>
+  </view>
+  <view class="cd__milestones" wx:if="{{milestones.length}}">
+    <view class="cd__ms" wx:for="{{milestones}}" wx:key="label">
+      <text class="cd__ms-label">{{item.label}}</text>
+      <text class="cd__ms-days">{{item.days >= 0 ? item.days + ' 天' : '已过'}}</text>
+    </view>
+  </view>
+</view>

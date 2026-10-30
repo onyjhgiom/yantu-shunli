@@ -1,0 +1,42 @@
+<view class="page {{themeCls}} page--tight">
+  <view class="hero">
+    <view class="hero__t serif">错题本</view>
+    <view class="hero__s">共 {{total}} 题 · 今日待复习 {{dueCount}} 题</view>
+  </view>
+
+  <view class="card review-cta" bindtap="goReview" wx:if="{{dueCount > 0}}">
+    <view class="review-cta__l">
+      <text class="review-cta__t">开始复习（{{dueCount}}）</text>
+      <text class="review-cta__s">间隔复习 · 记得更牢</text>
+    </view>
+    <text class="review-cta__arrow">›</text>
+  </view>
+
+  <scroll-view scroll-x class="chips">
+    <view class="chip {{filterSubject === item.key ? 'on' : ''}}" wx:for="{{subjects}}" wx:key="key" data-key="{{item.key}}" bindtap="onFilter">{{item.name}}</view>
+  </scroll-view>
+
+  <block wx:if="{{list.length}}">
+    <view class="mq" wx:for="{{list}}" wx:key="id" data-id="{{item.id}}" bindtap="onItem">
+      <view class="mq__bar" style="background:{{item.color}}"></view>
+      <view class="mq__body">
+        <view class="mq__top">
+          <text class="mq__sub" style="color:{{item.color}}">{{item.subjectName}}</text>
+          <text class="mq__diff">难度 {{item.difficulty}}</text>
+          <text class="mq__ok" wx:if="{{item.mastered}}">已掌握</text>
+        </view>
+        <text class="mq__q">{{item.questionText}}</text>
+        <view class="mq__tags" wx:if="{{item.reasonLabels.length}}">
+          <text class="tag tag--line" wx:for="{{item.reasonLabels}}" wx:key="*this" wx:for-item="r">{{r}}</text>
+        </view>
+        <text class="mq__src" wx:if="{{item.source}}">来源：{{item.source}}</text>
+      </view>
+    </view>
+  </block>
+
+  <view class="card" wx:else>
+    <empty-state mark="✗" text="还没有错题" sub="做题遇到卡壳，记下来用间隔复习巩固" actionText="记一道错题" bind:action="goAdd"></empty-state>
+  </view>
+
+  <view class="fab" bindtap="goAdd">+</view>
+</view>

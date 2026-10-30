@@ -1,0 +1,103 @@
+<view class="page {{themeCls}} page--tight">
+  <view class="hero">
+    <view class="hero__t serif">院校库</view>
+    <view class="hero__s">{{stats.schoolCount}} 所 · {{stats.programCount}} 个专业 · {{season}} 招生季</view>
+  </view>
+
+  <!-- 信息时效：先讲清批次与同步日期 -->
+  <view class="fresh">
+    <view class="fresh__row">
+      <text class="fresh__dot"></text>
+      <text class="fresh__t">{{season}} 招生季批次</text>
+      <text class="fresh__d">同步于 {{syncAt}} · {{version}}</text>
+      <view class="fresh__ref" bindtap="onRefresh">
+        <text wx:if="{{refreshing}}">同步中…</text>
+        <text wx:else>↻ 刷新</text>
+      </view>
+    </view>
+    <view class="fresh__s">科目与专业代码已对齐各校官方公告；招生计划、学费与分数线仍为按层次估算的参考区间。
+      <text wx:if="{{hasLive}}" class="fresh__live">已接入云端实时数据</text><text wx:else class="fresh__local">本地打包数据（未连云端）</text>
+    </view>
+    <view class="fresh__new" wx:if="{{newCount > 0}}" bindtap="goChanges">📌 有 {{newCount}} 条新发布的改考 / 调整动态，点此查看</view>
+  </view>
+
+  <!-- 改考动态入口：本轮「跟得上」的核心 -->
+  <view class="card changes" bindtap="goChanges">
+    <view class="changes__l">
+      <text class="changes__t">改考动态<text wx:if="{{newCount > 0}}" class="changes__badge">{{newCount}}</text></text>
+      <view class="changes__s">{{changeTotal}} 条院校已公布 {{season}} 初试科目调整，点开看哪所改考了 408</view>
+    </view>
+    <text class="changes__arrow">›</text>
+  </view>
+
+  <view class="card targets" wx:if="{{targets.length}}" bindtap="goTargets">
+    <view class="targets__l">
+      <text class="targets__t">我的目标院校（{{targets.length}}）</text>
+      <view class="targets__tags">
+        <text class="tt" wx:for="{{targets}}" wx:key="id">{{item.tier}} {{item.schoolName}}·{{item.majorName}}</text>
+      </view>
+    </view>
+    <text class="targets__arrow">对比 ›</text>
+  </view>
+
+  <view class="input-box search-box">
+    <input class="input" value="{{keyword}}" placeholder="搜索院校 / 专业 / 学院" placeholder-class="ph" confirm-type="search" bindinput="onKeyword" bindconfirm="doSearch" />
+    <text class="search-box__btn" bindtap="doSearch">搜索</text>
+  </view>
+
+  <view class="filters">
+    <scroll-view scroll-x class="frow">
+      <text class="fl {{province === '' ? 'on' : ''}}" data-v="" bindtap="onProvince">地区</text>
+      <text class="fl {{province === item ? 'on' : ''}}" wx:for="{{provinces}}" wx:key="*this" data-v="{{item}}" bindtap="onProvince">{{item}}</text>
+    </scroll-view>
+    <scroll-view scroll-x class="frow">
+      <text class="fl {{tag === '' ? 'on' : ''}}" data-v="" bindtap="onTag">层次</text>
+      <text class="fl {{tag === item ? 'on' : ''}}" wx:for="{{tags}}" wx:key="*this" data-v="{{item}}" bindtap="onTag">{{item}}</text>
+    </scroll-view>
+    <scroll-view scroll-x class="frow">
+      <text class="fl {{degreeType === '' ? 'on' : ''}}" data-v="" bindtap="onDegree">类型</text>
+      <text class="fl {{degreeType === item ? 'on' : ''}}" wx:for="{{degreeTypes}}" wx:key="*this" data-v="{{item}}" bindtap="onDegree">{{item}}</text>
+    </scroll-view>
+    <scroll-view scroll-x class="frow">
+      <text class="fl {{examCode === '' ? 'on' : ''}}" data-v="" bindtap="onExamCode">报考</text>
+      <text class="fl {{examCode === item.code ? 'on' : ''}}" wx:for="{{examCodes}}" wx:key="code" data-v="{{item.code}}" bindtap="onExamCode">{{item.code}}·{{item.label}}</text>
+    </scroll-view>
+  </view>
+
+  <view class="sc" wx:for="{{results}}" wx:key="code" data-code="{{item.code}}" bindtap="goDetail">
+    <view class="sc__bar"></view>
+    <view class="sc__body">
+      <view class="sc__top">
+        <text class="sc__name">{{item.name}}</text>
+        <text class="sc__code">{{item.code}}</text>
+        <text class="sc__assess" wx:if="{{item.assessCs}}">计科 {{item.assessCs}}</text>
+        <text class="sc__type">{{item.type}}</text>
+      </view>
+      <view class="sc__meta">
+        <text class="tag tag--line" wx:for="{{item.tags}}" wx:key="*this" wx:for-item="t">{{t}}</text>
+        <text class="sc__friendly sc__friendly--{{item.friendlyClass}}" wx:if="{{item.friendly}}">{{item.friendly === '高' ? '二本友好' : (item.friendly === '低' ? '二本谨慎' : '二本适中')}}</text>
+        <text class="sc__loc">{{item.province}} · {{item.city}} · {{item.programCount}} 个专业</text>
+      </view>
+      <view class="sc__exam">
+        <text class="ec" wx:for="{{item.examCodes}}" wx:key="*this" wx:for-item="ec">{{ec}}</text>
+      </view>
+    </view>
+    <text class="sc__arrow">›</text>
+  </view>
+
+  <view class="card" wx:if="{{!results.length}}">
+    <empty-state mark="⌕" text="没有匹配的院校" sub="换个省份或层次试试"></empty-state>
+  </view>
+
+  <!-- 官方核实入口 -->
+  <view class="card verify">
+    <view class="verify__t">想亲自确认？</view>
+    <view class="verify__s">改考、停招、招生计划变动都先发在研招网和院校研究生院。</view>
+    <view class="verify__btns">
+      <view class="btn btn--soft btn--sm" bindtap="copyChsi">复制研招网地址</view>
+      <view class="btn btn--ghost btn--sm" bindtap="showCalendar">招生季时间轴</view>
+    </view>
+  </view>
+
+  <view class="disclaimer">本库仅收录计算机类且考 408 统考的院校专业（11408 数一+408·学硕 / 22408 数二+408·专硕）。结构性事实取自公开公告整理，招生计划与分数线为估算参考值，请以研招网及院校官方当年公布为准。</view>
+</view>

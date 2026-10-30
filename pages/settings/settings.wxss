@@ -1,0 +1,29 @@
+.hero { margin-bottom: 24rpx; }
+.hero__t { font-size: 48rpx; font-weight: 700; color: var(--ink); }
+.hero__s { font-size: 24rpx; color: var(--sub); margin-top: 6rpx; }
+
+.sw { display: flex; align-items: center; justify-content: space-between; padding: 24rpx 0; border-bottom: 1rpx solid var(--line); }
+.sw:last-child { border-bottom: none; }
+.sw__label { font-size: 28rpx; color: var(--ink); }
+
+.about { display: flex; align-items: center; justify-content: space-between; padding: 30rpx 32rpx; }
+.about__t { font-size: 28rpx; color: var(--ink); }
+.about__arrow { font-size: 36rpx; color: var(--sub); }
+
+/* ---------- 外观主题选择器 ---------- */
+.th-grid { display: flex; gap: 14rpx; }
+.th-item { flex: 1; min-width: 0; display: flex; flex-direction: column; align-items: center; }
+.th-prev {
+  width: 100%; height: 104rpx; box-sizing: border-box;
+  border: 2rpx solid var(--card-line); border-radius: 16rpx;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 10rpx; overflow: hidden;
+}
+.th-item.on .th-prev { box-shadow: 0 0 0 4rpx var(--forest); }
+.th-prev__bar { width: 60rpx; height: 12rpx; border-radius: 6rpx; }
+.th-prev__row { display: flex; align-items: center; gap: 8rpx; }
+.th-prev__dot { width: 18rpx; height: 18rpx; border-radius: 50%; }
+.th-prev__txt { font-size: 20rpx; font-weight: 700; }
+.th-name { font-size: 21rpx; color: var(--ink); margin-top: 10rpx; }
+.th-item.on .th-name { color: var(--forest); font-weight: 600; }
+.th-desc { font-size: 17rpx; color: var(--sub); margin-top: 2rpx; text-align: center; line-height: 1.4; }

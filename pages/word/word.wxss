@@ -1,0 +1,44 @@
+.page { padding: 32rpx 32rpx 60rpx; box-sizing: border-box; }
+
+.hero { margin-bottom: 24rpx; }
+.hero__t { font-size: 48rpx; font-weight: 700; color: var(--ink); }
+.hero__s { font-size: 24rpx; color: var(--sub); margin-top: 6rpx; }
+
+/* 今日学习 */
+.today__row { display: flex; gap: 20rpx; margin-bottom: 20rpx; }
+.today__item { flex: 1; background: var(--forest-soft); border-radius: 14rpx; padding: 22rpx; text-align: center; }
+.today__num { font-size: 44rpx; color: var(--forest); display: block; }
+.today__label { font-size: 22rpx; color: var(--ink-soft); }
+.today__btns { display: flex; gap: 16rpx; }
+.today__btns .btn { flex: 1; }
+
+/* 词书 */
+.book { padding: 22rpx 0; border-bottom: 1rpx solid var(--line); }
+.book:last-child { border-bottom: none; padding-bottom: 0; }
+.book__head { display: flex; justify-content: space-between; align-items: baseline; }
+.book__name { font-size: 30rpx; font-weight: 600; color: var(--ink); }
+.book__pct { font-size: 28rpx; color: var(--c-english); font-family: "Songti SC", serif; font-weight: 700; }
+.book__desc { font-size: 22rpx; color: var(--sub); margin: 8rpx 0 14rpx; display: block; }
+.book__bar { height: 12rpx; background: var(--paper-deep); border-radius: 6rpx; overflow: hidden; }
+.book__fill { height: 100%; background: var(--c-english); border-radius: 6rpx; }
+.book__foot { display: flex; justify-content: space-between; align-items: center; margin-top: 14rpx; }
+.book__stat { font-size: 22rpx; color: var(--sub); }
+
+/* 通用入口行 */
+.entry { display: flex; justify-content: space-between; align-items: center; }
+.entry__l { display: flex; flex-direction: column; }
+.entry__t { font-size: 30rpx; font-weight: 600; color: var(--ink); }
+.entry__s { font-size: 22rpx; color: var(--sub); margin-top: 6rpx; }
+.entry__arrow { font-size: 40rpx; color: var(--sub); }
+
+/* 统计行 */
+.stat-row { display: flex; }
+.stat { flex: 1; text-align: center; }
+.stat__num { font-size: 38rpx; color: var(--forest); display: block; }
+.stat__label { font-size: 22rpx; color: var(--sub); }
+
+/* 设置 */
+.num-box { width: 140rpx; height: 64rpx; }
+.picker { font-size: 28rpx; color: var(--forest); }
+
+.tip { margin-top: 20rpx; line-height: 1.6; }

@@ -1,0 +1,16 @@
+.radar { width: 100%; height: 360rpx; }
+.legend { display: flex; gap: 30rpx; justify-content: center; margin-top: 6rpx; }
+.lg { font-size: 22rpx; }
+.lg--cur { color: var(--forest); }
+.lg--tgt { color: var(--terracotta); }
+.lg::before { content: '■ '; }
+
+.trend { width: 100%; height: 220rpx; }
+
+.diag { display: flex; align-items: flex-start; gap: 10rpx; padding: 10rpx 0; }
+.diag__dot { color: var(--terracotta); font-size: 22rpx; margin-top: 4rpx; }
+.diag__text { font-size: 26rpx; color: var(--ink-soft); line-height: 1.5; }
+
+.btn-row { display: flex; gap: 16rpx; margin-top: 8rpx; }
+.btn-row .btn { flex: 1; }
+.del { color: var(--danger); border-color: var(--danger); }

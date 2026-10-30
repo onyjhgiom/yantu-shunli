@@ -1,0 +1,23 @@
+<view class="page {{themeCls}} page--tight">
+  <view class="hero">
+    <view class="hero__t serif">模考记录</view>
+    <view class="hero__s">共 {{count}} 份 · 看趋势与诊断</view>
+  </view>
+
+  <view class="ex" wx:for="{{list}}" wx:key="id" data-id="{{item.id}}" bindtap="onItem">
+    <view class="ex__l">
+      <text class="ex__name">{{item.name}}</text>
+      <text class="ex__meta">{{item.date}} · {{item.typeText}} · {{item.scoreText}}</text>
+    </view>
+    <view class="ex__r">
+      <text class="ex__total serif">{{item.total}}</text>
+      <text class="ex__arrow">›</text>
+    </view>
+  </view>
+
+  <view class="card" wx:if="{{!list.length}}">
+    <empty-state mark="✎" text="还没有模考记录" sub="录入真题或模拟卷成绩，看完成度雷达与趋势" actionText="录一份模考" bind:action="goAdd"></empty-state>
+  </view>
+
+  <view class="fab" bindtap="goAdd">+</view>
+</view>

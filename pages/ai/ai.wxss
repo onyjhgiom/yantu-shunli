@@ -1,0 +1,196 @@
+.ai { padding-bottom: 360rpx; }
+
+/* 顶栏 */
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20rpx;
+}
+.topbar__title { font-size: 32rpx; font-weight: 600; color: var(--ink); font-family: serif; }
+.topbar__actions { display: flex; gap: 16rpx; }
+.topbar__btn {
+  font-size: 24rpx;
+  color: var(--forest-deep);
+  background: var(--forest-soft);
+  border-radius: 14rpx;
+  padding: 8rpx 20rpx;
+}
+
+.notice {
+  background: var(--forest-soft);
+  border-radius: 20rpx;
+  padding: 24rpx 28rpx;
+  margin-bottom: 24rpx;
+}
+.notice__t { font-size: 27rpx; font-weight: 600; color: var(--forest-deep); }
+.notice__tag { font-size: 20rpx; font-weight: 500; color: var(--sub); border: 1rpx solid var(--card-line); border-radius: 14rpx; padding: 2rpx 12rpx; margin-left: 10rpx; }
+.notice__tag.on { color: var(--terracotta); border-color: var(--terracotta-line); background: var(--terracotta-soft); }
+/* 云函数已配置但调用失败：用告警色，让用户区分「没配」和「配了没通」 */
+.notice__tag.warn { color: var(--danger); border-color: var(--danger); background: transparent; }
+.notice__s { display: block; font-size: 22rpx; color: var(--ink-soft); line-height: 1.6; margin-top: 8rpx; }
+
+.disabled__t { font-size: 30rpx; font-weight: 600; color: var(--danger); }
+.disabled__s { display: block; font-size: 24rpx; color: var(--ink-soft); line-height: 1.7; margin-top: 12rpx; }
+.disabled__btn { margin-top: 22rpx; }
+
+.advice__summary { font-size: 26rpx; color: var(--ink-soft); line-height: 1.7; margin-bottom: 14rpx; }
+
+.plan-entry { display: flex; align-items: center; justify-content: space-between; background: var(--terracotta-soft); border: none; }
+.plan-entry__l { flex: 1; }
+.plan-entry__t { font-size: 28rpx; font-weight: 600; color: var(--terracotta); }
+.plan-entry__s { display: block; font-size: 22rpx; color: var(--ink-soft); margin-top: 8rpx; line-height: 1.5; }
+.plan-entry__arrow { color: var(--ink-soft); font-size: 34rpx; }
+.prio { display: flex; padding: 12rpx 0; border-top: 1rpx solid var(--line); }
+.prio__dot { color: var(--terracotta); font-size: 18rpx; margin-right: 14rpx; margin-top: 8rpx; }
+.prio__body { flex: 1; }
+.prio__title { font-size: 27rpx; color: var(--ink); font-weight: 600; display: block; }
+.prio__reason { font-size: 22rpx; color: var(--sub); }
+.tips { margin-top: 14rpx; padding-top: 14rpx; border-top: 1rpx dashed var(--line); }
+.tips__item { display: flex; margin-top: 8rpx; }
+.tips__mark { color: var(--forest); margin-right: 10rpx; }
+.tips__text { flex: 1; font-size: 24rpx; color: var(--ink-soft); line-height: 1.6; }
+
+.chat {
+  height: 520rpx;
+  margin-top: 24rpx;
+  padding: 8rpx 0;
+}
+.msg { display: flex; margin-bottom: 20rpx; }
+.msg--ai { justify-content: flex-start; }
+.msg--user { justify-content: flex-end; }
+
+/* 气泡：背景从 .msg__text 上移到 .bubble，便于承载多行 Markdown */
+.bubble {
+  max-width: 80%;
+  padding: 18rpx 24rpx;
+  border-radius: 20rpx;
+  font-size: 26rpx;
+  line-height: 1.7;
+}
+.bubble--ai { background: var(--card); border: 1rpx solid var(--card-line); color: var(--ink); border-top-left-radius: 6rpx; }
+.bubble--user { background: var(--forest); color: var(--on-primary); border-top-right-radius: 6rpx; }
+
+/* ===== Markdown 块渲染 ===== */
+.md-h { display: block; font-weight: 700; color: inherit; margin: 10rpx 0 6rpx; }
+.md-h1 { font-size: 30rpx; }
+.md-h2 { font-size: 28rpx; }
+.md-h3 { font-size: 26rpx; }
+.md-p { display: block; margin: 6rpx 0; color: inherit; }
+.md-quote {
+  display: block;
+  border-left: 6rpx solid var(--card-line);
+  padding: 4rpx 0 4rpx 18rpx;
+  margin: 6rpx 0;
+  color: var(--ink-soft);
+}
+.bubble--user .md-quote { border-left-color: rgba(var(--on-primary-rgb), 0.5); color: rgba(var(--on-primary-rgb), 0.88); }
+.md-li { display: flex; margin: 4rpx 0; }
+.md-li__mark { margin-right: 12rpx; flex-shrink: 0; }
+.md-li__body { flex: 1; }
+.md-code {
+  display: block;
+  font-family: "SF Mono", Menlo, Consolas, monospace;
+  background: rgba(var(--primary-rgb), 0.12);
+  border-radius: 10rpx;
+  padding: 12rpx 16rpx;
+  margin: 8rpx 0;
+  font-size: 22rpx;
+  line-height: 1.5;
+  white-space: pre-wrap;
+  color: var(--ink-soft);
+}
+.bubble--user .md-code { background: rgba(var(--on-primary-rgb), 0.18); color: var(--on-primary); }
+.md-hr { height: 1rpx; background: var(--line); margin: 12rpx 0; }
+.bubble--user .md-hr { background: rgba(var(--on-primary-rgb), 0.4); }
+.md-b { font-weight: 700; }
+.md-c {
+  font-family: "SF Mono", Menlo, Consolas, monospace;
+  background: var(--paper-deep);
+  border-radius: 6rpx;
+  padding: 0 6rpx;
+  font-size: 24rpx;
+}
+.bubble--user .md-c { background: rgba(var(--on-primary-rgb), 0.2); }
+
+.composer {
+  position: fixed;
+  left: 0; right: 0; bottom: 0;
+  background: var(--paper);
+  border-top: 1rpx solid var(--line);
+  padding-bottom: env(safe-area-inset-bottom);
+}
+.inputbar {
+  display: flex;
+  align-items: center;
+  gap: 12rpx;
+  padding: 16rpx 24rpx;
+}
+.inputbar__input {
+  flex: 1;
+  height: 80rpx;
+  background: var(--card);
+  border: 1rpx solid var(--card-line);
+  border-radius: 16rpx;
+  padding: 0 26rpx;
+  font-size: 27rpx;
+}
+.inputbar__ico {
+  width: 64rpx; height: 64rpx; flex-shrink: 0; border-radius: 32rpx;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--card); border: 1rpx solid var(--card-line); font-size: 30rpx;
+}
+.inputbar__mic {
+  width: 64rpx; height: 64rpx; flex-shrink: 0; border-radius: 32rpx;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--card); border: 1rpx solid var(--card-line); font-size: 28rpx;
+}
+.inputbar__mic--rec { background: var(--danger); border-color: var(--danger); }
+.inputbar__mic--rec::after { content: ''; }
+.inputbar__btn {
+  height: 72rpx;
+  padding: 0 28rpx;
+  border-radius: 16rpx;
+  background: var(--forest);
+  color: var(--on-primary);
+  font-size: 27rpx;
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+.inputbar__btn.dis { opacity: .45; }
+
+/* 附件条（待发送） */
+.attachbar { width: 100%; white-space: nowrap; padding: 12rpx 24rpx 4rpx; }
+.attachbar__in { display: inline-flex; align-items: flex-end; gap: 14rpx; }
+.attachbar__item { position: relative; width: 132rpx; }
+.attachbar__img { width: 132rpx; height: 132rpx; border-radius: 14rpx; background: var(--paper-deep); }
+.attachbar__file {
+  width: 200rpx; height: 132rpx; border-radius: 14rpx; padding: 12rpx;
+  background: var(--card); border: 1rpx solid var(--card-line);
+  display: flex; align-items: center; gap: 8rpx;
+}
+.attachbar__fi { font-size: 30rpx; }
+.attachbar__fn { font-size: 22rpx; color: var(--ink-soft); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 130rpx; }
+.attachbar__x {
+  position: absolute; top: -8rpx; right: -8rpx; width: 36rpx; height: 36rpx; border-radius: 18rpx;
+  background: var(--ink); color: var(--paper); font-size: 24rpx; line-height: 36rpx; text-align: center;
+}
+.attachbar__up { position: absolute; bottom: 6rpx; left: 6rpx; font-size: 18rpx; color: var(--on-primary); background: var(--forest); padding: 2rpx 8rpx; border-radius: 8rpx; }
+
+/* 录音条 */
+.recbar { display: flex; align-items: center; gap: 12rpx; margin: 8rpx 24rpx 0; padding: 10rpx 18rpx; background: var(--danger-soft); border-radius: 12rpx; }
+.recbar__dot { width: 12rpx; height: 12rpx; border-radius: 6rpx; background: var(--danger); animation: recPulse 1s ease-in-out infinite; }
+@keyframes recPulse { 0%,100% { opacity: 1; } 50% { opacity: .25; } }
+.recbar__t { flex: 1; font-size: 23rpx; color: var(--danger); }
+.recbar__c { font-size: 23rpx; color: var(--sub); padding: 2rpx 10rpx; }
+
+/* 气泡内附件 */
+.msg__attach { margin-bottom: 12rpx; display: flex; flex-wrap: wrap; gap: 10rpx; }
+.msg__img { width: 180rpx; height: 180rpx; border-radius: 12rpx; background: var(--paper-deep); }
+.msg__file { display: flex; align-items: center; gap: 10rpx; padding: 12rpx 16rpx; border-radius: 12rpx; background: rgba(var(--on-primary-rgb), 0.10); }
+.msg__file-i { font-size: 28rpx; }
+.msg__file-b { display: flex; flex-direction: column; }
+.msg__file-n { font-size: 24rpx; }
+.msg__file-s { font-size: 20rpx; opacity: .7; }
+.bubble--typing .typing { font-size: 26rpx; color: var(--sub); }

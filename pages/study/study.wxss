@@ -1,0 +1,40 @@
+.hero { padding: 8rpx 4rpx 24rpx; }
+.hero__t { font-size: 44rpx; color: var(--ink); }
+.hero__s { margin-top: 8rpx; font-size: 24rpx; color: var(--sub); }
+
+.focus-entry {
+  background: var(--surface-dark);
+  border-radius: 24rpx;
+  padding: 34rpx 32rpx;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 28rpx;
+}
+.focus-entry__t { font-size: 32rpx; font-weight: 600; color: var(--on-dark); }
+.focus-entry__s { display: block; margin-top: 8rpx; font-size: 23rpx; color: rgba(var(--on-dark-rgb), 0.72); }
+.focus-entry__btn { color: var(--on-dark); font-size: 26rpx; }
+
+.subjects { display: flex; flex-direction: column; gap: 20rpx; }
+.subjects + .card { margin-top: 24rpx; }
+
+.weak { display: flex; align-items: center; justify-content: space-between; padding: 18rpx 0; border-top: 1rpx solid var(--line); }
+.weak:first-child { border-top: none; }
+.weak__name { font-size: 28rpx; color: var(--ink); }
+.weak__meta { display: block; font-size: 22rpx; color: var(--sub); margin-top: 4rpx; }
+.weak__flag { font-size: 22rpx; padding: 4rpx 16rpx; border-radius: 20rpx; }
+.weak__flag.danger { color: var(--danger); background: var(--danger-soft); }
+.weak__flag.warn { color: var(--warn); background: var(--warn-soft); }
+
+.tips-card__line { font-size: 26rpx; color: var(--ink-soft); }
+.tips-card__sub { margin-top: 10rpx; font-size: 23rpx; color: var(--sub); line-height: 1.6; }
+.tips-card__acts { display: flex; gap: 16rpx; margin-top: 18rpx; }
+.tips-card__btn {
+  flex: 1;
+  text-align: center;
+  font-size: 26rpx;
+  color: var(--forest);
+  background: var(--forest-soft);
+  border-radius: 14rpx;
+  padding: 18rpx 0;
+}

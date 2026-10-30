@@ -1,0 +1,118 @@
+<view class="page {{themeCls}} ai">
+  <!-- 顶栏：会话操作 -->
+  <view class="topbar">
+    <text class="topbar__title">AI 对话</text>
+    <view class="topbar__actions">
+      <view class="topbar__btn" bindtap="newChat">＋ 新建</view>
+      <view class="topbar__btn" bindtap="goHistory">历史</view>
+    </view>
+  </view>
+
+  <view class="notice">
+    <text class="notice__t">考研助手 AI <text class="notice__tag {{cloudMode ? 'on' : ''}} {{modeWarn ? 'warn' : ''}}">{{modeText}}</text></text>
+    <text class="notice__s">{{modeHint}}</text>
+  </view>
+
+  <view class="card disabled" wx:if="{{!enabled}}">
+    <text class="disabled__t">已关闭数据授权</text>
+    <text class="disabled__s">「允许 AI 读取学习数据」当前为关闭状态，我无法读取你的目标、任务与时长。可前往「我的 → 隐私与 AI 权限」开启。</text>
+    <view class="btn btn--soft btn--sm disabled__btn" bindtap="goProfile">去设置</view>
+  </view>
+
+  <!-- 建议 -->
+  <view class="card" wx:if="{{enabled}}">
+    <view class="card__head"><text class="card__title">今日建议</text></view>
+    <view class="advice__summary">{{advice.summary}}</view>
+    <view class="prio" wx:for="{{advice.priorities}}" wx:key="title">
+      <text class="prio__dot">◆</text>
+      <view class="prio__body">
+        <text class="prio__title">{{item.title}}</text>
+        <text class="prio__reason">{{item.reason}}</text>
+      </view>
+    </view>
+    <view class="tips">
+      <view class="tips__item" wx:for="{{advice.tips}}" wx:key="*this">
+        <text class="tips__mark">·</text><text class="tips__text">{{item}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 智能规划入口 -->
+  <view class="card plan-entry" wx:if="{{enabled}}" bindtap="goPlanAi">
+    <view class="plan-entry__l">
+      <text class="plan-entry__t">智能规划</text>
+      <text class="plan-entry__s">按目标 / 倒计时 / 模考 / 错题生成每周与每日方案</text>
+    </view>
+    <text class="plan-entry__arrow">›</text>
+  </view>
+
+  <!-- 对话 -->
+  <scroll-view scroll-y class="chat" scroll-into-view="{{scrollTo}}">
+    <view class="msg {{item.role === 'user' ? 'msg--user' : 'msg--ai'}}" wx:for="{{messages}}" wx:key="id" id="msg-{{index}}">
+      <view class="bubble {{item.role === 'user' ? 'bubble--user' : 'bubble--ai'}}">
+        <view class="msg__attach" wx:if="{{item.attach && item.attach.length}}">
+          <block wx:for="{{item.attach}}" wx:for-item="a" wx:key="id">
+            <image wx:if="{{a.kind === 'image'}}" class="msg__img" src="{{a.url}}" mode="aspectFill"
+                   data-url="{{a.url}}" bindtap="previewAtt" />
+            <view wx:else class="msg__file">
+              <text class="msg__file-i">📄</text>
+              <view class="msg__file-b">
+                <text class="msg__file-n">{{a.name}}</text>
+                <text class="msg__file-s">{{a.sizeText}}</text>
+              </view>
+            </view>
+          </block>
+        </view>
+        <block wx:for="{{item.blocks}}" wx:for-item="b" wx:key="k">
+          <text wx:if="{{b.t === 'h'}}" class="md-h md-h{{b.lv}}"><text wx:for="{{b.inl}}" wx:for-item="s" wx:key="k"><text wx:if="{{s.b}}" class="md-b">{{s.v}}</text><text wx:elif="{{s.c}}" class="md-c">{{s.v}}</text><text wx:else>{{s.v}}</text></text></text>
+          <text wx:elif="{{b.t === 'p'}}" class="md-p"><text wx:for="{{b.inl}}" wx:for-item="s" wx:key="k"><text wx:if="{{s.b}}" class="md-b">{{s.v}}</text><text wx:elif="{{s.c}}" class="md-c">{{s.v}}</text><text wx:else>{{s.v}}</text></text></text>
+          <view wx:elif="{{b.t === 'quote'}}" class="md-quote"><text wx:for="{{b.inl}}" wx:for-item="s" wx:key="k"><text wx:if="{{s.b}}" class="md-b">{{s.v}}</text><text wx:elif="{{s.c}}" class="md-c">{{s.v}}</text><text wx:else>{{s.v}}</text></text></view>
+          <view wx:elif="{{b.t === 'li'}}" class="md-li">
+            <text class="md-li__mark">{{b.n ? b.n + '. ' : '• '}}</text>
+            <text class="md-li__body"><text wx:for="{{b.inl}}" wx:for-item="s" wx:key="k"><text wx:if="{{s.b}}" class="md-b">{{s.v}}</text><text wx:elif="{{s.c}}" class="md-c">{{s.v}}</text><text wx:else>{{s.v}}</text></text></text>
+          </view>
+          <view wx:elif="{{b.t === 'code'}}" class="md-code"><text>{{b.text}}</text></view>
+          <view wx:elif="{{b.t === 'hr'}}" class="md-hr"></view>
+        </block>
+      </view>
+    </view>
+    <view class="msg msg--ai" wx:if="{{typing}}">
+      <view class="bubble bubble--ai bubble--typing"><text class="typing">正在思考…</text></view>
+    </view>
+  </scroll-view>
+
+  <view class="composer">
+    <scroll-view wx:if="{{attach.length}}" class="attachbar" scroll-x enable-flex>
+      <view class="attachbar__in">
+        <view class="attachbar__item" wx:for="{{attach}}" wx:for-item="a" wx:key="id">
+          <image wx:if="{{a.kind === 'image'}}" class="attachbar__img" src="{{a.url}}" mode="aspectFill"
+                 data-url="{{a.url}}" bindtap="previewAtt" />
+          <view wx:else class="attachbar__file"><text class="attachbar__fi">📄</text><text class="attachbar__fn">{{a.name}}</text></view>
+          <view class="attachbar__x" data-id="{{a.id}}" catchtap="removeAttach">×</view>
+          <text class="attachbar__up" wx:if="{{a.uploading}}">上传中</text>
+        </view>
+      </view>
+    </scroll-view>
+    <view class="recbar" wx:if="{{rec}}">
+      <view class="recbar__dot"></view>
+      <text class="recbar__t">正在聆听 · {{recSec}}s，点 ■ 结束</text>
+      <text class="recbar__c" bindtap="cancelRec">取消</text>
+    </view>
+    <view class="inputbar">
+      <view class="inputbar__ico" bindtap="pickImg">＋</view>
+      <view class="inputbar__ico" bindtap="pickFile">📎</view>
+      <input
+        class="inputbar__input"
+        value="{{input}}"
+        placeholder="问问：数学怎么提分？也可发图/文件/语音"
+        placeholder-class="ph"
+        disabled="{{rec}}"
+        confirm-type="send"
+        bindinput="onInput"
+        bindconfirm="send"
+      />
+      <view class="inputbar__mic {{rec ? 'inputbar__mic--rec' : ''}}" bindtap="onMic">{{rec ? '■' : '🎤'}}</view>
+      <view class="inputbar__btn {{(input || attach.length) && !sending ? '' : 'dis'}}" bindtap="send">{{sending ? '…' : '发送'}}</view>
+    </view>
+  </view>
+</view>

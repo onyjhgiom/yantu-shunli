@@ -1,0 +1,40 @@
+/* 概览四宫格 */
+.ov { display: flex; gap: 14rpx; margin-bottom: 20rpx; }
+.ov__i {
+  flex: 1; background: var(--card); border: 1rpx solid var(--card-line);
+  border-radius: 18rpx; padding: 20rpx 10rpx; display: flex; flex-direction: column; align-items: center;
+}
+.ov__v { font-size: 40rpx; color: var(--forest); line-height: 1.1; }
+.ov__u { font-size: 19rpx; color: var(--sub); margin-top: 2rpx; }
+.ov__l { font-size: 21rpx; color: var(--ink-soft); margin-top: 8rpx; text-align: center; }
+
+/* 近 14 天柱状图（纯 view，移动端最省） */
+.bars { display: flex; align-items: flex-end; gap: 6rpx; height: 220rpx; }
+.bar { flex: 1; display: flex; flex-direction: column; align-items: center; height: 100%; }
+.bar__col { flex: 1; width: 100%; display: flex; align-items: flex-end; }
+.bar__fill { width: 100%; background: var(--forest-soft); border-radius: 6rpx 6rpx 0 0; min-height: 4rpx; }
+.bar__n { font-size: 17rpx; color: var(--ink-soft); margin-top: 4rpx; height: 22rpx; }
+.bar__x { font-size: 15rpx; color: var(--sub); transform: scale(.9); }
+
+/* 卡片库存 */
+.stock { display: flex; gap: 12rpx; }
+.stock__i { flex: 1; text-align: center; }
+.stock__v { display: block; font-size: 34rpx; color: var(--ink); line-height: 1.2; }
+.stock__l { display: block; font-size: 20rpx; color: var(--sub); margin-top: 4rpx; }
+.prog { margin-top: 20rpx; }
+.prog__track { height: 12rpx; background: var(--paper-deep); border-radius: 6rpx; overflow: hidden; }
+.prog__fill { height: 100%; background: var(--forest); border-radius: 6rpx; }
+.prog__t { display: block; font-size: 21rpx; color: var(--sub); margin-top: 8rpx; text-align: right; }
+
+/* 科目分布 */
+.srow { display: flex; align-items: center; gap: 14rpx; padding: 10rpx 0; }
+.srow__n { width: 96rpx; font-size: 24rpx; flex-shrink: 0; }
+.srow__track { flex: 1; height: 14rpx; background: var(--paper-deep); border-radius: 7rpx; overflow: hidden; }
+.srow__fill { height: 100%; border-radius: 7rpx; }
+.srow__v { width: 92rpx; text-align: right; font-size: 22rpx; color: var(--ink-soft); flex-shrink: 0; }
+
+/* 牌组分布 */
+.drow { display: flex; align-items: center; gap: 14rpx; padding: 14rpx 0; border-bottom: 1rpx solid var(--line); }
+.drow__n { flex: 1; font-size: 26rpx; color: var(--ink); }
+.drow__m { font-size: 21rpx; color: var(--sub); }
+.drow__v { font-size: 24rpx; color: var(--forest); font-weight: 600; width: 90rpx; text-align: right; }

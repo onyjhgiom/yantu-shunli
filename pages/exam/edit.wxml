@@ -1,0 +1,45 @@
+<view class="page {{themeCls}}">
+  <view class="card">
+    <view class="field">
+      <view class="field__label">卷名</view>
+      <input class="input" value="{{name}}" placeholder="如：2024 数三真题 / 11月模拟卷" placeholder-class="ph" data-field="name" bindinput="onInput" />
+    </view>
+    <view class="field">
+      <view class="field__label">类型</view>
+      <view class="seg seg--sm">
+        <view class="seg__item {{type === 'mock' ? 'on' : ''}}" data-v="mock" bindtap="onType">模拟</view>
+        <view class="seg__item {{type === 'real' ? 'on' : ''}}" data-v="real" bindtap="onType">真题</view>
+      </view>
+    </view>
+    <view class="field">
+      <view class="field__label">考试日期</view>
+      <picker mode="date" value="{{date}}" bindchange="onInput" data-field="date">
+        <view class="picker">{{date}}</view>
+      </picker>
+    </view>
+    <view class="field">
+      <view class="field__label">用时（分钟，选填）</view>
+      <input class="input" type="number" value="{{durationMin}}" placeholder="0" placeholder-class="ph" data-field="durationMin" bindinput="onInput" />
+    </view>
+  </view>
+
+  <view class="card">
+    <view class="card__head"><text class="card__title">各科得分</text></view>
+    <view class="row row--between score" wx:for="{{subjects}}" wx:key="key">
+      <text class="score__name" style="color:{{item.color}}">{{item.name}}</text>
+      <input class="input input--right" type="number" value="{{scores[item.key]}}" placeholder="0" placeholder-class="ph" data-k="{{item.key}}" bindinput="onScore" />
+    </view>
+    <view class="score__sum">合计 {{scores.politics + scores.english + scores.math + scores.major}} 分</view>
+  </view>
+
+  <view class="card">
+    <view class="field">
+      <view class="field__label">备注（选填）</view>
+      <textarea class="textarea-box small" value="{{note}}" placeholder="错题集中在哪、下次注意什么" placeholder-class="ph" data-field="note" bindinput="onInput" auto-height></textarea>
+    </view>
+    <attach-bar value="{{attachments}}" bind:change="onAttachChange" bind:asr="onAsr"></attach-bar>
+  </view>
+
+  <button class="btn btn--primary btn--block" bindtap="save">保存</button>
+  <view class="btn btn--ghost btn--block del" wx:if="{{isEdit}}" bindtap="remove">删除这份模考</view>
+</view>

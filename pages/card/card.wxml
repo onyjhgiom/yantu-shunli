@@ -1,0 +1,73 @@
+<view class="page {{themeCls}} page--tight">
+  <view class="hero">
+    <view class="hero__t serif">背诵卡片</view>
+    <view class="hero__s">牌组 {{decks.length}} · 待复习 {{dueTotal}}</view>
+  </view>
+
+  <view class="card" wx:if="{{decks.length === 0 && !showDeckForm}}">
+    <empty-state mark="▦" text="还没有牌组" sub="新建一个牌组，把要背的知识点做成卡片" actionText="新建牌组" bind:action="toggleDeckForm"></empty-state>
+  </view>
+
+  <!-- 牌组列表 -->
+  <block wx:if="{{decks.length}}">
+    <scroll-view scroll-x class="chips">
+      <view class="chip {{deckId === item.id ? 'on' : ''}}" wx:for="{{decks}}" wx:key="id" data-id="{{item.id}}" bindtap="selectDeck">
+        {{item.name}}
+        <text class="chip__del" catchtap="removeDeck" data-id="{{item.id}}">×</text>
+      </view>
+      <view class="chip chip--add" bindtap="toggleDeckForm">+ 牌组</view>
+    </scroll-view>
+
+    <view class="card" wx:if="{{showDeckForm}}">
+      <view class="field">
+        <view class="field__label">牌组名</view>
+        <input class="input" value="{{newDeckName}}" placeholder="如：政治马原简答" placeholder-class="ph" bindinput="onDeckName" />
+      </view>
+      <view class="field">
+        <view class="field__label">科目</view>
+        <picker mode="selector" range="{{subjects}}" range-key="name" bindchange="onDeckSubject">
+          <view class="picker">{{newDeckSubjectName}}</view>
+        </picker>
+      </view>
+      <button class="btn btn--primary btn--block" bindtap="addDeck">创建牌组</button>
+    </view>
+
+    <!-- 卡片列表 -->
+    <view class="card rev-cta" bindtap="goReview" wx:if="{{cards.length}}">
+      <view class="review-cta__l">
+        <text class="review-cta__t">复习本组卡片</text>
+        <text class="review-cta__s">间隔复习更高效</text>
+      </view>
+      <text class="review-cta__arrow">›</text>
+    </view>
+
+    <view class="cd" wx:for="{{cards}}" wx:key="id" data-id="{{item.id}}" bindtap="editCard">
+      <view class="cd__body">
+        <text class="cd__front">{{item.front}}</text>
+        <text class="cd__back">{{item.back}}</text>
+        <text class="cd__meta">{{item.subjectName}}<text wx:if="{{item.due}}"> · 到期 {{item.due}}</text></text>
+      </view>
+      <text class="cd__del" data-id="{{item.id}}" catchtap="removeCard">删除</text>
+    </view>
+
+    <view class="card" wx:if="{{showCardForm}}">
+      <view class="field">
+        <view class="field__label">正面（问题 / 关键词）</view>
+        <textarea class="textarea-box small" value="{{newFront}}" placeholder="如：矛盾的同一性和斗争性" placeholder-class="ph" data-field="newFront" bindinput="onCardInput" auto-height></textarea>
+      </view>
+      <view class="field">
+        <view class="field__label">背面（答案）</view>
+        <textarea class="textarea-box small" value="{{newBack}}" placeholder="如：……" placeholder-class="ph" data-field="newBack" bindinput="onCardInput" auto-height></textarea>
+      </view>
+      <view class="field">
+        <view class="field__label">挖空（选填，把答案中的词替换成 ____）</view>
+        <input class="input" value="{{newCloze}}" placeholder="留空则用背面" placeholder-class="ph" data-field="newCloze" bindinput="onCardInput" />
+      </view>
+      <button class="btn btn--accent btn--block" bindtap="addCard">{{editingId ? '保存修改' : '添加卡片'}}</button>
+      <view class="btn btn--ghost btn--block" wx:if="{{editingId}}" bindtap="cancelEdit">取消编辑</view>
+    </view>
+
+    <view class="btn btn--ghost btn--block add-card" wx:if="{{!showCardForm}}" bindtap="toggleCardForm">+ 添加卡片</view>
+    <view class="btn btn--ghost btn--block add-card" bindtap="goStats">复习统计</view>
+  </block>
+</view>

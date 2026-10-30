@@ -1,0 +1,84 @@
+<view class="page {{themeCls}}">
+  <view class="tabs">
+    <view class="tab {{tab === 'chat' ? 'on' : ''}}" bindtap="switchTab" data-t="chat">对话记录</view>
+    <view class="tab {{tab === 'plan' ? 'on' : ''}}" bindtap="switchTab" data-t="plan">规划快照</view>
+  </view>
+
+  <!-- 对话记录 -->
+  <view wx:if="{{tab === 'chat'}}" class="list">
+    <view wx:if="{{!chatList.length}}" class="empty">还没有对话记录。去 AI 助手聊聊吧。</view>
+    <view class="item" wx:for="{{chatList}}" wx:key="id" bindtap="openChat" data-id="{{item.id}}">
+      <view class="item__main">
+        <view class="item__top">
+          <text class="item__title">{{item.title}}</text>
+          <text class="item__badge" wx:if="{{item.isCurrent}}">当前</text>
+        </view>
+        <text class="item__preview">{{item.preview}}</text>
+        <text class="item__meta">{{item.timeText}} · {{item.count}} 条</text>
+      </view>
+      <view class="item__del" catchtap="delChat" data-id="{{item.id}}">删除</view>
+    </view>
+    <view class="foot" wx:if="{{chatList.length}}" bindtap="goAi">＋ 开启新对话</view>
+  </view>
+
+  <!-- 规划快照 -->
+  <view wx:if="{{tab === 'plan'}}" class="list">
+    <view wx:if="{{!planList.length}}" class="empty">还没有规划快照。去「AI 智能规划」生成一份吧。</view>
+    <view class="item plan" wx:for="{{planList}}" wx:key="id">
+      <view class="item__main" bindtap="togglePlan" data-id="{{item.id}}">
+        <view class="item__top">
+          <text class="item__title">{{item.date}} 规划</text>
+          <text class="item__chev">{{planOpen[item.id] ? '收起' : '展开'}}</text>
+        </view>
+        <text class="item__meta">{{item.phase}} · {{item.daysText}} · 每周 {{item.weeklyHours}}h</text>
+        <text class="item__preview">{{item.summary}}</text>
+      </view>
+      <view class="item__del" catchtap="delPlan" data-id="{{item.id}}">删除</view>
+
+      <view class="pd" wx:if="{{planOpen[item.id]}}">
+        <view class="pd__sec" wx:if="{{item.subjects.length}}">
+          <text class="pd__h">各科学时</text>
+          <view class="pd__row" wx:for="{{item.subjects}}" wx:for-item="s" wx:key="name">
+            <text class="pd__name">{{s.name}}</text>
+            <text class="pd__v">{{s.weeklyHours}}h · {{s.gapText}}</text>
+          </view>
+        </view>
+
+        <view class="pd__sec" wx:if="{{item.priorities.length}}">
+          <text class="pd__h">重点突破</text>
+          <view class="pd__row" wx:for="{{item.priorities}}" wx:for-item="pr" wx:key="subject">
+            <text class="pd__name">{{pr.subject}}</text>
+            <text class="pd__v">{{pr.reason}}</text>
+          </view>
+        </view>
+
+        <view class="pd__sec" wx:if="{{item.weeks.length}}">
+          <text class="pd__h">每周规划</text>
+          <view class="pd__week" wx:for="{{item.weeks}}" wx:for-item="w" wx:key="week">
+            <text class="pd__weekno">W{{w.week}}</text>
+            <text class="pd__theme">{{w.theme}}</text>
+          </view>
+        </view>
+
+        <view class="pd__sec" wx:if="{{item.daily.length}}">
+          <text class="pd__h">每日模板</text>
+          <view class="pd__day" wx:for="{{item.daily}}" wx:for-item="d" wx:key="period">
+            <text class="pd__period">{{d.period}}</text>
+            <text class="pd__focus">{{d.focus}}</text>
+            <text class="pd__detail">{{d.detail}}</text>
+          </view>
+        </view>
+
+        <view class="pd__sec" wx:if="{{item.tips.length}}">
+          <text class="pd__h">Tips</text>
+          <view class="pd__tip" wx:for="{{item.tips}}" wx:for-item="t" wx:key="*this">· {{t}}</view>
+        </view>
+
+        <view class="pd__sec" wx:if="{{item.insight.length}}">
+          <text class="pd__h">AI 策略建议</text>
+          <view class="pd__tip pd__tip--cloud" wx:for="{{item.insight}}" wx:for-item="it" wx:key="*this">▸ {{it}}</view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

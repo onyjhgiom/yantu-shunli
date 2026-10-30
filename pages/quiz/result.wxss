@@ -1,0 +1,59 @@
+.score { text-align: center; padding: 40rpx 0 30rpx; }
+.score__num { display: block; font-size: 96rpx; font-weight: 700; color: var(--forest); line-height: 1; }
+.score__s { display: block; font-size: 28rpx; color: var(--sub); margin-top: 16rpx; }
+
+.tip { background: var(--forest-soft); }
+.tip__t { display: block; font-size: 28rpx; color: var(--forest-deep); font-weight: 600; }
+.tip__s { display: block; font-size: 24rpx; color: var(--ink-soft); margin-top: 6rpx; }
+
+.list { display: flex; flex-direction: column; gap: 18rpx; margin-top: 24rpx; }
+.it {
+  background: var(--card); border: 1rpx solid var(--card-line);
+  border-left: 8rpx solid var(--ok); border-radius: var(--radius); padding: 24rpx;
+}
+.it.bad { border-left-color: var(--danger); }
+.it__head { display: flex; align-items: flex-start; }
+.it__icon {
+  width: 40rpx; height: 40rpx; border-radius: 20rpx; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 26rpx; color: var(--on-fill); background: var(--ok); margin-right: 16rpx; margin-top: 2rpx;
+}
+.it.bad .it__icon { background: var(--danger); }
+.it__title { flex: 1; font-size: 28rpx; color: var(--ink); line-height: 1.5; }
+.it__arrow { font-size: 24rpx; color: var(--forest); flex-shrink: 0; margin-left: 12rpx; }
+.it__sub { display: flex; flex-wrap: wrap; gap: 16rpx; margin-top: 12rpx; padding-left: 56rpx; }
+.it__tag { font-size: 22rpx; color: var(--ink-soft); }
+.it__ans { font-size: 22rpx; color: var(--sub); }
+.it__ana { margin-top: 16rpx; padding: 18rpx; background: var(--paper-deep); border-radius: 12rpx; }
+.it__ana_t { display: block; font-size: 22rpx; color: var(--terracotta); margin-bottom: 8rpx; }
+.it__ana_b { display: block; font-size: 26rpx; color: var(--ink-soft); line-height: 1.6; }
+
+.nav { display: flex; gap: 20rpx; margin-top: 40rpx; }
+
+/* ===== 解析区：完整题目 + 全部选项 + 正确答案 ===== */
+.it__q {
+  display: block; font-size: 27rpx; color: var(--ink); line-height: 1.55;
+  font-weight: 600; margin: 8rpx 0 14rpx;
+}
+.it__opts { display: flex; flex-direction: column; gap: 10rpx; margin-bottom: 18rpx; }
+.it__opt {
+  display: flex; align-items: flex-start; gap: 12rpx;
+  padding: 14rpx 18rpx; border-radius: 12rpx;
+  background: var(--paper-deep); border: 1rpx solid var(--line);
+}
+.it__opt-l {
+  width: 36rpx; height: 36rpx; flex-shrink: 0; border-radius: 18rpx;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--card); color: var(--ink-soft); font-size: 21rpx; font-weight: 600;
+}
+.it__opt-t { flex: 1; font-size: 25rpx; color: var(--ink); line-height: 1.5; }
+.it__opt-f, .it__opt-f2 {
+  flex-shrink: 0; font-size: 19rpx; padding: 3rpx 10rpx; border-radius: 8rpx; font-weight: 600;
+}
+.it__opt-f { background: var(--ok); color: var(--on-fill); }
+.it__opt-f2 { background: var(--danger-soft); color: var(--danger); }
+/* 正确答案：绿底绿边；选错且被选中：红底红边 */
+.it__opt.is-right { background: var(--forest-soft); border-color: var(--ok); }
+.it__opt.is-right .it__opt-l { background: var(--ok); color: var(--on-fill); }
+.it__opt.is-wrong { background: var(--danger-soft); border-color: var(--danger); }
+.it__opt.is-wrong .it__opt-l { background: var(--danger); color: var(--on-fill); }

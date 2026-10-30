@@ -1,0 +1,96 @@
+<view class="page {{themeCls}}">
+  <view class="hero">
+    <view class="hero__t serif">背单词</view>
+    <view class="hero__s">考研英语核心词 · 艾宾浩斯记忆</view>
+  </view>
+
+  <!-- 今日学习 -->
+  <view class="card today">
+    <view class="card__head">
+      <text class="card__title">今日学习</text>
+      <text class="card__more">连续 {{stats.streak}} 天</text>
+    </view>
+    <view class="today__row">
+      <view class="today__item">
+        <text class="today__num serif">{{today.newCount}}</text>
+        <text class="today__label">待学新词</text>
+      </view>
+      <view class="today__item">
+        <text class="today__num serif">{{today.reviewCount}}</text>
+        <text class="today__label">待复习</text>
+      </view>
+    </view>
+    <view class="today__btns">
+      <view class="btn btn--primary btn--block" bindtap="goStudy" data-scope="new">学新词</view>
+      <view class="btn btn--ghost btn--block" bindtap="goStudy" data-scope="review">复习</view>
+    </view>
+  </view>
+
+  <!-- 词书 -->
+  <view class="card">
+    <view class="card__head">
+      <text class="card__title">词书</text>
+      <text class="card__more">共 {{stats.total}} 词</text>
+    </view>
+    <view class="book" wx:for="{{books}}" wx:key="id">
+      <view class="book__head">
+        <view class="book__name">{{item.name}}</view>
+        <text class="book__pct">{{item.percent}}%</text>
+      </view>
+      <text class="book__desc">{{item.desc}}</text>
+      <view class="book__bar"><view class="book__fill" style="width:{{item.percent}}%;background:{{'var(--c-english)'}}"></view></view>
+      <view class="book__foot">
+        <text class="book__stat">已学 {{item.learned}}/{{item.total}} · 掌握 {{item.mastered}}</text>
+        <view class="btn btn--soft btn--sm" bindtap="goBook" data-id="{{item.id}}">学习</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 生词本 -->
+  <view class="card entry" bindtap="goExtra">
+    <view class="entry__l">
+      <text class="entry__t">生词本</text>
+      <text class="entry__s">{{extraCount ? extraCount + ' 个生词待巩固' : '从刷题/阅读中收集生词'}}</text>
+    </view>
+    <text class="entry__arrow">›</text>
+  </view>
+
+  <!-- 统计概览 -->
+  <view class="card entry" bindtap="goStats">
+    <view class="stat-row">
+      <view class="stat">
+        <text class="stat__num serif">{{stats.learned}}</text>
+        <text class="stat__label">已学</text>
+      </view>
+      <view class="stat">
+        <text class="stat__num serif">{{stats.mastered}}</text>
+        <text class="stat__label">已掌握</text>
+      </view>
+      <view class="stat">
+        <text class="stat__num serif">{{stats.newCount}}</text>
+        <text class="stat__label">未学</text>
+      </view>
+      <view class="stat">
+        <text class="stat__num serif">{{stats.streak}}</text>
+        <text class="stat__label">连续天数</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 设置 -->
+  <view class="card">
+    <view class="card__head"><text class="card__title">学习设置</text></view>
+    <view class="field row row--between">
+      <text class="field__label">每日新词量</text>
+      <view class="input-box num-box"><input class="input" type="number" value="{{settings.dailyNew}}" bindinput="onDailyInput" bindblur="saveDaily" /></view>
+    </view>
+    <view class="field row row--between">
+      <text class="field__label">默认模式</text>
+      <picker mode="selector" range="{{modes}}" range-key="name" value="{{modeIndex}}" bindchange="onModeChange">
+        <view class="picker">{{modes[modeIndex].name}} ›</view>
+      </picker>
+    </view>
+  </view>
+
+  <view class="tip muted">记忆算法：根据评分自动调度复习间隔，距初试越近复习越密，保证考前反复见面。</view>
+</view>

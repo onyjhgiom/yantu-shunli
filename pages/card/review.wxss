@@ -1,0 +1,27 @@
+.rev-head { display: flex; justify-content: space-between; align-items: center; padding: 8rpx 4rpx 20rpx; }
+.rev-head__t { font-size: 26rpx; color: var(--ink-soft); }
+.rev-head__exit { font-size: 26rpx; color: var(--sub); }
+
+.rev-card__top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16rpx; }
+.rev-card__sub { font-size: 26rpx; font-weight: 600; }
+.rev-card__due { font-size: 22rpx; color: var(--sub); }
+.rev-card__q { font-size: 32rpx; color: var(--ink); line-height: 1.6; display: block; }
+
+.rev-ans { margin-top: 16rpx; }
+.rev-ans__label { font-size: 22rpx; color: var(--sub); display: block; margin-bottom: 6rpx; }
+.rev-ans__text { font-size: 28rpx; color: var(--ink); line-height: 1.6; display: block; }
+
+.rate { display: flex; gap: 16rpx; margin-top: 28rpx; }
+.rate__btn { flex: 1; height: 92rpx; border-radius: var(--radius-btn); display: flex; align-items: center; justify-content: center; font-size: 28rpx; font-weight: 600; }
+.rate__btn--bad { background: var(--terracotta-soft); color: var(--terracotta); }
+.rate__btn--mid { background: var(--paper-deep); color: var(--ink-soft); }
+.rate__btn--ok { background: var(--forest); color: var(--on-primary); }
+
+.done { min-height: 70vh; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+.done__mark { font-size: 96rpx; color: var(--ok); }
+.done__t { font-size: 38rpx; font-weight: 700; color: var(--ink); margin-top: 16rpx; }
+.done__s { font-size: 26rpx; color: var(--sub); margin: 12rpx 0 40rpx; }
+/* 完成页的"返回"是 btn--block，但这里刻意要 60% 宽居中：
+   app.wxss 的 .btn--block 带了 !important（为了压过 button 内置的 184px），
+   所以这里也必须有 !important，否则会被顶成整行。 */
+.done .btn { width: 60% !important; }

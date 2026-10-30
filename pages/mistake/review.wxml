@@ -1,0 +1,48 @@
+<view class="page {{themeCls}}" wx:if="{{current}}">
+  <view class="rev-head">
+    <text class="rev-head__t">复习进度 {{done + 1}} / {{total}}</text>
+    <text class="rev-head__exit" bindtap="exit">退出</text>
+  </view>
+
+  <view class="card rev-card">
+    <view class="rev-card__top">
+      <text class="rev-card__sub" style="color:{{current.color}}">{{current.subjectName}}</text>
+      <text class="rev-card__due">{{current.intervalText}}</text>
+    </view>
+    <text class="rev-card__q">{{current.questionText}}</text>
+    <view class="rev-card__tags" wx:if="{{current.reasonLabels.length}}">
+      <text class="tag tag--line" wx:for="{{current.reasonLabels}}" wx:key="*this" wx:for-item="r">{{r}}</text>
+    </view>
+
+    <block wx:if="{{showAnswer}}">
+      <view class="divider"></view>
+      <view class="rev-ans" wx:if="{{current.myAnswer}}">
+        <text class="rev-ans__label">我的答案</text>
+        <text class="rev-ans__text">{{current.myAnswer}}</text>
+      </view>
+      <view class="rev-ans">
+        <text class="rev-ans__label">正确答案 / 解析</text>
+        <text class="rev-ans__text">{{current.rightAnswer}}</text>
+      </view>
+      <view class="rev-ans" wx:if="{{current.analysis}}">
+        <text class="rev-ans__label">避坑</text>
+        <text class="rev-ans__text">{{current.analysis}}</text>
+      </view>
+    </block>
+  </view>
+
+  <button wx:if="{{!showAnswer}}" class="btn btn--primary btn--block" bindtap="flip">看答案</button>
+
+  <view class="rate" wx:if="{{showAnswer}}">
+    <view class="rate__btn rate__btn--bad" data-q="0" bindtap="rate">忘了</view>
+    <view class="rate__btn rate__btn--mid" data-q="3" bindtap="rate">模糊</view>
+    <view class="rate__btn rate__btn--ok" data-q="5" bindtap="rate">记得</view>
+  </view>
+</view>
+
+<view class="page {{themeCls}} done" wx:else>
+  <view class="done__mark">{{emptyQueue ? '○' : '✓'}}</view>
+  <text class="done__t">{{emptyQueue ? '暂无待复习' : '今日复习完成'}}</text>
+  <text class="done__s">{{emptyQueue ? '错题本里没有到期的题，保持住！' : '本轮复习 ' + done + ' 题，明天继续巩固'}}</text>
+  <view class="btn btn--ghost btn--block" bindtap="exit">返回</view>
+</view>

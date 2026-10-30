@@ -1,0 +1,16 @@
+<view class="page {{themeCls}} page--tight">
+  <view class="hero">
+    <view class="hero__t serif">工具中心</view>
+    <view class="hero__s">把常用能力收拢到一处</view>
+  </view>
+
+  <view class="group" wx:for="{{groups}}" wx:key="name" wx:for-item="g">
+    <text class="group__name">{{g.name}}</text>
+    <view class="grid">
+      <view class="grid__item" wx:for="{{g.items}}" wx:key="name" wx:for-item="it" data-url="{{it.url}}" bindtap="onTap">
+        <text class="grid__icon" style="color:{{it.color}}">{{it.icon}}</text>
+        <text class="grid__label">{{it.name}}</text>
+      </view>
+    </view>
+  </view>
+</view>

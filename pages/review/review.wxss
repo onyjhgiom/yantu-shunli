@@ -1,0 +1,78 @@
+.hero { padding: 8rpx 4rpx 24rpx; }
+.hero__t { font-size: 44rpx; color: var(--ink); }
+.hero__s { margin-top: 8rpx; font-size: 24rpx; color: var(--sub); }
+
+.input--right { text-align: right; flex: 1; }
+.textarea-box { min-height: 150rpx; line-height: 1.7; }
+.textarea-box.small { min-height: 110rpx; }
+
+.three { margin-bottom: 16rpx; }
+.three:last-child { margin-bottom: 0; }
+.three__no {
+  width: 44rpx;
+  height: 44rpx;
+  border-radius: 22rpx;
+  background: var(--forest-soft);
+  color: var(--forest-deep);
+  font-size: 24rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 18rpx;
+}
+
+.ai-summary { margin-top: 28rpx; background: var(--terracotta-soft); border-color: var(--terracotta-line); }
+.ai-summary__text { font-size: 26rpx; color: var(--terracotta); line-height: 1.8; white-space: pre-wrap; }
+.ai-summary__btn {
+  margin-top: 22rpx;
+  text-align: center;
+  font-size: 26rpx;
+  color: var(--terracotta);
+  border: 1rpx solid var(--terracotta);
+  border-radius: 14rpx;
+  padding: 16rpx 0;
+}
+
+.review-tools { margin-top: 24rpx; }
+.review-tools__acts { display: flex; gap: 16rpx; }
+.review-tools__btn {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 26rpx;
+  color: var(--forest);
+  background: var(--forest-soft);
+  border-radius: 14rpx;
+  padding: 18rpx 0;
+}
+.review-tools__n {
+  margin-left: 10rpx;
+  min-width: 30rpx;
+  height: 30rpx;
+  padding: 0 8rpx;
+  border-radius: 15rpx;
+  background: var(--terracotta);
+  color: var(--on-fill);
+  font-size: 20rpx;
+  line-height: 30rpx;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+/* ===== 复盘语音输入 ===== */
+.field__row { display: flex; align-items: center; justify-content: space-between; }
+.field__mic {
+  width: 52rpx; height: 52rpx; flex-shrink: 0; border-radius: 26rpx;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--paper-deep); border: 1rpx solid var(--card-line); font-size: 24rpx;
+}
+.field__mic.on { background: var(--danger); border-color: var(--danger); }
+.rec-tip {
+  display: flex; align-items: center; gap: 12rpx;
+  margin: 16rpx 0; padding: 14rpx 20rpx;
+  background: var(--danger-soft); border-radius: 14rpx;
+}
+.rec-tip__dot { width: 12rpx; height: 12rpx; border-radius: 6rpx; background: var(--danger); animation: recPulse 1s ease-in-out infinite; }
+.rec-tip__t { flex: 1; font-size: 23rpx; color: var(--danger); }
+@keyframes recPulse { 0%,100% { opacity: 1; } 50% { opacity: .25; } }

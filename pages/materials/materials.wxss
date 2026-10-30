@@ -1,0 +1,96 @@
+.seg {
+  display: flex;
+  background: var(--paper-deep);
+  border-radius: 16rpx;
+  padding: 6rpx;
+  margin-bottom: 24rpx;
+}
+.seg__item {
+  flex: 1;
+  text-align: center;
+  font-size: 26rpx;
+  color: var(--ink-soft);
+  padding: 16rpx 0;
+  border-radius: 12rpx;
+}
+.seg__item.on { background: var(--forest); color: var(--on-primary); font-weight: 600; }
+
+.item {
+  display: flex;
+  align-items: center;
+  background: var(--card);
+  border: 1rpx solid var(--card-line);
+  border-radius: 20rpx;
+  padding: 24rpx 26rpx;
+  margin-top: 18rpx;
+}
+.item__ext {
+  width: 72rpx;
+  height: 72rpx;
+  border-radius: 16rpx;
+  color: var(--on-fill);
+  font-size: 20rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 22rpx;
+  flex-shrink: 0;
+  text-transform: uppercase;
+}
+.item__body { flex: 1; min-width: 0; }
+.item__title { font-size: 28rpx; color: var(--ink); display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.item__meta { font-size: 22rpx; color: var(--sub); margin-top: 6rpx; }
+.item__del { font-size: 24rpx; color: var(--danger); padding-left: 20rpx; }
+
+.note {
+  background: var(--card);
+  border: 1rpx solid var(--card-line);
+  border-radius: 20rpx;
+  padding: 26rpx 28rpx;
+  margin-top: 18rpx;
+}
+.note__top { display: flex; justify-content: space-between; align-items: baseline; }
+.note__title { font-size: 30rpx; font-weight: 600; color: var(--ink); }
+.note__subject { font-size: 22rpx; }
+.note__excerpt {
+  margin-top: 10rpx;
+  font-size: 24rpx;
+  color: var(--sub);
+  line-height: 1.6;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+}
+.note__tags { display: flex; gap: 10rpx; margin-top: 14rpx; flex-wrap: wrap; }
+
+.search-box { justify-content: space-between; margin-bottom: 24rpx; }
+.search-box__btn { font-size: 26rpx; color: var(--forest); padding-left: 20rpx; }
+.res {
+  padding: 18rpx 0;
+  border-top: 1rpx solid var(--line);
+}
+.res:first-child { border-top: none; }
+.res__t { font-size: 28rpx; color: var(--ink); display: block; }
+.res__s {
+  font-size: 23rpx;
+  color: var(--sub);
+  margin-top: 4rpx;
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ---------- 资源库入口 ---------- */
+.res-entry {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: linear-gradient(135deg, var(--paper-deep) 0%, var(--card) 100%);
+  border-color: var(--card-line);
+}
+.res-entry__l { flex: 1; min-width: 0; }
+.res-entry__t { font-size: 31rpx; font-weight: 600; color: var(--forest-deep); display: block; }
+.res-entry__s { font-size: 22rpx; color: var(--ink-soft); display: block; margin-top: 6rpx; line-height: 1.5; }
+.res-entry__arrow { font-size: 44rpx; color: var(--forest); margin-left: 16rpx; flex-shrink: 0; }

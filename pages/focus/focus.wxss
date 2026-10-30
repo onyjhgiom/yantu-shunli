@@ -1,0 +1,54 @@
+.focus { display: flex; flex-direction: column; align-items: center; }
+
+.ring-wrap {
+  position: relative;
+  width: 460rpx;
+  height: 460rpx;
+  margin: 20rpx 0 32rpx;
+}
+.ring { width: 460rpx; height: 460rpx; }
+.ring-center {
+  position: absolute;
+  left: 0; top: 0; right: 0; bottom: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.ring-phase { font-size: 24rpx; color: var(--sub); letter-spacing: 3rpx; }
+.ring-time { font-size: 88rpx; color: var(--ink); line-height: 1.1; margin: 4rpx 0; }
+.ring-sub { font-size: 23rpx; color: var(--sub); max-width: 300rpx; text-align: center; }
+
+.presets { display: flex; gap: 14rpx; margin-bottom: 28rpx; width: 100%; }
+.preset {
+  flex: 1;
+  text-align: center;
+  font-size: 24rpx;
+  color: var(--ink-soft);
+  padding: 16rpx 0;
+  background: var(--paper-deep);
+  border-radius: 14rpx;
+}
+.preset.on { background: var(--forest); color: var(--on-primary); font-weight: 600; }
+
+.card { width: 100%; }
+
+.picker { font-size: 30rpx; color: var(--ink); }
+
+.controls {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 18rpx;
+  margin: 32rpx 0;
+}
+.controls__main { flex: 1.4; }
+.controls .btn { flex: 1; }
+
+.today { display: flex; }
+.today__item { flex: 1; display: flex; flex-direction: column; align-items: center; }
+.today__item + .today__item { border-left: 1rpx solid var(--line); }
+.today__num { font-size: 46rpx; color: var(--forest); }
+.today__label { font-size: 22rpx; color: var(--sub); margin-top: 6rpx; }
+
+.hint { margin-top: 24rpx; font-size: 22rpx; color: var(--sub); text-align: center; line-height: 1.6; }

@@ -1,0 +1,45 @@
+<view class="page {{themeCls}} page--tight" wx:if="{{result}}">
+  <view class="score">
+    <text class="score__num serif">{{result.accuracy}}%</text>
+    <text class="score__s">答对 {{result.correct}} / {{result.total}}</text>
+  </view>
+
+  <view class="card tip" wx:if="{{added > 0}}">
+    <text class="tip__t">已自动收录 {{added}} 道错题到错题本</text>
+    <text class="tip__s">用间隔复习巩固薄弱点</text>
+  </view>
+
+  <view class="list">
+    <view class="it {{item.ok ? 'ok' : 'bad'}}" wx:for="{{result.detail}}" wx:key="id">
+      <view class="it__head" data-id="{{item.id}}" bindtap="toggle">
+        <text class="it__icon">{{item.ok ? '✓' : '✕'}}</text>
+        <text class="it__title">{{item.stem}}</text>
+        <text class="it__arrow">{{open[item.id] ? '收起' : '解析'}}</text>
+      </view>
+      <view class="it__sub">
+        <text class="it__tag">{{item.subjectName}}·{{item.chapter}}</text>
+        <text class="it__ans">你的答案 {{item.userText}} · 正确答案 {{item.answerText}}</text>
+      </view>
+      <view class="it__ana" wx:if="{{open[item.id]}}">
+        <text class="it__ana_t">题目</text>
+        <text class="it__q">{{item.stem}}</text>
+        <view class="it__opts">
+          <view class="it__opt {{o.correct ? 'is-right' : ''}} {{o.picked && !o.correct ? 'is-wrong' : ''}} {{o.picked ? 'is-mine' : ''}}"
+                wx:for="{{item.optView}}" wx:for-item="o" wx:key="letter">
+            <text class="it__opt-l">{{o.letter}}</text>
+            <text class="it__opt-t">{{o.text}}</text>
+            <text class="it__opt-f" wx:if="{{o.correct}}">正确答案</text>
+            <text class="it__opt-f2" wx:elif="{{o.picked}}">你选的</text>
+          </view>
+        </view>
+        <text class="it__ana_t">解析</text>
+        <text class="it__ana_b">{{item.analysis}}</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="nav">
+    <view class="btn btn--ghost grow" bindtap="goMistake">查看错题本</view>
+    <view class="btn btn--primary grow" bindtap="goConfig">再刷一组</view>
+  </view>
+</view>

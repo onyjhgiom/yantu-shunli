@@ -1,0 +1,45 @@
+<view class="page {{themeCls}} page--tight">
+  <view class="hero">
+    <view class="hero__t serif">目标院校对比</view>
+    <view class="hero__s">最多并排 3 所 · 看差值选冲稳保</view>
+  </view>
+
+  <view class="card" wx:if="{{!targets.length}}">
+    <empty-state mark="⌕" text="还没有目标院校" sub="先在院校详情里「加入目标」，再来这里对比" actionText="去院校库" bind:action="goSchool"></empty-state>
+  </view>
+
+  <block wx:else>
+    <view class="card">
+      <view class="card__head"><text class="card__title">选择对比（{{selected.length}}/3）</text></view>
+      <view class="tl" wx:for="{{targets}}" wx:key="id">
+        <view class="tl__check {{item.sel ? 'on' : ''}}" data-id="{{item.programId}}" bindtap="toggle">{{item.sel ? '✓' : ''}}</view>
+        <view class="tl__body" data-id="{{item.programId}}" bindtap="toggle">
+          <text class="tl__name">{{item.schoolName}}·{{item.majorName}}</text>
+          <text class="tl__tier">{{item.tier}}</text>
+        </view>
+      </view>
+    </view>
+
+    <view class="card" wx:if="{{rows.length}}">
+      <view class="canvas-wrap">
+        <text class="canvas-title">分数线趋势叠加</text>
+        <canvas type="2d" id="cmp" class="cmp"></canvas>
+      </view>
+      <view class="tbl">
+        <view class="tbl__row tbl__head">
+          <text class="tbl__c">院校专业</text><text class="tbl__c">档</text><text class="tbl__c">最新线</text><text class="tbl__c">差目标</text><text class="tbl__c">计划</text>
+        </view>
+        <view class="tbl__row" wx:for="{{rows}}" wx:key="id">
+          <text class="tbl__c tl__name">{{item.name}}</text>
+          <text class="tbl__c">{{item.tierText}}</text>
+          <text class="tbl__c">{{item.latestTotal}}</text>
+          <text class="tbl__c" style="color:{{item.diffColor}}">{{item.diff}}</text>
+          <text class="tbl__c">{{item.planCount}}</text>
+        </view>
+      </view>
+      <view class="muted" wx:if="{{!hasTarget}}">尚未设定总分目标，差值以「—」显示。去「我的目标」填一下即可看到差距。</view>
+    </view>
+  </block>
+
+  <view class="disclaimer">数据来源：示例数据，仅供参考，请以研招网及院校官方公布为准。</view>
+</view>

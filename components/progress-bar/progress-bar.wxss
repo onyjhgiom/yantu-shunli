@@ -1,0 +1,11 @@
+.pb {
+  width: 100%;
+  border-radius: 999rpx;
+  overflow: hidden;
+}
+.pb__fill {
+  height: 100%;
+  border-radius: 999rpx;
+  transition: width 0.35s ease;
+  min-width: 0;
+}

@@ -1,0 +1,125 @@
+<view class="page {{themeCls}} page--tight">
+  <view class="hero">
+    <view class="hero__t serif">考研日历</view>
+    <view class="hero__s" wx:if="{{configured}}">{{examYear}} 初试 {{examDate}}</view>
+    <view class="hero__s" wx:else>先设定目标，才有自己的时间线</view>
+    <view class="tl-cd" wx:if="{{configured && daysToExam != null}}">
+      <text class="tl-cd__num serif">{{daysToExam}}</text>
+      <text class="tl-cd__unit">天后初试</text>
+    </view>
+    <view class="tl-cd tl-cd--empty" wx:else>
+      <text class="tl-cd__unit">还没有设定考试日期</text>
+    </view>
+  </view>
+
+  <!-- 没有目标时也要给出「现在该做什么」：阶段是按全国口径算的，不依赖目标 -->
+  <block wx:if="{{phase}}">
+    <view class="card ph">
+      <view class="ph__top">
+        <text class="ph__name serif">{{phase.name}}</text>
+        <text class="ph__range">{{phase.range}}</text>
+      </view>
+      <view class="ph__focus" wx:for="{{phase.focus}}" wx:key="*this">
+        <text class="ph__bullet">·</text><text class="ph__txt">{{item}}</text>
+      </view>
+      <view class="ph__watch" wx:if="{{phase.watch}}">盯紧：{{phase.watch}}</view>
+      <view class="ph__next" wx:if="{{phase.next && phase.daysToNext != null}}">距「{{phase.next.short}}」还有 {{phase.daysToNext}} 天</view>
+    </view>
+  </block>
+
+  <!-- 月历 -->
+  <view class="card cal">
+    <view class="cal__bar">
+      <view class="cal__nav" bindtap="prevMonth">‹</view>
+      <text class="cal__label serif">{{monthLabel}}</text>
+      <view class="cal__nav" bindtap="nextMonth">›</view>
+      <view class="cal__today" bindtap="goToday">今天</view>
+    </view>
+
+    <view class="cal__head">
+      <text wx:for="{{weekHead}}" wx:key="*this" class="cal__hcell">{{item}}</text>
+    </view>
+
+    <view class="cal__grid">
+      <block wx:for="{{weeks}}" wx:for-item="row" wx:key="*this">
+        <view class="cal__row">
+          <view
+            class="cal__cell {{item ? '' : 'cal__cell--void'}} {{item.isToday ? 'is-today' : ''}} {{item.weekend && !item.isWork ? 'is-weekend' : ''}} {{item.isRest ? 'is-rest' : ''}} {{item.isWork ? 'is-work' : ''}} {{item.hasMark ? 'has-mark' : ''}}"
+            wx:for="{{row}}" wx:for-item="item" wx:key="date"
+            bindtap="onDayTap" data-date="{{item.date}}"
+          >
+            <block wx:if="{{!item.void}}">
+              <text class="cal__hol {{item.holiday.type}}" wx:if="{{item.holiday}}">{{item.holiday.short}}</text>
+              <text class="cal__d">{{item.day}}</text>
+              <text class="cal__dot" wx:if="{{item.hasMark}}"></text>
+              <text class="cal__lv lv{{item.level}}" wx:if="{{item.level > 0}}"></text>
+            </block>
+          </view>
+        </view>
+      </block>
+    </view>
+
+    <view class="cal__legend">
+      <view class="cal__lg"><text class="cal__lgb cal__lgb--rest">休</text><text class="cal__lgt">法定假日</text></view>
+      <view class="cal__lg"><text class="cal__lgb cal__lgb--work">班</text><text class="cal__lgt">调休上班</text></view>
+      <view class="cal__lg"><text class="cal__lgb cal__lgb--dot"></text><text class="cal__lgt">考研节点</text></view>
+    </view>
+    <view class="cal__warn" wx:if="{{!holidayKnown}}">{{year}} 年法定节假日安排官方尚未公布，暂不标注（不做推算）。</view>
+
+    <view class="cal__foot" wx:if="{{monthStat.days > 0}}">
+      本月学了 <text class="cal__strong">{{monthStat.days}}</text> 天，共
+      <text class="cal__strong">{{monthStat.totalText}}</text>
+    </view>
+  </view>
+
+  <!-- 选中那天的详情 -->
+  <view class="card det" wx:if="{{detail}}">
+    <view class="det__head">
+      <text class="det__date">{{detail.date}}</text>
+      <text class="det__title">{{detail.title}}</text>
+    </view>
+    <view class="det__line" wx:for="{{detail.lines}}" wx:key="*this">{{item}}</view>
+    <view class="det__tip">{{detail.tip}}</view>
+  </view>
+
+  <!-- 全国招生季 -->
+  <view class="card">
+    <view class="sec__t serif">全国招生季</view>
+    <view class="sec__s">按考研年度排列，跨年（12 月初试 → 次年 4 月调剂）</view>
+    <view class="sn" wx:for="{{season}}" wx:key="key">
+      <view class="sn__dot {{item.state}}"></view>
+      <view class="sn__body" bindtap="toggleSeason" data-index="{{index}}">
+        <view class="sn__top">
+          <text class="sn__title">{{item.title}}</text>
+          <text class="sn__month">{{item.monthLabel}}</text>
+          <text class="sn__state {{item.state}}" wx:if="{{item.state === 'now'}}">本月</text>
+        </view>
+        <view class="sn__desc" wx:if="{{item.open}}">{{item.desc}}</view>
+      </view>
+      <text class="sn__caret" wx:if="{{item.open}}">▾</text>
+    </view>
+  </view>
+
+  <!-- 我自己的节点（原有四项，一项没删） -->
+  <view class="card" wx:if="{{configured}}">
+    <view class="sec__t serif">我的时间线</view>
+    <view class="tl-node {{item.past ? 'past' : ''}} {{item.soon ? 'soon' : ''}}" wx:for="{{mine}}" wx:key="key">
+      <view class="tl-node__dot"></view>
+      <view class="tl-node__body">
+        <view class="tl-node__top">
+          <text class="tl-node__label">{{item.label}}</text>
+          <text class="tl-node__days" wx:if="{{item.past}}">已过去</text>
+          <text class="tl-node__days" wx:else>还有 {{item.days}} 天</text>
+        </view>
+        <text class="tl-node__date">{{item.date}} · {{item.desc}}</text>
+      </view>
+    </view>
+    <view class="btn btn--soft btn--sm" bindtap="goTarget">修改目标日期</view>
+  </view>
+
+  <view class="card" wx:if="{{!configured}}">
+    <empty-state mark="◷" text="还没有目标日期" sub="去设定考研目标，时间线会按你的初试日自动生成" actionText="去设定目标" bind:action="goTarget"></empty-state>
+  </view>
+
+  <view class="disclaimer">关键节点日期以你填写的目标为准；报名 / 确认 / 准考证 / 成绩等具体时间请以研招网及院校官方公告为准。考研日历按全国惯例整理月份节点，不编造具体日期。</view>
+</view>

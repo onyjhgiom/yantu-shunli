@@ -1,0 +1,3 @@
+<view class="pb" style="height:{{height}}rpx;background:{{track}};">
+  <view class="pb__fill" style="width:{{safePercent}}%;background:{{color}};"></view>
+</view>

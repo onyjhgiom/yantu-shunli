@@ -1,0 +1,9 @@
+{
+  "name": "school-sync",
+  "version": "1.0.0",
+  "description": "研途顺利 院校库时效数据实时同步（云库优先，回退内置 data.json）",
+  "main": "index.js",
+  "dependencies": {
+    "wx-server-sdk": "~2.6.3"
+  }
+}

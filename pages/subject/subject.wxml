@@ -1,0 +1,72 @@
+<view class="page {{themeCls}} page--tight" wx:if="{{detail}}">
+  <!-- 概览 -->
+  <view class="card head" style="border-left-color:{{color}}">
+    <view class="head__row">
+      <view class="head__badge" style="background:{{color}}">{{detail.name}}</view>
+      <view class="head__mastery">
+        <text class="head__num serif">{{detail.mastery}}%</text>
+        <text class="head__label">掌握度</text>
+      </view>
+    </view>
+    <view class="head__foot">
+      <text class="muted">累计 {{timeText}}</text>
+      <text class="muted">共 {{pointCount}} 个知识点</text>
+    </view>
+    <progress-bar percent="{{detail.mastery}}" color="{{color}}" height="12"></progress-bar>
+  </view>
+
+  <!-- 阶段进度 -->
+  <view class="card">
+    <view class="card__head">
+      <text class="card__title">阶段进度</text>
+      <text class="card__more">点击可调整</text>
+    </view>
+    <view class="stage" wx:for="{{detail.stageProgress}}" wx:key="name" data-name="{{item.name}}" bindtap="onStage">
+      <view class="stage__top">
+        <text class="stage__name">{{item.name}}</text>
+        <text class="stage__val">{{item.percent}}%</text>
+      </view>
+      <progress-bar percent="{{item.percent}}" color="{{color}}" height="10"></progress-bar>
+    </view>
+  </view>
+
+  <!-- 章节 / 知识点 -->
+  <view class="card" wx:for="{{groups}}" wx:key="name" wx:for-item="group">
+    <view class="card__head"><text class="card__title">{{group.name}}</text></view>
+    <view class="chapter" wx:for="{{group.chapters}}" wx:key="name" wx:for-item="chapter">
+      <view class="chapter__top">
+        <text class="chapter__name">{{chapter.name}}</text>
+        <text class="chapter__prog">{{chapter.mastered}}/{{chapter.points.length}}</text>
+      </view>
+      <view class="chips">
+        <view
+          class="chip"
+          wx:for="{{chapter.points}}"
+          wx:key="id"
+          wx:for-item="point"
+          data-id="{{point.id}}"
+          data-name="{{point.name}}"
+          bindtap="onPoint"
+          style="border-color:{{point.statusBg}};color:{{point.statusColor}};background:{{point.statusBg}}"
+        >{{point.name}}</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 专业课自定义 -->
+  <view class="card" wx:if="{{isMajor}}">
+    <view class="card__head">
+      <text class="card__title">自定义专业课</text>
+      <text class="card__more" bindtap="addChapter">+ 添加章节</text>
+    </view>
+    <view class="muted">专业课不写死：可添加 / 维护自己的章节与知识点。当前为{{isCustom ? '自定义' : '内置 408 参考'}}结构。</view>
+    <view class="btn btn--ghost btn--sm reset-btn" wx:if="{{isCustom}}" bindtap="resetMajor">恢复内置 408 结构</view>
+  </view>
+
+  <view class="legend">
+    <view class="legend__item" wx:for="{{legend}}" wx:key="label">
+      <text class="legend__dot" style="background:{{item.color}}"></text>
+      <text class="legend__label">{{item.label}}</text>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,350 @@
+{
+  "version": "v2026.10.19.1",
+  "syncAt": "2026-10-19",
+  "season": "2027",
+  "syncNote": {
+    "season": "2027",
+    "summary": "截至 2026 年 7 月，全国已有 110 所以上的高校发布 2027 研考初试科目调整公告，其中六成以上是把自命题改为全国统考科目。",
+    "policy": "计算机类是本轮统考化的前沿：408 计算机学科专业基础被越来越多的院校采用，仍坚持自命题的院校已不足三成。",
+    "caution": "准确地说：不少院校当前发布的是「预公告」，正式方案以 9 月中旬前后发布的《招生简章》与《招生专业目录》为准。"
+  },
+  "calendar": [
+    {
+      "month": 6,
+      "title": "科目调整预公告期",
+      "desc": "各校陆续公布初试科目调整（含改考 408），此时就要开始按新科目复习",
+      "state": "done"
+    },
+    {
+      "month": 9,
+      "title": "招生简章 + 专业目录发布",
+      "desc": "【当前阶段】正式方案落地，专业代码、考试科目、招生计划以这一版为准",
+      "state": "now"
+    },
+    {
+      "month": 9,
+      "title": "预报名",
+      "desc": "通常在 9 月下旬开放，蹲一个心仪的报考点",
+      "state": "now"
+    },
+    {
+      "month": 10,
+      "title": "正式报名",
+      "desc": "10 月中下旬开通，确认报考院校与专业",
+      "state": "next"
+    },
+    {
+      "month": 11,
+      "title": "网上确认 / 准考证",
+      "desc": "核对学籍学历信息，下载打印准考证",
+      "state": "next"
+    },
+    {
+      "month": 12,
+      "title": "初试",
+      "desc": "12 月第三个周末，政治 + 英语 + 数学 + 专业课",
+      "state": "next"
+    },
+    {
+      "month": 2,
+      "title": "成绩公布",
+      "desc": "次年 2 月中下旬，第一时间对比目标院校复试线",
+      "state": "next"
+    },
+    {
+      "month": 3,
+      "title": "国家线 + 复试",
+      "desc": "3 月国家线发布，随后院校组织复试（注意部分院校有机试）",
+      "state": "next"
+    },
+    {
+      "month": 4,
+      "title": "调剂系统",
+      "desc": "4 月调剂服务系统开放，缺额信息以系统内为准",
+      "state": "next"
+    }
+  ],
+  "chsi": {
+    "name": "中国研究生招生信息网（研招网）",
+    "host": "https://yz.chsi.com.cn/",
+    "school": "https://yz.chsi.com.cn/sch/",
+    "news": "https://yz.chsi.com.cn/z/ckxz/",
+    "tiaoji": "https://yz.chsi.com.cn/tiaoji/"
+  },
+  "kindMeta": {
+    "to408": {
+      "name": "改考 408",
+      "color": "var(--forest-deep)",
+      "desc": "自命题改为全国统考 408"
+    },
+    "back": {
+      "name": "回退自命题",
+      "color": "var(--danger)",
+      "desc": "统考改回校内自命题（反向调整）"
+    },
+    "new": {
+      "name": "专业调整",
+      "color": "var(--ok)",
+      "desc": "新增专业 / 专业代码或门类调整"
+    }
+  },
+  "changes": [
+    {
+      "id": "tsinghua-cs-085400",
+      "school": "清华大学",
+      "college": "计算机系",
+      "major": "电子信息",
+      "code": "085400",
+      "degreeType": "专硕",
+      "kind": "to408",
+      "from": "826 计算机专业基础综合",
+      "to": "408 计算机学科专业基础",
+      "season": "2027",
+      "date": "2026-06-23",
+      "source": "清华大学计算机系官网公告",
+      "url": ""
+    },
+    {
+      "id": "sigs-085400-408",
+      "school": "清华大学",
+      "college": "深圳国际研究生院",
+      "major": "电子信息",
+      "code": "085400",
+      "degreeType": "专硕",
+      "kind": "to408",
+      "from": "826 / 827 电路原理等自命题",
+      "to": "408 计算机学科专业基础",
+      "season": "2027",
+      "date": "2026-06-30",
+      "source": "清华大学深圳国际研究生院《2027 年硕士初试科目调整公告》",
+      "url": "https://www.sigs.tsinghua.edu.cn/2026/0630/c7770a291822/page.htm"
+    },
+    {
+      "id": "sigs-085404-408",
+      "school": "清华大学",
+      "college": "深圳国际研究生院",
+      "major": "计算机技术",
+      "code": "085404",
+      "degreeType": "专硕",
+      "kind": "to408",
+      "from": "826 计算机专业基础综合",
+      "to": "408 计算机学科专业基础",
+      "season": "2027",
+      "date": "2026-06-30",
+      "source": "清华大学深圳国际研究生院《2027 年硕士初试科目调整公告》",
+      "url": "https://www.sigs.tsinghua.edu.cn/2026/0630/c7770a291822/page.htm"
+    },
+    {
+      "id": "sigs-085411-408",
+      "school": "清华大学",
+      "college": "深圳国际研究生院",
+      "major": "大数据技术与工程",
+      "code": "085411",
+      "degreeType": "专硕",
+      "kind": "to408",
+      "from": "827 电路原理",
+      "to": "408 计算机学科专业基础",
+      "season": "2027",
+      "date": "2026-06-30",
+      "source": "清华大学深圳国际研究生院《2027 年硕士初试科目调整公告》",
+      "url": "https://www.sigs.tsinghua.edu.cn/2026/0630/c7770a291822/page.htm"
+    },
+    {
+      "id": "buaa-083900-408",
+      "school": "北京航空航天大学",
+      "college": "网络空间安全学院",
+      "major": "网络空间安全",
+      "code": "083900",
+      "degreeType": "学硕",
+      "kind": "to408",
+      "from": "第四单元自命题",
+      "to": "408 计算机学科专业基础",
+      "season": "2027",
+      "date": "2026-06",
+      "source": "北京航空航天大学网络空间安全学院公告（全院 27 级硕士）",
+      "url": "https://cst.buaa.edu.cn/info/1102/5379.htm"
+    },
+    {
+      "id": "bjtu-085410-408",
+      "school": "北京交通大学",
+      "college": "人工智能学院",
+      "major": "人工智能",
+      "code": "085410",
+      "degreeType": "专硕",
+      "kind": "to408",
+      "from": "自命题科目",
+      "to": "408 计算机学科专业基础",
+      "season": "2027",
+      "date": "2026-06",
+      "source": "北京交通大学人工智能学院《人才培育通知》",
+      "url": "https://ai.bjtu.edu.cn/tzgg/rcpytzgg/08ed06172a044d4599d1294586bb56d1.htm"
+    },
+    {
+      "id": "ustb-085405-408",
+      "school": "北京科技大学",
+      "college": "数理学院",
+      "major": "软件工程",
+      "code": "085405",
+      "degreeType": "专硕",
+      "kind": "to408",
+      "from": "879 数据结构",
+      "to": "408 计算机学科专业基础",
+      "season": "2027",
+      "date": "2026-06",
+      "source": "北京科技大学研究生院《统考科目调整通知》",
+      "url": "https://yzxc.ustb.edu.cn/sssbkzn/sstzgg/04ade75bf29f4592804d1310c2e961cd.htm"
+    },
+    {
+      "id": "bupt-085410-408",
+      "school": "北京邮电大学",
+      "college": "人工智能学院",
+      "major": "人工智能",
+      "code": "085410",
+      "degreeType": "专硕",
+      "kind": "to408",
+      "from": "809 数据结构",
+      "to": "408 计算机学科专业基础",
+      "season": "2027",
+      "date": "2026-06",
+      "source": "北京邮电大学研究生院《初试科目调整公告》",
+      "url": "https://yzb.bupt.edu.cn/info/1031/1412.htm"
+    },
+    {
+      "id": "bupt-140500-408",
+      "school": "北京邮电大学",
+      "college": "人工智能学院",
+      "major": "智能科学与技术",
+      "code": "140500",
+      "degreeType": "学硕",
+      "kind": "to408",
+      "from": "809 数据结构",
+      "to": "408 计算机学科专业基础",
+      "season": "2027",
+      "date": "2026-06",
+      "source": "北京邮电大学研究生院《初试科目调整公告》",
+      "url": "https://yzb.bupt.edu.cn/info/1031/1412.htm"
+    },
+    {
+      "id": "hnu-085400-408",
+      "school": "湖南大学",
+      "college": "计算机学院",
+      "major": "电子信息",
+      "code": "085400",
+      "degreeType": "专硕",
+      "kind": "to408",
+      "from": "866 数据结构",
+      "to": "408 计算机学科专业基础",
+      "season": "2027",
+      "date": "2026-06",
+      "source": "湖南大学计算机学院公告",
+      "url": "https://csee.hnu.edu.cn/info/1062/14057.htm"
+    },
+    {
+      "id": "ccut-081200-408",
+      "school": "长春工业大学",
+      "college": "计算机科学与工程学院",
+      "major": "计算机科学与技术",
+      "code": "081200",
+      "degreeType": "学硕",
+      "kind": "to408",
+      "from": "808 数据结构",
+      "to": "408 计算机学科专业基础",
+      "season": "2027",
+      "date": "2026-06",
+      "source": "长春工业大学研究生院公告",
+      "url": "https://yjsy.ccut.edu.cn/info/1015/3385.htm"
+    },
+    {
+      "id": "ccut-085404-408",
+      "school": "长春工业大学",
+      "college": "计算机科学与工程学院",
+      "major": "计算机技术",
+      "code": "085404",
+      "degreeType": "专硕",
+      "kind": "to408",
+      "from": "808 数据结构",
+      "to": "408 计算机学科专业基础",
+      "season": "2027",
+      "date": "2026-06",
+      "source": "长春工业大学研究生院公告",
+      "url": "https://yjsy.ccut.edu.cn/info/1015/3385.htm"
+    },
+    {
+      "id": "zuel-085400-408",
+      "school": "中南财经政法大学",
+      "college": "信息工程学院",
+      "major": "电子信息",
+      "code": "085400",
+      "degreeType": "专硕",
+      "kind": "to408",
+      "from": "自命题业务课",
+      "to": "408 计算机学科专业基础",
+      "season": "2027",
+      "date": "2026-07-17",
+      "source": "中南财经政法大学信息工程学院《2027 年招生专业及初试科目调整公告》",
+      "url": "https://xagx.zuel.edu.cn/2026/0717/c3402a436272/page.htm"
+    },
+    {
+      "id": "qhnu-0775-0812",
+      "school": "青海师范大学",
+      "college": "计算机学院",
+      "major": "计算机科学与技术",
+      "code": "0775",
+      "degreeType": "学硕",
+      "kind": "new",
+      "from": "计算机科学与技术（理学，专业代码 0775，自命题）",
+      "to": "计算机科学与技术（工学，专业代码 0812，改考 201/301/408 全国统考）",
+      "season": "2027",
+      "date": "2026-06-30",
+      "source": "青海师范大学研究生院《计算机科学与技术专业学科门类及考试科目调整的通知》",
+      "url": "https://jsj.qhnu.edu.cn/info/1070/4218.htm"
+    },
+    {
+      "id": "njuit-back-817",
+      "school": "南京信息工程大学",
+      "college": "人工智能学院",
+      "major": "人工智能",
+      "code": "085410",
+      "degreeType": "专硕",
+      "kind": "back",
+      "from": "408 计算机学科专业基础（2026 年）",
+      "to": "817 信号与系统（校内自命题）",
+      "season": "2027",
+      "date": "2026-07",
+      "source": "南京信息工程大学 2027 招生科目调整（统考改回自命题，本年度少数反向调整案例）",
+      "url": "",
+      "note": "反向调整：2026 年考 408，2027 年退回自命题。按旧信息准备的同学最容易踩坑。"
+    },
+    {
+      "id": "bit-085405-408",
+      "school": "北京理工大学",
+      "college": "软件学院",
+      "major": "软件工程",
+      "code": "085405",
+      "degreeType": "专硕",
+      "kind": "to408",
+      "from": "885 单科自命题",
+      "to": "408 计算机学科专业基础",
+      "season": "2027",
+      "date": "2026-07",
+      "source": "北京理工大学软件工程专业科目调整公告",
+      "url": ""
+    },
+    {
+      "id": "dlut-081200-408",
+      "school": "大连理工大学",
+      "college": "计算机科学与工程学院",
+      "major": "计算机科学与技术",
+      "code": "081200",
+      "degreeType": "学硕",
+      "kind": "to408",
+      "from": "校内自命题",
+      "to": "408 计算机学科专业基础",
+      "season": "2026",
+      "date": "2025",
+      "source": "大连理工大学 2026 年计算机学硕首次改考 408（已进入 2026 招生季执行）",
+      "url": "",
+      "note": "该校为上一轮改考的代表案例，可作为「新改考院校分数线上涨」的参照。"
+    }
+  ]
+}

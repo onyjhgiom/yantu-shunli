@@ -1,0 +1,25 @@
+<view class="page {{themeCls}} page--tight" wx:if="{{q}}">
+  <view class="top">
+    <text class="top__tag" style="color:{{q.color}}">{{q.subjectName}}·{{q.chapter}}</text>
+    <text class="top__prog">{{progress}}</text>
+  </view>
+  <view class="prog"><view class="prog__fill" style="width:{{index / total * 100}}%"></view></view>
+
+  <view class="q">
+    <text class="q__type">{{q.type === 'multiple' ? '多选' : (q.type === 'judge' ? '判断' : '单选')}}</text>
+    <text class="q__stem">{{q.stem}}</text>
+  </view>
+
+  <view class="opts">
+    <view class="o {{item.on ? 'on' : ''}}" wx:for="{{optView}}" wx:key="mark" data-i="{{index}}" bindtap="toggle">
+      <text class="o__mark">{{item.mark}}</text>
+      <text class="o__text">{{item.text}}</text>
+      <text class="o__check" wx:if="{{item.on}}">✓</text>
+    </view>
+  </view>
+
+  <view class="nav">
+    <view class="btn btn--ghost {{index === 0 ? 'dis' : ''}}" bindtap="prev">{{index === 0 ? '首页' : '上一题'}}</view>
+    <view class="btn btn--primary grow" bindtap="next">{{index === total - 1 ? '提交' : '下一题'}}</view>
+  </view>
+</view>

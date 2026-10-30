@@ -1,0 +1,64 @@
+<view class="page {{themeCls}} page--tight">
+  <view class="hero">
+    <view class="hero__t serif">改考动态</view>
+    <view class="hero__s">{{season}} 招生季 · 初试科目调整实录</view>
+  </view>
+
+  <!-- 全口径背景：帮用户建立「这不是编的」的信心 -->
+  <view class="card season">
+    <view class="season__head">
+      <text class="season__t">为什么要看这个</text>
+      <text class="season__season">{{season}} 招生季 · 数据批次 {{syncAtText}} · {{version}}<text wx:if="{{hasLive}}" class="season__live"> · 云端实时</text><text wx:else class="season__local"> · 本地</text></text>
+    </view>
+    <view class="season__text">{{summary}}</view>
+    <view class="season__text season__text--policy">{{policy}}</view>
+    <view class="season__text season__text--caution">{{caution}}</view>
+    <view class="season__btns">
+      <view class="btn btn--ghost btn--sm" bindtap="copyChsi">打开研招网核实</view>
+      <view class="btn btn--soft btn--sm" bindtap="openCalendar">招生季时间轴</view>
+    </view>
+    <view class="season__note">本页只记录有官方公告可查的事实：院校、学院、专业代码、原科目、新科目、公告发布日期与原文链接。分数线与招生计划不在其中，仍以估算标注为准。</view>
+  </view>
+
+  <!-- 当前阶段 -->
+  <view class="card phase" wx:if="{{phase}}">
+    <view class="phase__row">
+      <text class="phase__dot"></text>
+      <text class="phase__t">{{phase.title}}</text>
+    </view>
+    <view class="phase__d">{{phase.desc}}</view>
+  </view>
+
+  <!-- 筛选 -->
+  <scroll-view scroll-x class="kinds">
+    <view class="kind {{kind === item.key ? 'on' : ''}}" wx:for="{{kinds}}" wx:key="key" data-k="{{item.key}}" bindtap="onKind">{{item.name}}</view>
+  </scroll-view>
+
+  <view class="cnt">共 {{total}} 条调整记录</view>
+
+  <view class="cg" wx:for="{{list}}" wx:key="id">
+    <view class="cg__head">
+      <text class="cg__kind cg__kind--{{item.kind}}">{{item.kindName}}</text>
+      <text class="cg__date">{{item.season}} 招生季 · {{item.date}}</text>
+    </view>
+    <view class="cg__school">{{item.school}} · {{item.college}}</view>
+    <view class="cg__major">{{item.majorCode}} {{item.major}}（{{item.deg}}）</view>
+    <view class="cg__flow">
+      <text class="cg__from">{{item.from}}</text>
+      <text class="cg__arrow">→</text>
+      <text class="cg__to">{{item.to}}</text>
+    </view>
+    <view class="cg__source" wx:if="{{item.source}}">来源：{{item.source}}</view>
+    <view class="cg__note" wx:if="{{item.note}}">{{item.note}}</view>
+    <view class="cg__btns">
+      <view class="btn btn--soft btn--sm" wx:if="{{item.code}}" data-code="{{item.code}}" data-school="{{item.school}}" bindtap="openDetail">看这所学校</view>
+      <view class="btn btn--ghost btn--sm" wx:if="{{item.url}}" data-url="{{item.url}}" bindtap="copyUrl">复制公告原文</view>
+    </view>
+  </view>
+
+  <view class="card" wx:if="{{!list.length}}">
+    <empty-state mark="◎" text="这个筛选下暂无记录" sub="换个筛选看看，或点上方研招网自查"></empty-state>
+  </view>
+
+  <view class="disclaimer">改考信息为动态更新：各校最终方案以《{{season}}年招收攻读硕士学位研究生简章》与《招生专业目录》为准，一般于 9 月中旬前后发布。决策前请点开公告原文核对。</view>
+</view>

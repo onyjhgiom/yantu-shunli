@@ -1,0 +1,30 @@
+.chips { white-space: nowrap; margin: 8rpx 0 16rpx; }
+.chip {
+  display: inline-flex; align-items: center;
+  padding: 10rpx 24rpx; margin-right: 14rpx;
+  border-radius: 30rpx; font-size: 24rpx;
+  background: var(--paper-deep); color: var(--ink-soft);
+}
+.chip.on { background: var(--forest); color: var(--on-primary); }
+.chip--add { background: var(--terracotta-soft); color: var(--terracotta); }
+.chip__del { margin-left: 10rpx; opacity: 0.6; }
+
+.picker { height: 72rpx; display: flex; align-items: center; font-size: 30rpx; color: var(--ink); }
+
+.rev-cta { display: flex; align-items: center; justify-content: space-between; background: var(--forest-soft); border: none; }
+.review-cta__t { font-size: 30rpx; font-weight: 600; color: var(--forest-deep); }
+.review-cta__s { font-size: 22rpx; color: var(--ink-soft); }
+.review-cta__arrow { color: var(--forest); font-size: 36rpx; }
+
+.cd {
+  display: flex; align-items: center;
+  background: var(--card); border: 1rpx solid var(--card-line);
+  border-radius: var(--radius-lg); padding: 20rpx 24rpx; margin-bottom: 14rpx;
+}
+.cd__body { flex: 1; min-width: 0; }
+.cd__front { font-size: 28rpx; color: var(--ink); display: block; font-weight: 600; }
+.cd__back { font-size: 26rpx; color: var(--ink-soft); display: block; margin-top: 6rpx; }
+.cd__meta { font-size: 22rpx; color: var(--sub); display: block; margin-top: 8rpx; }
+.cd__del { font-size: 24rpx; color: var(--danger); margin-left: 16rpx; }
+
+.add-card { margin-top: 16rpx; }

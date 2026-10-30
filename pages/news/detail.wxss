@@ -1,0 +1,19 @@
+.d-head { display: flex; align-items: center; justify-content: space-between; }
+.d-cat { font-size: 26rpx; color: var(--forest); }
+.d-fav { font-size: 26rpx; color: var(--terracotta); }
+.d-fav.on { font-weight: 600; }
+
+.d-title { display: block; font-size: 42rpx; font-weight: 700; color: var(--ink); margin-top: 18rpx; line-height: 1.4; }
+.d-sub { display: block; font-size: 26rpx; color: var(--ink-soft); margin-top: 12rpx; line-height: 1.45; }
+.d-meta { display: flex; align-items: center; margin-top: 18rpx; }
+.d-src { font-size: 22rpx; color: var(--sub); margin-right: 20rpx; }
+.d-date { font-size: 22rpx; color: var(--sub); }
+
+.d-tags { display: flex; flex-wrap: wrap; gap: 12rpx; margin-top: 18rpx; }
+
+.d-body { margin-top: 8rpx; }
+.d-p { display: block; font-size: 29rpx; color: var(--ink); line-height: 1.75; margin-bottom: 16rpx; }
+.d-p:empty { height: 14rpx; margin-bottom: 0; }
+
+.d-foot { margin-top: 40rpx; }
+.d-tip { display: block; font-size: 22rpx; color: var(--sub); text-align: center; margin-top: 20rpx; }

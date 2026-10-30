@@ -1,0 +1,109 @@
+<view class="page {{themeCls}} page--tight">
+  <view class="hero">
+    <view class="hero__t serif">AI 智能规划</view>
+    <view class="hero__s">结合你的目标 · 倒计时 · 模考 · 错题{{insightFrom == 'cloud' ? ' · 策略由云端模型生成' : ''}}</view>
+  </view>
+
+  <!-- 未授权 -->
+  <view class="card disabled" wx:if="{{!enabled}}">
+    <text class="disabled__t">已关闭数据授权</text>
+    <text class="disabled__s">{{reason}}</text>
+    <view class="btn btn--soft btn--sm disabled__btn" bindtap="goProfile">去设置</view>
+  </view>
+
+  <block wx:if="{{enabled}}">
+    <!-- 概览 -->
+    <view class="card overview">
+      <view class="phase">
+        <text class="phase__tag">阶段 · {{plan.phase}}</text>
+        <text class="phase__days" wx:if="{{plan.daysToExam != null}}">距初试 {{plan.daysToExam}} 天</text>
+        <text class="phase__days" wx:else>未设考试日期</text>
+      </view>
+      <view class="overview__summary">{{plan.summary}}</view>
+      <view class="overview__stat" wx:if="{{plan.weeklyHours}}">
+        <text class="overview__num serif">{{plan.weeklyHours}}</text>
+        <text class="overview__unit">建议每周有效学习（小时）</text>
+      </view>
+    </view>
+
+    <!-- 云端策略建议（混合式：数值本地算，策略由模型生成） -->
+    <view class="card insight" wx:if="{{insightLoading || insight.length}}">
+      <view class="card__head">
+        <text class="card__title">AI 策略建议</text>
+        <text class="card__more" wx:if="{{insightFrom == 'cloud'}}">云端模型</text>
+      </view>
+      <view class="insight__loading" wx:if="{{insightLoading}}">正在结合你的数据生成策略…</view>
+      <block wx:else>
+        <view class="insight__item" wx:for="{{insight}}" wx:key="*this">
+          <text class="insight__dot">▸</text>
+          <text class="insight__text">{{item}}</text>
+        </view>
+      </block>
+    </view>
+
+    <!-- 每日模板 -->
+    <view class="card">
+      <view class="card__head"><text class="card__title">每日模板</text></view>
+      <view class="daily" wx:for="{{plan.daily}}" wx:key="period">
+        <view class="daily__period">{{item.period}}</view>
+        <view class="daily__focus">{{item.focus}}</view>
+        <view class="daily__detail">{{item.detail}}</view>
+      </view>
+    </view>
+
+    <!-- 每周规划 -->
+    <view class="card">
+      <view class="card__head">
+        <text class="card__title">每周规划</text>
+        <text class="card__more" bindtap="regen">重新生成</text>
+      </view>
+      <view class="week" wx:for="{{plan.weeks}}" wx:key="week">
+        <view class="week__no">W{{item.week}}</view>
+        <view class="week__body">
+          <text class="week__theme">{{item.theme}}</text>
+          <view class="week__subs">
+            <text class="ws" wx:for="{{item.subjects}}" wx:for-item="s" wx:key="name">{{s.name}} {{s.hours}}h</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 重点科目 -->
+    <view class="card" wx:if="{{plan.priorities.length}}">
+      <view class="card__head"><text class="card__title">重点突破科目</text></view>
+      <view class="prio" wx:for="{{plan.priorities}}" wx:key="subject">
+        <text class="prio__dot">◆</text>
+        <view class="prio__body">
+          <text class="prio__title">{{item.subject}}<text wx:if="{{item.gap != null}}" class="prio__gap"> +{{item.gap}}</text></text>
+          <text class="prio__reason">{{item.reason}}</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 里程碑 -->
+    <view class="card" wx:if="{{plan.milestones && plan.milestones.length}}">
+      <view class="card__head"><text class="card__title">关键节点</text></view>
+      <view class="ms" wx:for="{{plan.milestones}}" wx:key="label">
+        <text class="ms__label">{{item.label}}</text>
+        <text class="ms__date">{{item.date}}</text>
+        <text class="ms__days {{item.days < 0 ? 'past' : ''}}">{{item.days >= 0 ? '剩 ' + item.days + ' 天' : '已过'}}</text>
+      </view>
+    </view>
+
+    <!-- 建议 -->
+    <view class="card">
+      <view class="card__head"><text class="card__title">Tips</text></view>
+      <view class="tips">
+        <view class="tips__item" wx:for="{{plan.tips}}" wx:key="*this">
+          <text class="tips__mark">·</text><text class="tips__text">{{item}}</text>
+        </view>
+      </view>
+      <view class="btn-row">
+        <view class="btn btn--accent btn--sm" bindtap="goExam">去模考</view>
+        <view class="btn btn--primary btn--sm" bindtap="goSchool">看院校</view>
+      </view>
+    </view>
+
+    <view class="disclaimer">阶段 · 每周学时 · 每日模板与周计划由本地规则引擎计算（确定性、可复现）；策略建议由云端模型生成，可能随模型调整而变化。整体仅供参考，非官方建议。</view>
+  </block>
+</view>

@@ -1,0 +1,12 @@
+<view class="sc" bindtap="onTap" style="border-left-color:{{subject.color}}">
+  <view class="sc__head">
+    <view class="sc__badge" style="background:{{subject.color}}">{{subject.short}}</view>
+    <view class="sc__name">{{subject.name}}</view>
+    <view class="sc__mastery">{{subject.mastery}}%</view>
+  </view>
+  <progress-bar percent="{{subject.mastery}}" color="{{subject.color}}" height="10"></progress-bar>
+  <view class="sc__foot">
+    <text class="sc__time">累计 {{subject.timeText}}</text>
+    <text class="sc__points">{{subject.pointCount}} 个知识点</text>
+  </view>
+</view>

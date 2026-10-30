@@ -1,0 +1,26 @@
+<view class="page {{themeCls}}" wx:if="{{item}}">
+  <view class="d-head">
+    <text class="d-cat">{{item.catIcon}} {{item.catName}}</text>
+    <text class="d-fav {{fav ? 'on' : ''}}" bindtap="onFav">{{fav ? '★ 已收藏' : '☆ 收藏'}}</text>
+  </view>
+  <text class="d-title serif">{{item.title}}</text>
+  <text class="d-sub">{{item.sub}}</text>
+  <view class="d-meta">
+    <text class="d-src">{{item.source}}</text>
+    <text class="d-date">{{item.date}}</text>
+  </view>
+  <view class="d-tags" wx:if="{{item.tags.length}}">
+    <text class="tag tag--line" wx:for="{{item.tags}}" wx:key="*this">{{item}}</text>
+  </view>
+
+  <view class="divider"></view>
+
+  <view class="d-body">
+    <text class="d-p" wx:for="{{body}}" wx:key="index">{{item}}</text>
+  </view>
+
+  <view class="d-foot">
+    <view class="btn btn--soft btn--block" bindtap="copy">复制全文</view>
+    <text class="d-tip">内容由本应用离线整理，关键政策以官方公告为准</text>
+  </view>
+</view>

@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "备考资源库",
+  "usingComponents": {
+    "empty-state": "/components/empty-state/empty-state"
+  }
+}

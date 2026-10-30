@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "笔记",
+  "usingComponents": {
+    "attach-bar": "../../components/attach-bar/attach-bar"
+  }
+}

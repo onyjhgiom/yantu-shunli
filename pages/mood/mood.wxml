@@ -1,0 +1,34 @@
+<view class="page {{themeCls}} page--tight">
+  <view class="hero">
+    <view class="hero__t serif">今日心情</view>
+    <view class="hero__s">{{today}} · 照顾好状态，才能跑得远</view>
+  </view>
+
+  <view class="card">
+    <view class="mood-emoji">
+      <view class="me {{level === idx + 1 ? 'on' : ''}}" wx:for="{{emoji}}" wx:key="*this" wx:for-item="em" wx:for-index="idx" data-v="{{idx + 1}}" bindtap="setLevel">
+        <text class="me__face">{{em}}</text>
+        <text class="me__label">{{['很差','较差','一般','不错','很好'][idx]}}</text>
+      </view>
+    </view>
+    <textarea class="textarea-box" value="{{text}}" placeholder="写一句今天的状态，或想说的话（仅自己可见）" placeholder-class="ph" bindinput="onText" auto-height></textarea>
+    <view class="risk" wx:if="{{risk}}">你写的内容里有较沉重的词，如果很难受，可拨打心理援助热线 12356。</view>
+    <button class="btn btn--primary btn--block" bindtap="save">记录今天</button>
+  </view>
+
+  <view class="card">
+    <view class="card__head"><text class="card__title">本月心情曲线</text></view>
+    <canvas type="2d" id="curve" class="curve"></canvas>
+  </view>
+
+  <view class="card" wx:if="{{history.length}}">
+    <view class="card__head"><text class="card__title">最近记录</text></view>
+    <view class="hi" wx:for="{{history}}" wx:key="date">
+      <text class="hi__emoji">{{item.emoji}}</text>
+      <view class="hi__body">
+        <text class="hi__date">{{item.date}} · {{item.levelText}}</text>
+        <text class="hi__text" wx:if="{{item.text}}">{{item.text}}</text>
+      </view>
+    </view>
+  </view>
+</view>

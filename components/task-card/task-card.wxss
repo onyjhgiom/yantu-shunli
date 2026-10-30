@@ -1,0 +1,62 @@
+.tc {
+  display: flex;
+  align-items: flex-start;
+  padding: 26rpx 28rpx;
+  background: var(--card);
+  border: 1rpx solid var(--card-line);
+  border-radius: 20rpx;
+}
+.tc + .tc { margin-top: 16rpx; }
+
+.tc__check {
+  width: 44rpx;
+  height: 44rpx;
+  border-radius: 12rpx;
+  border: 2rpx solid var(--line);
+  margin-right: 22rpx;
+  margin-top: 4rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: all 0.2s ease;
+}
+.tc__tick { color: var(--on-fill); font-size: 26rpx; line-height: 1; }
+
+.tc__body { flex: 1; min-width: 0; }
+.tc__title {
+  font-size: 30rpx;
+  color: var(--ink);
+  line-height: 1.45;
+  word-break: break-all;
+}
+.tc--done .tc__title {
+  color: var(--sub);
+  text-decoration: line-through;
+}
+/* 未完成（未做且未取消）任务标题标红，便于一眼区分待办 */
+.tc--undone .tc__title { color: var(--danger); }
+.tc__meta {
+  margin-top: 8rpx;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6rpx;
+}
+.tc__dot {
+  width: 12rpx;
+  height: 12rpx;
+  border-radius: 6rpx;
+  margin-right: 4rpx;
+}
+.tc__sub { font-size: 22rpx; color: var(--sub); }
+.tc__overdue { font-size: 22rpx; color: var(--danger); }
+
+.tc__side { margin-left: 16rpx; flex-shrink: 0; }
+.tc__pri {
+  display: inline-block;
+  font-size: 20rpx;
+  padding: 4rpx 14rpx;
+  border-radius: 20rpx;
+  line-height: 1.5;
+}

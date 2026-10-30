@@ -1,0 +1,60 @@
+<view class="page {{themeCls}}">
+  <!-- 完成态 -->
+  <view wx:if="{{done}}" class="card done">
+    <view class="done__title serif">{{empty ? '暂无待学内容' : '本轮完成'}}</view>
+    <view wx:if="{{!empty}}" class="done__stat">
+      <text class="done__num serif">{{learned}}</text> 个词 ·
+      正确率 <text class="done__num serif">{{total ? Math.round(correctCount/total*100) : 0}}%</text>
+    </view>
+    <view wx:if="{{empty}}" class="muted">今天的任务已完成，或去「词书」自由学习。</view>
+    <view class="done__btns">
+      <view class="btn btn--primary btn--block" bindtap="onRestart">再学一轮</view>
+      <view class="btn btn--ghost btn--block" bindtap="onBack">返回</view>
+    </view>
+  </view>
+
+  <!-- 学习态 -->
+  <block wx:else>
+    <view class="topbar">
+      <text class="topbar__mode">{{modeName}}</text>
+      <text class="topbar__progress">{{idx + 1}} / {{total}}</text>
+    </view>
+    <view class="progress-line"><view class="progress-line__fill" style="width:{{((idx)/total)*100}}%"></view></view>
+
+    <view class="card flash">
+      <view class="flash__prompt serif">{{card.prompt}}</view>
+
+      <!-- 选择模式 -->
+      <view wx:if="{{mode !== 'spelling'}}" class="opts">
+        <view
+          wx:for="{{card.options}}"
+          wx:key="text"
+          class="opt {{answered ? (item.correct ? 'opt--ok' : (item.text === picked ? 'opt--bad' : '')) : ''}}"
+          data-text="{{item.text}}"
+          data-correct="{{item.correct}}"
+          bindtap="onChoice"
+        >{{item.text}}</view>
+      </view>
+
+      <!-- 拼写模式 -->
+      <view wx:else class="spell">
+        <input class="spell__input" placeholder="输入英文单词" value="{{inputVal}}" disabled="{{answered}}" bindinput="onInput" />
+        <view wx:if="{{!answered}}" class="btn btn--primary btn--block spell__btn" bindtap="onSubmitSpelling">确认</view>
+      </view>
+
+      <!-- 答案详情 -->
+      <view wx:if="{{answered}}" class="answer">
+        <view class="answer__head">
+          <text class="answer__word serif">{{card.w}}</text>
+          <text class="answer__ph">{{card.phonetic}}</text>
+          <text class="answer__tag {{correct ? 'answer__tag--ok' : 'answer__tag--bad'}}">{{correct ? '答对了' : '答错了'}}</text>
+        </view>
+        <text class="answer__meaning">{{card.meaning}}</text>
+        <text wx:if="{{card.example}}" class="answer__example">例句：{{card.example}}</text>
+        <text wx:if="{{card.roots}}" class="answer__roots">词根：{{card.roots}}</text>
+        <text wx:if="{{card.deriv}}" class="answer__roots">派生：{{card.deriv}}</text>
+        <view class="btn btn--primary btn--block answer__next" bindtap="onNext">下一个 ›</view>
+      </view>
+    </view>
+  </block>
+</view>

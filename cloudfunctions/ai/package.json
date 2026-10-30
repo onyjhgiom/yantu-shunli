@@ -1,0 +1,7 @@
+{
+  "name": "ai",
+  "version": "1.0.0",
+  "description": "研途顺利 AI 云函数：转发到火山方舟 Ark（零依赖）",
+  "main": "index.js",
+  "dependencies": {}
+}

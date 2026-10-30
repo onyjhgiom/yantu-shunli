@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "录模考",
+  "usingComponents": {
+    "attach-bar": "../../components/attach-bar/attach-bar"
+  }
+}

@@ -1,0 +1,96 @@
+<view class="page {{themeCls}}">
+  <view class="card">
+    <view class="input-box">
+      <input
+        class="input"
+        value="{{title}}"
+        placeholder="要做的事，例如：数学第三章例题"
+        placeholder-class="ph"
+        data-field="title"
+        bindinput="onInput"
+        maxlength="60"
+        focus="{{!isEdit}}"
+      />
+    </view>
+
+    <view class="field">
+      <view class="field__label">备注</view>
+      <textarea
+        class="textarea-box"
+        value="{{description}}"
+        placeholder="补充说明（可选）"
+        placeholder-class="ph"
+        data-field="description"
+        bindinput="onInput"
+        maxlength="300"
+      ></textarea>
+    </view>
+  </view>
+
+  <view class="card">
+    <view class="field row row--between">
+      <text class="field__label">科目</text>
+      <picker mode="selector" range="{{subjectLabels}}" value="{{subjectIndex}}" bindchange="onSubject">
+        <view class="picker" style="color:{{subjects[subjectIndex].color}}">{{subjects[subjectIndex].name}} ▾</view>
+      </picker>
+    </view>
+
+    <view class="field row row--between">
+      <text class="field__label">优先级</text>
+      <picker mode="selector" range="{{priorityLabels}}" value="{{priorityIndex}}" bindchange="onPriority">
+        <view class="picker">{{priorityLabels[priorityIndex]}} ▾</view>
+      </picker>
+    </view>
+
+    <view class="field row row--between">
+      <text class="field__label">计划周期</text>
+      <picker mode="selector" range="{{planTypeLabels}}" value="{{planTypeIndex}}" bindchange="onPlanType">
+        <view class="picker">{{planTypeLabels[planTypeIndex]}} ▾</view>
+      </picker>
+    </view>
+
+    <view class="field row row--between">
+      <text class="field__label">日期</text>
+      <picker mode="date" value="{{date}}" bindchange="onDate">
+        <view class="picker">{{date}} ▾</view>
+      </picker>
+    </view>
+
+    <view class="field row row--between">
+      <text class="field__label">预计耗时（分钟）</text>
+      <input class="input input--right" type="number" value="{{estimatedMinutes}}" placeholder="0" placeholder-class="ph" data-field="estimatedMinutes" bindinput="onInput" />
+    </view>
+
+    <view class="field row row--between">
+      <text class="field__label">标签</text>
+      <input class="input input--right" value="{{tagsText}}" placeholder="逗号分隔，如 真题,背诵" placeholder-class="ph" data-field="tagsText" bindinput="onInput" />
+    </view>
+  </view>
+
+  <!-- 子任务 -->
+  <view class="card" wx:if="{{isEdit}}">
+    <view class="card__head">
+      <text class="card__title">子任务</text>
+      <text class="card__more" bindtap="addSubtask">+ 添加</text>
+    </view>
+    <block wx:if="{{children.length}}">
+      <view class="children">
+        <task-card
+          wx:for="{{children}}"
+          wx:key="id"
+          task="{{item}}"
+          bind:tap="onChildTap"
+          bind:toggle="onChildToggle"
+        ></task-card>
+      </view>
+    </block>
+    <view wx:else class="muted">把大任务拆成更小的步骤，更容易推进。</view>
+    <view class="parent-hint" wx:if="{{parentTitle}}">属于：{{parentTitle}}</view>
+  </view>
+
+  <view class="actions">
+    <button class="btn btn--primary btn--block" bindtap="save" disabled="{{saving}}">保存</button>
+    <button class="btn btn--soft btn--block" bindtap="toggleComplete" wx:if="{{isEdit}}">{{status === 'done' ? '标记为未完成' : '标记为已完成'}}</button>
+    <button class="btn btn--ghost btn--block" bindtap="remove" wx:if="{{isEdit}}">删除任务</button>
+  </view>
+</view>

@@ -1,0 +1,67 @@
+<view class="page {{themeCls}}">
+  <!-- 拍照识题 -->
+  <view class="card">
+    <view class="card__head"><text class="card__title">拍照识题</text></view>
+    <view class="ocr__imgs" wx:if="{{images.length}}">
+      <view class="ocr__item" wx:for="{{images}}" wx:key="id">
+        <image class="ocr__img" src="{{item.url}}" mode="aspectFill" data-url="{{item.url}}" bindtap="previewImage" />
+        <view class="ocr__x" data-id="{{item.id}}" catchtap="removeImage">×</view>
+      </view>
+    </view>
+    <view class="ocr__btns">
+      <view class="btn btn--ghost btn--sm" bindtap="pickImage">{{images.length ? '再加一张' : '添加题目图片'}}</view>
+      <view class="btn btn--primary btn--sm {{recognizing || !images.length ? 'dis' : ''}}" bindtap="recognize">{{recognizing ? '识别中…' : '识别题目内容'}}</view>
+    </view>
+    <text class="ocr__tip">识别会填入下方「题目」「选项」「正确答案」「解析」，可自由修改后再保存。识别需云端 AI 且模型支持图片。</text>
+  </view>
+
+  <view class="card">
+    <view class="field">
+      <view class="field__label">科目</view>
+      <picker mode="selector" range="{{subjects}}" range-key="name" bindchange="onSubject">
+        <view class="picker">{{subjectName}}</view>
+      </picker>
+    </view>
+    <view class="field">
+      <view class="field__label">来源（选填）</view>
+      <input class="input" value="{{source}}" placeholder="如：1000题 / 2024数三真题" placeholder-class="ph" data-field="source" bindinput="onInput" />
+    </view>
+    <view class="field">
+      <view class="field__label">题目 / 错在哪</view>
+      <textarea class="textarea-box" value="{{questionText}}" placeholder="把题目或你的思路卡点记下来" placeholder-class="ph" data-field="questionText" bindinput="onInput" auto-height></textarea>
+    </view>
+    <view class="field" wx:if="{{optionsText}}">
+      <view class="field__label">选项（每行一个）</view>
+      <textarea class="textarea-box small" value="{{optionsText}}" placeholder="A. ...&#10;B. ...&#10;C. ..." placeholder-class="ph" bindinput="onOptionsInput" auto-height></textarea>
+    </view>
+    <view class="field">
+      <view class="field__label">我的答案（选填）</view>
+      <textarea class="textarea-box small" value="{{myAnswer}}" placeholder="当时怎么写的" placeholder-class="ph" data-field="myAnswer" bindinput="onInput" auto-height></textarea>
+    </view>
+    <view class="field">
+      <view class="field__label">正确答案 / 解析</view>
+      <textarea class="textarea-box small" value="{{rightAnswer}}" placeholder="正确答案，或解析要点" placeholder-class="ph" data-field="rightAnswer" bindinput="onInput" auto-height></textarea>
+    </view>
+    <view class="field">
+      <view class="field__label">解析（选填）</view>
+      <textarea class="textarea-box small" value="{{analysis}}" placeholder="为什么错、下次怎么避坑" placeholder-class="ph" data-field="analysis" bindinput="onInput" auto-height></textarea>
+    </view>
+  </view>
+
+  <view class="card">
+    <view class="card__head"><text class="card__title">错因标签</text></view>
+    <view class="wrap gap12">
+      <view class="reason {{reasonMap[item.key] ? 'on' : ''}}" wx:for="{{allReasons}}" wx:key="key" data-key="{{item.key}}" bindtap="onReason">{{item.label}}</view>
+    </view>
+  </view>
+
+  <view class="card">
+    <view class="card__head"><text class="card__title">难度</text></view>
+    <view class="wrap gap12">
+      <view class="reason {{difficulty === item ? 'on' : ''}}" wx:for="{{[1,2,3,4,5]}}" wx:key="*this" data-v="{{item}}" bindtap="setDiff">{{item}}</view>
+    </view>
+  </view>
+
+  <button class="btn btn--primary btn--block" bindtap="save">保存</button>
+  <view class="btn btn--ghost btn--block del" wx:if="{{isEdit}}" bindtap="remove">删除这道错题</view>
+</view>

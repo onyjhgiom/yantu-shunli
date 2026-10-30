@@ -1,0 +1,100 @@
+<view class="page {{themeCls}} page--tight">
+  <view class="hero">
+    <view class="hero__t serif">成就与打卡</view>
+    <view class="hero__s">每一天的坚持，都算数</view>
+  </view>
+
+  <!-- 坚持总览：深色重色块，把"战绩"立起来 -->
+  <view class="board">
+    <view class="board__glow"></view>
+    <view class="board__main">
+      <text class="board__num serif">{{stat.streak}}</text>
+      <text class="board__unit">天连续打卡</text>
+    </view>
+    <view class="board__side">
+      <view class="board__cell">
+        <text class="board__v">{{stat.focusHours}}</text>
+        <text class="board__l">累计专注 / 小时</text>
+      </view>
+      <view class="board__cell">
+        <text class="board__v">{{stat.taskDone}}</text>
+        <text class="board__l">完成任务 / 项</text>
+      </view>
+      <view class="board__cell">
+        <text class="board__v">{{stat.earned}}<text class="board__slash">/{{stat.total}}</text></text>
+        <text class="board__l">徽章解锁</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 下一个目标：把"还差多少"摊开，成就感来自可见的进度 -->
+  <view class="card next" wx:if="{{stat.next}}">
+    <view class="next__head">
+      <text class="next__t">下一个目标</text>
+      <text class="next__b">{{stat.next.icon}} {{stat.next.name}}</text>
+    </view>
+    <view class="next__track"><view class="next__fill" style="width:{{stat.next.percent}}%"></view></view>
+    <text class="next__p">{{stat.next.desc}} · 已完成 {{stat.next.progressText}}</text>
+  </view>
+
+  <view class="card next next--done" wx:else>
+    <text class="next__t">全部徽章已解锁</text>
+    <text class="next__p">了不起，你已经把每一枚都收入囊中。</text>
+  </view>
+
+  <!-- 分组徽章 -->
+  <view class="grp" wx:for="{{groups}}" wx:key="key">
+    <view class="grp__head">
+      <view class="grp__t">
+        <text class="grp__name serif">{{item.name}}</text>
+        <text class="grp__desc">{{item.desc}}</text>
+      </view>
+      <text class="grp__count">{{item.earnedCount}}/{{item.items.length}}</text>
+    </view>
+
+    <view class="badges">
+      <view class="badge {{b.earned ? 'on' : ''}}" wx:for="{{item.items}}" wx:for-item="b" wx:key="key">
+        <view class="badge__emblem">
+          <view class="badge__ring"></view>
+          <text class="badge__icon">{{b.icon}}</text>
+        </view>
+        <view class="badge__body">
+          <view class="badge__top">
+            <text class="badge__name">{{b.name}}</text>
+            <text class="badge__ribbon" wx:if="{{b.earned}}">已达成</text>
+          </view>
+          <text class="badge__desc">{{b.desc}}</text>
+          <view class="badge__track"><view class="badge__fill" style="width:{{b.percent}}%"></view></view>
+          <text class="badge__prog">{{b.progressText}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 补签与请假 -->
+  <view class="card">
+    <view class="card__head"><text class="card__title">补签与请假</text></view>
+    <view class="row row--between setting">
+      <view class="setting__l">
+        <text class="setting__t">补签卡</text>
+        <text class="setting__s">每月 2 张，可补最近 3 天</text>
+      </view>
+      <view class="setting__act">
+        <text class="setting__num">剩 {{makeup.cards}} 张</text>
+        <view class="btn btn--sm btn--ghost" bindtap="useMakeup">使用</view>
+      </view>
+    </view>
+    <view class="row row--between setting">
+      <view class="setting__l">
+        <text class="setting__t">请假</text>
+        <text class="setting__s">每月最多 3 天，请假不断签</text>
+      </view>
+      <view class="setting__act">
+        <text class="setting__num">{{makeup.leaveUsed}}/{{makeup.leaveMax}}</text>
+        <view class="btn btn--sm btn--ghost" bindtap="useLeave">请假</view>
+      </view>
+    </view>
+  </view>
+
+  <view class="disclaimer">补签 / 请假为本地记录，用于自我激励；真实连续天数仍以「学习记录」为准。</view>
+</view>

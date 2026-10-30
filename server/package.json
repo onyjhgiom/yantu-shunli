@@ -1,0 +1,16 @@
+{
+  "name": "yantu-shunli-ai-proxy",
+  "version": "1.0.0",
+  "private": true,
+  "description": "研途顺利 · AI 代理服务：把小程序 /ai/chat 请求转发到火山方舟 Ark。零第三方依赖，仅用 Node 内置模块。",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "probe": "node _probe.js"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  },
+  "dependencies": {},
+  "devDependencies": {}
+}

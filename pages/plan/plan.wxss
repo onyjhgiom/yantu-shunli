@@ -1,0 +1,66 @@
+.seg {
+  display: flex;
+  background: var(--paper-deep);
+  border-radius: 16rpx;
+  padding: 6rpx;
+  margin-bottom: 24rpx;
+}
+.seg__item {
+  flex: 1;
+  text-align: center;
+  font-size: 26rpx;
+  color: var(--ink-soft);
+  padding: 16rpx 0;
+  border-radius: 12rpx;
+}
+.seg__item.on {
+  background: var(--forest);
+  color: var(--on-primary);
+  font-weight: 600;
+}
+
+.datebar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6rpx 10rpx 22rpx;
+}
+.datebar__step {
+  font-size: 46rpx;
+  color: var(--forest);
+  padding: 0 28rpx;
+  line-height: 1;
+}
+.datebar__center { display: flex; flex-direction: column; align-items: center; }
+.datebar__label { font-size: 30rpx; font-weight: 600; color: var(--ink); }
+.datebar__date { font-size: 22rpx; color: var(--sub); margin-top: 4rpx; }
+
+.overview__foot {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 18rpx;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 16rpx;
+  margin-top: 4rpx;
+}
+
+.quick {
+  display: flex;
+  gap: 20rpx;
+  margin-top: 28rpx;
+}
+.quick__item {
+  flex: 1;
+  background: var(--card);
+  border: 1rpx solid var(--card-line);
+  border-radius: 20rpx;
+  padding: 26rpx 24rpx;
+  display: flex;
+  flex-direction: column;
+}
+.quick__t { font-size: 28rpx; font-weight: 600; color: var(--ink); }
+.quick__s { font-size: 22rpx; color: var(--sub); margin-top: 8rpx; }

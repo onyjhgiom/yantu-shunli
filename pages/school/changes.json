@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "改考动态",
+  "usingComponents": {
+    "empty-state": "/components/empty-state/empty-state"
+  }
+}

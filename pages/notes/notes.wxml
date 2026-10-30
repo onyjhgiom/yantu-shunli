@@ -1,0 +1,34 @@
+<view class="page {{themeCls}} page--tight">
+  <view class="hero">
+    <view class="hero__t serif">笔记中心</view>
+    <view class="hero__s">共 {{total}} 条笔记</view>
+  </view>
+
+  <scroll-view scroll-x class="chips">
+    <view class="chip {{filterSubject === item.key ? 'on' : ''}}" wx:for="{{subjects}}" wx:key="key" data-key="{{item.key}}" bindtap="onFilter">{{item.name}}</view>
+  </scroll-view>
+
+  <block wx:if="{{list.length}}">
+    <view class="nt" wx:for="{{list}}" wx:key="id" data-id="{{item.id}}" bindtap="onItem">
+      <view class="nt__bar" style="background:{{item.color}}"></view>
+      <view class="nt__body">
+        <view class="nt__top">
+          <text class="nt__sub" style="color:{{item.color}}">{{item.subjectName}}</text>
+          <text class="nt__time">{{item.updatedAt}}</text>
+        </view>
+        <text class="nt__title">{{item.title}}</text>
+        <text class="nt__preview" wx:if="{{item.preview}}">{{item.preview}}</text>
+        <view class="nt__tags" wx:if="{{item.tags.length}}">
+          <text class="tag tag--line" wx:for="{{item.tags}}" wx:key="*this" wx:for-item="tg">{{tg}}</text>
+        </view>
+      </view>
+      <text class="nt__del" catchtap="onDelete" data-id="{{item.id}}">🗑</text>
+    </view>
+  </block>
+
+  <view class="card" wx:else>
+    <empty-state mark="✍️" text="还没有笔记" sub="听课、刷题、复盘时随手记下来" actionText="写一条笔记" bind:action="goAdd"></empty-state>
+  </view>
+
+  <view class="fab" bindtap="goAdd">+</view>
+</view>

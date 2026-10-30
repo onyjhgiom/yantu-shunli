@@ -1,0 +1,60 @@
+<view class="page {{themeCls}} focus">
+  <!-- 环形计时 -->
+  <view class="ring-wrap">
+    <canvas type="2d" id="ring" class="ring"></canvas>
+    <view class="ring-center">
+      <text class="ring-phase">{{phaseLabel}}</text>
+      <text class="ring-time serif">{{timeText}}</text>
+      <text class="ring-sub">{{subjectName}}{{taskTitle ? ' · ' + taskTitle : ''}}</text>
+    </view>
+  </view>
+
+  <!-- 预设 -->
+  <view class="presets">
+    <view
+      class="preset {{presetIndex === index ? 'on' : ''}}"
+      wx:for="{{presets}}"
+      wx:key="label"
+      data-index="{{index}}"
+      bindtap="onPreset"
+    >{{item.label}}</view>
+  </view>
+
+  <!-- 关联设置 -->
+  <view class="card">
+    <view class="field row row--between">
+      <text class="field__label">科目</text>
+      <picker mode="selector" range="{{subjectLabels}}" value="{{subjectIndex}}" bindchange="onSubject">
+        <view class="picker">{{subjects[subjectIndex].name}} ▾</view>
+      </picker>
+    </view>
+    <view class="field row row--between">
+      <text class="field__label">关联任务</text>
+      <picker mode="selector" range="{{taskLabels}}" value="{{taskIndex}}" bindchange="onTask">
+        <view class="picker">{{taskLabels[taskIndex]}} ▾</view>
+      </picker>
+    </view>
+  </view>
+
+  <!-- 控制 -->
+  <view class="controls">
+    <button class="btn btn--ghost" bindtap="reset">重置</button>
+    <button class="btn btn--primary controls__main" bindtap="toggle">{{running ? '暂停' : '开始'}}</button>
+    <button class="btn btn--ghost" bindtap="finish" wx:if="{{phase === 'focus'}}">结束记录</button>
+    <button class="btn btn--ghost" bindtap="skip" wx:else>跳过</button>
+  </view>
+
+  <!-- 今日概览 -->
+  <view class="card today">
+    <view class="today__item">
+      <text class="today__num serif">{{todayFocus}}</text>
+      <text class="today__label">今日专注次数</text>
+    </view>
+    <view class="today__item">
+      <text class="today__num serif">{{todayText}}</text>
+      <text class="today__label">今日专注时长</text>
+    </view>
+  </view>
+
+  <view class="hint">专注结束后会自动写入学习记录，并同步到首页与统计。</view>
+</view>

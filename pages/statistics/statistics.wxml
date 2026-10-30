@@ -1,0 +1,106 @@
+<view class="page {{themeCls}}">
+  <!-- 范围切换 -->
+  <view class="seg">
+    <view
+      class="seg__item {{scope === item.key ? 'on' : ''}}"
+      wx:for="{{scopes}}"
+      wx:key="key"
+      data-key="{{item.key}}"
+      bindtap="onScope"
+    >{{item.label}}</view>
+  </view>
+
+  <!-- 核心指标 -->
+  <view class="card">
+    <view class="metrics">
+      <view class="metric">
+        <text class="metric__num serif">{{metrics.minutesText}}</text>
+        <text class="metric__label">学习时长</text>
+      </view>
+      <view class="metric">
+        <text class="metric__num serif">{{metrics.avgText}}</text>
+        <text class="metric__label">平均每天</text>
+      </view>
+      <view class="metric">
+        <text class="metric__num serif">{{metrics.completionRate}}%</text>
+        <text class="metric__label">任务完成率</text>
+      </view>
+      <view class="metric">
+        <text class="metric__num serif">{{metrics.focusCount}}</text>
+        <text class="metric__label">专注次数</text>
+      </view>
+    </view>
+    <view class="metrics__foot">
+      <text class="muted">已完成 {{metrics.completionDone}} / {{metrics.completionTotal}} 项任务</text>
+      <text class="muted">连续学习 {{overview.streak}} 天</text>
+    </view>
+  </view>
+
+  <!-- 折线图 -->
+  <view class="card">
+    <view class="card__head">
+      <text class="card__title">每日学习时长</text>
+      <text class="card__more">近 14 天</text>
+    </view>
+    <canvas type="2d" id="line" class="chart chart--line"></canvas>
+  </view>
+
+  <!-- 柱状图 -->
+  <view class="card">
+    <view class="card__head">
+      <text class="card__title">四科学习时间</text>
+      <text class="card__more">累计</text>
+    </view>
+    <canvas type="2d" id="bar" class="chart chart--bar"></canvas>
+  </view>
+
+  <!-- 知识点掌握度 -->
+  <view class="card">
+    <view class="card__head"><text class="card__title">知识点掌握度</text></view>
+    <view class="mastery" wx:for="{{subjects}}" wx:key="key">
+      <view class="mastery__top">
+        <text class="mastery__name" style="color:{{item.color}}">{{item.name}}</text>
+        <text class="mastery__val">{{item.mastery}}%</text>
+      </view>
+      <progress-bar percent="{{item.mastery}}" color="{{item.color}}" height="10"></progress-bar>
+    </view>
+  </view>
+
+  <!-- 热力图 -->
+  <view class="card">
+    <view class="card__head">
+      <text class="card__title">学习热力图</text>
+      <text class="card__more">近 {{heat.weeks}} 周</text>
+    </view>
+    <scroll-view scroll-x class="heat-scroll">
+      <view class="heat">
+        <view class="heat__col" wx:for="{{heat.cols}}" wx:key="index" wx:for-item="col">
+          <view
+            class="heat__cell"
+            wx:for="{{col}}"
+            wx:key="date"
+            wx:for-item="cell"
+            style="background:{{cell.bg}}"
+            data-date="{{cell.date}}"
+            data-minutes="{{cell.minutes}}"
+            bindtap="onCell"
+          ></view>
+        </view>
+      </view>
+    </scroll-view>
+    <view class="heat__legend">
+      <text class="muted">少</text>
+      <view class="heat__cell" style="background:{{legendColors[0]}}"></view>
+      <view class="heat__cell" style="background:{{legendColors[1]}}"></view>
+      <view class="heat__cell" style="background:{{legendColors[2]}}"></view>
+      <view class="heat__cell" style="background:{{legendColors[3]}}"></view>
+      <view class="heat__cell" style="background:{{legendColors[4]}}"></view>
+      <text class="muted">多</text>
+    </view>
+    <view class="heat__stats">
+      <text class="muted">学习 {{overview.studyDays}} 天</text>
+      <text class="muted">累计 {{overview.totalText}}</text>
+      <text class="muted">最长连续 {{overview.streak}} 天</text>
+    </view>
+  </view>
+</view>

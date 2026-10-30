@@ -1,0 +1,10 @@
+.ex {
+  display: flex; align-items: center; justify-content: space-between;
+  background: var(--card); border: 1rpx solid var(--card-line);
+  border-radius: var(--radius-lg); padding: 24rpx; margin-bottom: 14rpx;
+}
+.ex__name { font-size: 30rpx; font-weight: 600; color: var(--ink); display: block; }
+.ex__meta { font-size: 22rpx; color: var(--sub); display: block; margin-top: 6rpx; }
+.ex__r { display: flex; align-items: baseline; gap: 10rpx; }
+.ex__total { font-size: 44rpx; font-weight: 700; color: var(--forest); }
+.ex__arrow { color: var(--sub); font-size: 34rpx; }

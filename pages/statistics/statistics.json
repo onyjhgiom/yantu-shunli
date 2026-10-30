@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "学习统计",
+  "usingComponents": {
+    "progress-bar": "../../components/progress-bar/progress-bar"
+  }
+}

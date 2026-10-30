@@ -1,0 +1,41 @@
+<view class="page {{themeCls}} page--tight" wx:if="{{notFound}}">
+  <empty-state mark="!" text="模考记录不存在" sub="该记录可能已被删除。请返回重新选择一次模考。" actionText="返回上一页" bind:action="goBack"></empty-state>
+</view>
+<view class="page {{themeCls}} page--tight" wx:elif="{{exam}}">
+  <view class="hero">
+    <view class="hero__t serif">{{exam.name}}</view>
+    <view class="hero__s">{{exam.date}} · {{exam.typeText}} · 总分 {{exam.total}}</view>
+  </view>
+
+  <view class="card">
+    <view class="card__head"><text class="card__title">完成度雷达</text><text class="card__more">当前 vs 目标</text></view>
+    <canvas type="2d" id="radar" class="radar"></canvas>
+    <view class="legend">
+      <text class="lg lg--cur">当前</text>
+      <text class="lg lg--tgt">目标</text>
+    </view>
+  </view>
+
+  <view class="card">
+    <view class="card__head"><text class="card__title">总分趋势</text></view>
+    <canvas type="2d" id="trend" class="trend"></canvas>
+  </view>
+
+  <view class="card" wx:if="{{diagnose.length}}">
+    <view class="card__head"><text class="card__title">诊断建议</text></view>
+    <view class="diag" wx:for="{{diagnose}}" wx:key="subject">
+      <text class="diag__dot">◆</text>
+      <text class="diag__text">{{item.text}}</text>
+    </view>
+  </view>
+
+  <view class="card" wx:if="{{exam.note}}">
+    <view class="card__head"><text class="card__title">备注</text></view>
+    <text class="muted">{{exam.note}}</text>
+  </view>
+
+  <view class="btn-row">
+    <view class="btn btn--accent btn--sm" bindtap="importMistakes">失分导入错题本</view>
+    <view class="btn btn--ghost btn--sm del" bindtap="remove">删除</view>
+  </view>
+</view>

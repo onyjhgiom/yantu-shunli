@@ -1,0 +1,41 @@
+.head { border-left: 8rpx solid var(--forest); }
+.head__row { display: flex; align-items: center; justify-content: space-between; }
+.head__badge {
+  color: var(--on-fill);
+  font-size: 26rpx;
+  padding: 12rpx 26rpx;
+  border-radius: 16rpx;
+  font-weight: 600;
+}
+.head__mastery { display: flex; flex-direction: column; align-items: flex-end; }
+.head__num { font-size: 52rpx; color: var(--forest); }
+.head__label { font-size: 22rpx; color: var(--sub); }
+.head__foot { display: flex; justify-content: space-between; margin: 20rpx 0 14rpx; }
+
+.stage { padding: 16rpx 0; }
+.stage__top { display: flex; justify-content: space-between; margin-bottom: 10rpx; }
+.stage__name { font-size: 26rpx; color: var(--ink-soft); }
+.stage__val { font-size: 26rpx; color: var(--forest); font-weight: 600; }
+
+.chapter { padding: 18rpx 0; border-top: 1rpx solid var(--line); }
+.chapter:first-child { border-top: none; padding-top: 0; }
+.chapter__top { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 12rpx; }
+.chapter__name { font-size: 28rpx; color: var(--ink); font-weight: 600; }
+.chapter__prog { font-size: 22rpx; color: var(--sub); }
+.chips { display: flex; flex-wrap: wrap; gap: 12rpx; }
+.chip {
+  font-size: 23rpx;
+  padding: 8rpx 20rpx;
+  border-radius: 999rpx;
+  border: 1rpx solid var(--line);
+  color: var(--ink-soft);
+  background: transparent;
+  line-height: 1.4;
+}
+
+.reset-btn { margin-top: 20rpx; }
+
+.legend { display: flex; flex-wrap: wrap; gap: 18rpx; padding: 24rpx 8rpx 0; }
+.legend__item { display: flex; align-items: center; }
+.legend__dot { width: 14rpx; height: 14rpx; border-radius: 7rpx; margin-right: 8rpx; }
+.legend__label { font-size: 22rpx; color: var(--sub); }

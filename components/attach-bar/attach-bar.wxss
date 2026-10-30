@@ -1,0 +1,54 @@
+.abar { margin-top: 16rpx; }
+
+/* 已选附件横向列表 */
+.abar__list { width: 100%; white-space: nowrap; }
+.abar__in { display: inline-flex; align-items: flex-end; gap: 14rpx; padding-bottom: 4rpx; }
+.abar__item { position: relative; width: 150rpx; }
+.abar__img { width: 150rpx; height: 150rpx; border-radius: 14rpx; background: var(--paper-deep); }
+.abar__file {
+  width: 220rpx; height: 150rpx; border-radius: 14rpx; padding: 14rpx;
+  background: var(--card); border: 1rpx solid var(--card-line);
+  display: flex; flex-direction: column; justify-content: center; gap: 4rpx;
+}
+.abar__file-i { font-size: 32rpx; }
+.abar__file-n { font-size: 22rpx; color: var(--ink); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.abar__file-s { font-size: 19rpx; color: var(--sub); }
+.abar__audio {
+  width: 240rpx; height: 150rpx; border-radius: 14rpx; padding: 14rpx;
+  background: var(--forest-soft); border: 1rpx solid var(--card-line);
+  display: flex; flex-direction: column; justify-content: center; gap: 6rpx;
+}
+.abar__audio-i { font-size: 34rpx; }
+.abar__audio-n { font-size: 22rpx; color: var(--forest-deep); font-weight: 600; }
+.abar__x {
+  position: absolute; top: -8rpx; right: -8rpx; width: 36rpx; height: 36rpx; border-radius: 18rpx;
+  background: var(--ink); color: var(--paper); font-size: 24rpx; line-height: 36rpx; text-align: center;
+}
+.abar__up {
+  position: absolute; bottom: 6rpx; left: 6rpx; font-size: 18rpx;
+  color: var(--on-primary); background: var(--forest); padding: 2rpx 8rpx; border-radius: 8rpx;
+}
+
+/* 录音条 */
+.abar__rec {
+  display: flex; align-items: center; gap: 12rpx; margin-top: 14rpx;
+  padding: 12rpx 18rpx; background: var(--danger-soft); border-radius: 12rpx;
+}
+.abar__rec-dot { width: 12rpx; height: 12rpx; border-radius: 6rpx; background: var(--danger); animation: abarPulse 1s ease-in-out infinite; }
+@keyframes abarPulse { 0%,100% { opacity: 1; } 50% { opacity: .25; } }
+.abar__rec-t { flex: 1; font-size: 23rpx; color: var(--danger); }
+.abar__rec-b { font-size: 23rpx; color: var(--danger); font-weight: 600; padding: 4rpx 12rpx; }
+.abar__rec-c { font-size: 23rpx; color: var(--sub); padding: 4rpx 12rpx; }
+
+/* 操作按钮行 */
+.abar__btns { display: flex; align-items: center; gap: 16rpx; margin-top: 14rpx; flex-wrap: wrap; }
+.abar__btn {
+  display: flex; align-items: center; gap: 8rpx;
+  padding: 12rpx 22rpx; border-radius: 999rpx;
+  background: var(--paper-deep); border: 1rpx solid var(--card-line);
+}
+.abar__btn-i { font-size: 24rpx; }
+.abar__btn-t { font-size: 23rpx; color: var(--ink-soft); }
+.abar__btn.on { background: var(--danger); border-color: var(--danger); }
+.abar__btn.on .abar__btn-t { color: var(--on-fill); }
+.abar__hint { font-size: 21rpx; color: var(--sub); }

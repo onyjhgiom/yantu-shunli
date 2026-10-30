@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "背诵卡片",
+  "usingComponents": {
+    "empty-state": "/components/empty-state/empty-state"
+  }
+}

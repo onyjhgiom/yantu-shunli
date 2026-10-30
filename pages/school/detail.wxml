@@ -1,0 +1,277 @@
+<view class="page {{themeCls}} page--tight" wx:if="{{notFound}}">
+  <empty-state mark="!" text="院校不存在或已下架" sub="该院校可能已被移除，或链接无效。请返回重新选择。" actionText="返回上一页" bind:action="goBack"></empty-state>
+</view>
+<view class="page {{themeCls}} page--tight" wx:elif="{{school}}">
+  <view class="hero">
+    <view class="hero__t serif">{{school.name}}</view>
+    <view class="hero__s">{{school.province}} · {{school.city}} · {{school.type}} · 院校代码 {{school.code}}</view>
+  </view>
+
+  <view class="tags-row">
+    <text class="tag tag--line" wx:for="{{school.tags}}" wx:key="*this">{{item}}</text>
+  </view>
+
+  <!-- 信息时效条：先说清「这批数据是什么时候、按什么对齐的」，再谈数字 -->
+  <view class="fresh">
+    <view class="fresh__l">
+      <text class="fresh__dot"></text>
+      <text class="fresh__t">{{season}} 招生季批次</text>
+    </view>
+    <text class="fresh__s">结构性事实（科目/代码/学院）已对齐 {{season}} 官方公告 · 同步于 {{syncAt}} · {{version}}<text wx:if="{{hasLive}}" class="fresh__live"> · 云端实时</text><text wx:else class="fresh__local"> · 本地</text></text>
+  </view>
+
+  <view class="phase" wx:if="{{phase}}">
+    <view class="phase__row">
+      <text class="phase__dot"></text>
+      <text class="phase__t">{{phase.title}}</text>
+    </view>
+    <view class="phase__d">{{phase.desc}}</view>
+  </view>
+
+  <!-- 院校画像：学科评估 / 简介 / 优势 / 复试特点 / 二本友好度 / 重点平台 -->
+  <view class="card profile">
+    <view class="card__head">
+      <text class="card__title">院校画像</text>
+      <text class="card__more">{{school.assessSource === 'verified' ? school.assessRound + '官方' : '按层次参考'}}</text>
+    </view>
+
+    <view class="profile__intro">{{school.intro}}</view>
+
+    <!-- 院校招生代码（研招网报名填写用，可一键复制） -->
+    <view class="profile__code">
+      <text class="profile__code-k">院校代码（研招网报名用）</text>
+      <text class="profile__code-v serif">{{school.code}}</text>
+      <view class="profile__code-copy" bindtap="copyCode">复制</view>
+    </view>
+
+    <view class="profile__assess" wx:if="{{school.assessList.length}}">
+      <view class="assess__item" wx:for="{{school.assessList}}" wx:key="field">
+        <text class="assess__k">{{item.field}}</text>
+        <text class="assess__v assess__v--{{item.cls}}">{{item.value}}</text>
+      </view>
+    </view>
+    <view class="profile__assess-note" wx:else>学科评估未逐校核对，以层次「{{school.levelName}}」参考；具体等级以教育部{{school.assessRound || '第四轮'}}学科评估为准。</view>
+
+    <view class="profile__tags" wx:if="{{school.strengths.length}}">
+      <text class="tag tag--soft" wx:for="{{school.strengths}}" wx:key="*this">{{item}}</text>
+    </view>
+
+    <view class="profile__retest">
+      <view class="rt__row">
+        <text class="rt__k">复试特点</text>
+        <text class="rt__v">{{school.retest.machine ? '含机试' : (school.retest.machine === false ? '无硬机试' : '机试未知')}}{{school.retest.english ? ' · 重外语' : ''}} · 面试权重{{school.retest.interviewWeight}}</text>
+      </view>
+      <view class="rt__note">{{school.retest.note}}</view>
+    </view>
+
+    <view class="profile__friendly">
+      <text class="rt__k">二本友好度</text>
+      <text class="friendly__v friendly__v--{{school.friendlyClass}}">{{school.friendly}}</text>
+      <text class="friendly__note">{{school.friendlyNote}}</text>
+    </view>
+
+    <view class="profile__platform" wx:if="{{school.platform.length}}">
+      <text class="plat__t">重点平台 / 特色方向</text>
+      <view class="plat__list">
+        <text class="plat__item" wx:for="{{school.platform}}" wx:key="*this">{{item}}</text>
+      </view>
+    </view>
+  </view>
+
+  <scroll-view scroll-x class="chips">
+    <view class="chip {{programId === item.id ? 'on' : ''}}" wx:for="{{programs}}" wx:key="id" data-id="{{item.id}}" bindtap="onProgram">{{item.majorName}}（{{item.degreeType}}）</view>
+  </scroll-view>
+
+  <!-- 招生学院 / 专业：精确到 学院 → 专业 → 研究方向（含参考分数与学费） -->
+  <view class="card struct" wx:if="{{structure}}">
+    <view class="card__head">
+      <text class="card__title">招生学院 / 专业</text>
+      <text class="card__more">{{school.programCount}} 个专业 · 点专业看详情</text>
+    </view>
+    <view class="struct__college" wx:for="{{structure.colleges}}" wx:key="college" wx:for-item="cg">
+      <view class="struct__college-name">{{cg.college}}</view>
+      <view class="struct__major" wx:for="{{cg.majors}}" wx:key="id" wx:for-item="m" data-id="{{m.id}}" bindtap="onProgram">
+        <view class="struct__major-l">
+          <text class="struct__major-name">{{m.majorName}}</text>
+          <text class="struct__major-tag">{{m.degreeType}} · {{m.examCode}}</text>
+        </view>
+        <view class="struct__major-r">
+          <text class="struct__score">复试线 {{m.bandLow}}–{{m.bandHigh}}</text>
+          <text class="struct__tuition">{{m.tuition.text}}</text>
+        </view>
+      </view>
+    </view>
+    <view class="struct__note">复试线与招生计划为按院校层次估算的参考区间（非官方）；学费为按学位类型与院校层次的典型参考。具体以院校研究生院当年公告为准。</view>
+  </view>
+
+  <view class="card" wx:if="{{program}}">
+    <view class="card__head">
+      <text class="card__title">{{program.majorName}}</text>
+      <text class="card__more">{{program.degreeType}} · {{program.studyMode}}</text>
+    </view>
+    <view class="ec-badge">{{program.examCode}}（{{program.math}} + 408）</view>
+    <view class="row row--between meta">
+      <text class="muted">招生学院：{{program.college}}</text>
+      <text class="muted">计划：{{program.planCount}} 人</text>
+    </view>
+    <view class="muted">报考科目：{{program.examSubjects[0].name}} / {{program.examSubjects[1].name}} / {{program.examSubjects[2].name}} / {{program.examSubjects[3].name}}</view>
+    <view class="muted">专业课：{{program.majorExamName}}（代码 408，统考）</view>
+    <view class="muted" wx:if="{{program.refBooks.length}}">参考书：{{program.refBooks}}</view>
+    <view class="row row--between meta">
+      <text class="muted">学费参考：{{program.tuition.text}}</text>
+      <text class="muted">{{program.tuition.note}}</text>
+    </view>
+    <view class="dirs" wx:if="{{program.directions.length}}">
+      <text class="dirs__t">研究方向（含说明与就业）</text>
+      <view class="dir" wx:for="{{program.directions}}" wx:key="name" wx:for-item="d">
+        <view class="dir__head">
+          <text class="dir__name">{{d.name}}</text>
+          <text class="dir__badge" wx:if="{{d.schoolSpecific}}">该校特色</text>
+        </view>
+        <text class="dir__desc">{{d.desc}}</text>
+        <text class="dir__jobs" wx:if="{{d.jobs}}">就业：{{d.jobs}}</text>
+      </view>
+      <text class="dirs__note">方向为各高校该专业常见 / 代表性方向，最终以院校当年招生专业目录为准。</text>
+    </view>
+    <view class="muted remark" wx:if="{{program.remark}}">备注：{{program.remark}}</view>
+
+    <!-- 科目调整动态：改考 / 回退 / 专业代码变更，附官方公告原文 -->
+    <view class="chg" wx:if="{{program.changeList.length}}">
+      <view class="chg__head">
+        <text class="chg__t">初试科目调整</text>
+        <text class="chg__tag">{{program.changeList.length}} 条 · {{season}} 招生季</text>
+      </view>
+      <view class="chg__item" wx:for="{{program.changeList}}" wx:key="id">
+        <view class="chg__row">
+          <text class="chg__kind chg__kind--{{item.kind}}">{{item.kindName}}</text>
+          <text class="chg__date">{{item.date}}</text>
+        </view>
+        <view class="chg__flow">
+          <text class="chg__from">{{item.from}}</text>
+          <text class="chg__arrow">→</text>
+          <text class="chg__to">{{item.to}}</text>
+        </view>
+        <view class="chg__src">{{item.source}}</view>
+        <view class="chg__note" wx:if="{{item.note}}">{{item.note}}</view>
+        <view class="chg__link" wx:if="{{item.url}}" data-url="{{item.url}}" data-label="公告原文" bindtap="copyUrl">复制公告原文 ›</view>
+      </view>
+      <view class="chg__tip">科目以官方公告为准。改考后旧自命题资料作废，须按 408 全国统考大纲重新复习。</view>
+    </view>
+
+    <!-- 官方直达 -->
+    <view class="links">
+      <view class="link" wx:for="{{links}}" wx:key="url" data-url="{{item.url}}" data-label="{{item.label}}" bindtap="copyUrl">
+        <text class="link__t">{{item.label}}</text>
+        <text class="link__a">复制 ›</text>
+      </view>
+    </view>
+
+    <view class="latest" wx:if="{{program.latest}}">
+      <view class="latest__item">
+        <text class="latest__num serif">{{program.latest.retestLine}}</text>
+        <text class="latest__label">最新复试线</text>
+      </view>
+      <view class="latest__item">
+        <text class="latest__num serif" wx:if="{{targetTotal}}">{{targetTotal}}</text>
+        <text class="latest__num serif" wx:else>—</text>
+        <text class="latest__label">你的目标分</text>
+      </view>
+      <view class="latest__item">
+        <text class="latest__num serif" style="color:{{diffColor}}">{{diffText || '—'}}</text>
+        <text class="latest__label">差值</text>
+      </view>
+    </view>
+
+    <view class="canvas-wrap">
+      <text class="canvas-title">近四年分数线趋势（总分）</text>
+      <canvas type="2d" id="trend" class="trend"></canvas>
+    </view>
+
+    <view class="tbl">
+      <view class="tbl__row tbl__head">
+        <text class="tbl__c">年份</text><text class="tbl__c">总分</text><text class="tbl__c">政</text><text class="tbl__c">英</text><text class="tbl__c">数</text><text class="tbl__c">专</text>
+      </view>
+      <view class="tbl__row" wx:for="{{program.lines}}" wx:key="year">
+        <text class="tbl__c">{{item.year}}</text>
+        <text class="tbl__c">{{item.total}}</text>
+        <text class="tbl__c">{{item.subjectLines.politics}}</text>
+        <text class="tbl__c">{{item.subjectLines.english}}</text>
+        <text class="tbl__c">{{item.subjectLines.math}}</text>
+        <text class="tbl__c">{{item.subjectLines.major}}</text>
+      </view>
+    </view>
+
+    <view class="btn-row">
+      <view class="btn btn--accent btn--sm" bindtap="addToTarget">加入目标</view>
+      <view class="btn btn--primary btn--sm" bindtap="setMain">设为主目标</view>
+    </view>
+
+    <!-- 数据核实：让用户用官方真实数据覆盖估算值 -->
+    <view class="verify">
+      <view class="verify__head">
+        <text class="verify__t">数据核实</text>
+        <text class="verify__badge {{program.userLine ? 'verify__badge--ok' : 'verify__badge--warn'}}">{{program.userLine ? '你已核实' : '参考估算值'}}</text>
+      </view>
+      <view class="verify__row">
+        <text class="verify__k">系统参考区间</text>
+        <text class="verify__v">{{program.bandLow}} – {{program.bandHigh}} 分</text>
+      </view>
+      <view class="verify__row" wx:if="{{program.userLine}}">
+        <text class="verify__k">你录入的复试线</text>
+        <text class="verify__v verify__v--ok">{{program.userLine}} 分 · {{program.updatedAt}}</text>
+      </view>
+      <view class="verify__row" wx:if="{{program.userPlan}}">
+        <text class="verify__k">你录入的招生计划</text>
+        <text class="verify__v verify__v--ok">{{program.userPlan}} 人</text>
+      </view>
+      <view class="verify__row" wx:if="{{program.sourceUrl}}">
+        <text class="verify__k">公告链接</text>
+        <text class="verify__v verify__v--ok" data-url="{{program.sourceUrl}}" data-label="公告原文" bindtap="copyUrl">点击查看 ›</text>
+      </view>
+      <view class="verify__note">
+        招生计划与分数线区间是按院校层次估算的参考值，不是官方数据，年际波动可达 ±20 分。<b>把这所学校的真实数据录进来，判断就全部改按你的数据走。</b>
+      </view>
+      <view class="verify__btns">
+        <view class="btn btn--soft btn--sm" bindtap="openForm">{{program.userLine || program.sourceUrl ? '修改' : '录入真实数据'}}</view>
+        <view class="btn btn--ghost btn--sm" wx:if="{{program.userLine || program.sourceUrl}}" bindtap="clearRealLine">清除</view>
+      </view>
+    </view>
+  </view>
+
+  <view class="disclaimer">
+    结构性事实（院校/专业/学院/考试科目）取自公开公告整理；招生计划与分数线为按层次估算的参考值。请以研招网及院校官方当年公告为准。
+  </view>
+
+  <!-- 录入弹层 -->
+  <view class="sheet" wx:if="{{showForm}}" bindtap="closeForm">
+    <view class="sheet__box" catchtap="">
+      <view class="sheet__head">
+        <text class="sheet__t">录入官方真实数据</text>
+        <text class="sheet__s">{{program.schoolName}} · {{program.majorName}}</text>
+      </view>
+
+      <view class="fld">
+        <text class="fld__k">复试线（总分）</text>
+        <input class="fld__i" type="number" value="{{formLine}}" placeholder="如 352" placeholder-class="ph" data-k="Line" bindinput="onFormField" />
+      </view>
+      <view class="fld">
+        <text class="fld__k">招生计划（人）</text>
+        <input class="fld__i" type="number" value="{{formPlan}}" placeholder="选填，如 45" placeholder-class="ph" data-k="Plan" bindinput="onFormField" />
+      </view>
+      <view class="fld">
+        <text class="fld__k">公告链接</text>
+        <input class="fld__i" value="{{formUrl}}" placeholder="研究生院专业目录/公告地址" placeholder-class="ph" data-k="Url" bindinput="onFormField" />
+      </view>
+      <view class="fld">
+        <text class="fld__k">公告日</text>
+        <input class="fld__i" value="{{formDate}}" placeholder="选填，如 2026-09-15" placeholder-class="ph" data-k="Date" bindinput="onFormField" />
+      </view>
+
+      <view class="sheet__tip">填的是你在院校研究生院核实到的数字。填了链接，以后一键就能回看原文。</view>
+      <view class="sheet__btns">
+        <view class="btn btn--ghost btn--sm" bindtap="closeForm">取消</view>
+        <view class="btn btn--primary btn--sm" bindtap="saveForm">保存</view>
+      </view>
+    </view>
+  </view>
+</view>

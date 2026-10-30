@@ -1,0 +1,31 @@
+<view class="page {{themeCls}} page--tight">
+  <view class="head">
+    <view class="head__l">
+      <text class="head__t serif">消息通知</text>
+      <text class="head__u" wx:if="{{unread > 0}}">{{unread}} 条未读</text>
+    </view>
+    <view class="head__r">
+      <text class="head__btn" bindtap="markAll">全部已读</text>
+      <text class="head__btn" bindtap="clearAll">清空</text>
+    </view>
+  </view>
+
+  <block wx:if="{{list.length}}">
+    <view class="nf {{item.read ? '' : 'unread'}}" wx:for="{{list}}" wx:key="id" data-id="{{item.id}}" bindtap="onItem">
+      <view class="nf__icon" style="background:{{item.color}}">{{item.icon}}</view>
+      <view class="nf__body">
+        <view class="nf__top">
+          <text class="nf__title">{{item.title}}</text>
+          <text class="nf__date">{{item.date}}</text>
+        </view>
+        <text class="nf__content">{{item.content}}</text>
+        <text class="nf__type">{{item.name}}</text>
+      </view>
+      <text class="nf__del" catchtap="onDelete" data-id="{{item.id}}">🗑</text>
+    </view>
+  </block>
+
+  <view class="card" wx:else>
+    <empty-state mark="🔔" text="暂无通知" sub="倒计时提醒与每日一句会在这里出现" />
+  </view>
+</view>

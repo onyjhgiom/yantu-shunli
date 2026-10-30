@@ -1,0 +1,59 @@
+<view class="page {{themeCls}} page--tight">
+  <view class="hero">
+    <view class="hero__t serif">四科学习</view>
+    <view class="hero__s">今日 {{todayText}} · 专注 {{todayFocus}} 次</view>
+  </view>
+
+  <!-- 番茄钟入口 -->
+  <view class="focus-entry" bindtap="goFocus">
+    <view class="focus-entry__l">
+      <text class="focus-entry__t">开始专注</text>
+      <text class="focus-entry__s">番茄钟 · 自动记录学习时长</text>
+    </view>
+    <text class="focus-entry__btn">进入 ›</text>
+  </view>
+
+  <!-- 四科 -->
+  <view class="subjects">
+    <subject-card
+      wx:for="{{subjects}}"
+      wx:key="key"
+      subject="{{item}}"
+      bind:select="onSelectSubject"
+    ></subject-card>
+  </view>
+
+  <!-- 薄弱知识点 -->
+  <view class="card">
+    <view class="card__head">
+      <text class="card__title">薄弱 / 需复习</text>
+      <text class="card__more">{{weak.length}} 个</text>
+    </view>
+    <block wx:if="{{weak.length}}">
+      <view class="weak" wx:for="{{weak}}" wx:key="id" data-key="{{item.subjectKey}}" bindtap="onSelectSubjectKey">
+        <view class="weak__l">
+          <text class="weak__name">{{item.name}}</text>
+          <text class="weak__meta">{{item.subject}} · {{item.chapter}}</text>
+        </view>
+        <text class="weak__flag {{item.status === 'weak' ? 'danger' : 'warn'}}">{{item.status === 'weak' ? '薄弱' : '需复习'}}</text>
+      </view>
+    </block>
+    <empty-state
+      wx:else
+      mark="✓"
+      text="暂时没有薄弱知识点"
+      sub="在科目详情里给知识点打标，这里会汇总提醒"
+    ></empty-state>
+  </view>
+
+  <!-- 复习入口说明 -->
+  <view class="card tips-card">
+    <view class="card__head"><text class="card__title">复习系统</text></view>
+    <view class="tips-card__line">学习 → 第一次复习 → 第二次 → 长期巩固</view>
+    <view class="tips-card__sub">系统每天会汇总「需复习」的知识点，配合错题一起回顾。</view>
+    <view class="tips-card__acts">
+      <view class="tips-card__btn" bindtap="goMistake">错题复习</view>
+      <view class="tips-card__btn" bindtap="goCard">卡片复习</view>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,32 @@
+.sc {
+  background: var(--card);
+  border: 1rpx solid var(--card-line);
+  border-left: 8rpx solid var(--forest);
+  border-radius: 20rpx;
+  padding: 26rpx 28rpx;
+}
+.sc__head {
+  display: flex;
+  align-items: center;
+  margin-bottom: 18rpx;
+}
+.sc__badge {
+  width: 48rpx;
+  height: 48rpx;
+  border-radius: 14rpx;
+  color: var(--on-fill);
+  font-size: 24rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 16rpx;
+}
+.sc__name { font-size: 32rpx; font-weight: 600; color: var(--ink); flex: 1; }
+.sc__mastery { font-size: 32rpx; font-weight: 700; color: var(--forest); font-family: "Songti SC", serif; }
+.sc__foot {
+  margin-top: 16rpx;
+  display: flex;
+  justify-content: space-between;
+}
+.sc__time { font-size: 24rpx; color: var(--ink-soft); }
+.sc__points { font-size: 24rpx; color: var(--sub); }

@@ -1,0 +1,39 @@
+<!-- 附件输入条：缩略图/文件/语音 + 图片、文件、语音按钮 -->
+<view class="abar">
+  <!-- 已选附件 -->
+  <scroll-view wx:if="{{value.length}}" class="abar__list" scroll-x enable-flex>
+    <view class="abar__in">
+      <view class="abar__item" wx:for="{{value}}" wx:key="id">
+        <image wx:if="{{item.kind === 'image'}}" class="abar__img" src="{{item.url}}" mode="aspectFill"
+               data-url="{{item.url}}" bindtap="preview" />
+        <view wx:elif="{{item.kind === 'audio'}}" class="abar__audio" data-url="{{item.url}}" bindtap="playAudio">
+          <text class="abar__audio-i">🎙</text>
+          <text class="abar__audio-n">{{item.name}}</text>
+        </view>
+        <view wx:else class="abar__file">
+          <text class="abar__file-i">📄</text>
+          <text class="abar__file-n">{{item.name}}</text>
+          <text class="abar__file-s">{{item.sizeText}}</text>
+        </view>
+        <view class="abar__x" data-id="{{item.id}}" catchtap="removeItem">×</view>
+        <text class="abar__up" wx:if="{{item.uploading}}">上传中</text>
+      </view>
+    </view>
+  </scroll-view>
+
+  <!-- 录音中 -->
+  <view class="abar__rec" wx:if="{{rec}}">
+    <view class="abar__rec-dot"></view>
+    <text class="abar__rec-t">正在录音 · {{recSec}}s</text>
+    <text class="abar__rec-b" catchtap="stopRec">结束</text>
+    <text class="abar__rec-c" catchtap="cancelRec">取消</text>
+  </view>
+
+  <!-- 操作按钮 -->
+  <view class="abar__btns">
+    <view class="abar__btn" catchtap="pickImg"><text class="abar__btn-i">＋</text><text class="abar__btn-t">图片</text></view>
+    <view class="abar__btn" wx:if="{{allowFile}}" catchtap="pickFile"><text class="abar__btn-i">📎</text><text class="abar__btn-t">文件</text></view>
+    <view class="abar__btn {{rec ? 'on' : ''}}" catchtap="onMic"><text class="abar__btn-i">{{rec ? '■' : '🎤'}}</text><text class="abar__btn-t">语音</text></view>
+    <text class="abar__hint" wx:if="{{uploading}}">附件上传中…</text>
+  </view>
+</view>

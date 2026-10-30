@@ -1,0 +1,47 @@
+.hero { margin-bottom: 24rpx; }
+.hero__t { font-size: 48rpx; font-weight: 700; color: var(--ink); }
+.hero__s { font-size: 24rpx; color: var(--sub); margin-top: 6rpx; }
+
+.search {
+  display: flex; align-items: center;
+  background: var(--paper-deep);
+  border-radius: 14rpx;
+  padding: 0 24rpx; height: 80rpx;
+  margin-bottom: 20rpx;
+}
+.search__icon { color: var(--sub); font-size: 34rpx; margin-right: 12rpx; }
+.search__input { flex: 1; height: 80rpx; font-size: 28rpx; }
+
+.bar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12rpx; }
+.chips { flex: 1; white-space: nowrap; }
+.chip {
+  display: inline-block; padding: 10rpx 26rpx; margin-right: 14rpx;
+  font-size: 26rpx; color: var(--ink-soft);
+  background: var(--card); border: 1rpx solid var(--line); border-radius: 28rpx;
+}
+.chip.on { background: var(--forest); color: var(--on-primary); border-color: var(--forest); }
+.fav-toggle {
+  flex-shrink: 0; margin-left: 16rpx; padding: 10rpx 22rpx;
+  font-size: 24rpx; color: var(--terracotta);
+  background: var(--terracotta-soft); border-radius: 28rpx;
+}
+.fav-toggle.on { background: var(--terracotta); color: var(--on-fill); }
+
+.nw {
+  background: var(--card); border: 1rpx solid var(--card-line);
+  border-radius: var(--radius-lg); padding: 28rpx; margin-bottom: 20rpx;
+  box-sizing: border-box;
+}
+.nw__head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12rpx; }
+.nw__cat { font-size: 24rpx; color: var(--forest); }
+.nw__fav { font-size: 36rpx; color: var(--sub); line-height: 1; }
+.nw__fav.on { color: var(--terracotta); }
+.nw__title { font-size: 30rpx; font-weight: 600; color: var(--ink); line-height: 1.45; }
+.nw__title.read { color: var(--sub); }
+.nw__sub { display: block; font-size: 24rpx; color: var(--ink-soft); margin-top: 8rpx; line-height: 1.4; }
+.nw__foot { display: flex; align-items: center; margin-top: 16rpx; }
+.nw__hot {
+  font-size: 20rpx; color: var(--on-fill); background: var(--danger);
+  border-radius: 8rpx; padding: 2rpx 12rpx; margin-right: 14rpx;
+}
+.nw__date { font-size: 22rpx; color: var(--sub); }

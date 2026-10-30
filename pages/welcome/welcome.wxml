@@ -1,0 +1,78 @@
+<view class="page {{themeCls}} welcome">
+  <view class="welcome__hello serif">{{greeting}}</view>
+  <view class="welcome__sub">先立个目标，剩下的交给我。三步开局：写下名字 → 定下目标 → 开始研途。</view>
+
+  <view class="card">
+    <view class="card__head"><text class="card__title">怎么称呼你</text></view>
+    <view class="input-box">
+      <input class="input" value="{{name}}" placeholder="你的名字" placeholder-class="ph" data-field="name" bindinput="onField" maxlength="12" />
+    </view>
+  </view>
+
+  <view class="card">
+    <view class="card__head"><text class="card__title">考研目标</text><text class="card__more">必填项：院校 / 专业</text></view>
+
+    <view class="field row row--between">
+      <text class="field__label">考研年份</text>
+      <picker mode="selector" range="{{years}}" value="{{examYearIndex}}" bindchange="onYear">
+        <view class="picker">{{years[examYearIndex]}} ▾</view>
+      </picker>
+    </view>
+
+    <view class="field row row--between">
+      <text class="field__label">初试日期</text>
+      <picker mode="date" value="{{examDate}}" start="{{dateStart}}" bindchange="onDate">
+        <view class="picker">{{examDate}} ▾</view>
+      </picker>
+    </view>
+
+    <view class="field row row--between">
+      <text class="field__label">目标地区</text>
+      <input class="input input--right" value="{{region}}" placeholder="如 北京" placeholder-class="ph" data-field="region" bindinput="onField" maxlength="20" />
+    </view>
+
+    <view class="field row row--between">
+      <text class="field__label">目标院校</text>
+      <input class="input input--right" value="{{university}}" placeholder="如 XX大学" placeholder-class="ph" data-field="university" bindinput="onField" maxlength="30" />
+    </view>
+
+    <view class="field row row--between">
+      <text class="field__label">目标专业</text>
+      <input class="input input--right" value="{{major}}" placeholder="如 计算机技术" placeholder-class="ph" data-field="major" bindinput="onField" maxlength="30" />
+    </view>
+
+    <view class="field row row--between">
+      <text class="field__label">专业代码</text>
+      <input class="input input--right" value="{{majorCode}}" placeholder="如 085404" placeholder-class="ph" data-field="majorCode" bindinput="onField" maxlength="20" />
+    </view>
+  </view>
+
+  <view class="card">
+    <view class="card__head">
+      <text class="card__title">各科目标分</text>
+      <text class="card__more">目标总分 <text class="welcome__total serif">{{total}}</text></text>
+    </view>
+    <view class="score-grid">
+      <view class="score-item" wx:for="{{scoreFields}}" wx:key="key">
+        <text class="score-item__label" style="color:{{item.color}}">{{item.label}}</text>
+        <input
+          class="score-item__input serif"
+          type="number"
+          value="{{scores[item.key]}}"
+          data-key="{{item.key}}"
+          bindinput="onScore"
+        />
+      </view>
+    </view>
+  </view>
+
+  <!-- 底部固定行动条：始终吸底 + 水平居中。
+       （原先用 position: sticky，在小程序页面级滚动里不生效，会跟着内容流跑到左下，
+        所以改为 fixed；跳过入口一并收进来，保证整块都居中。） -->
+  <view class="welcome__footer">
+    <view class="welcome__skip" bindtap="skip" wx:if="{{!isEdit}}">先随便看看，稍后再设置目标</view>
+    <button class="btn btn--primary btn--block" bindtap="submit" disabled="{{submitting}}">
+      {{isEdit ? '保存修改' : '开始我的研途'}}
+    </button>
+  </view>
+</view>

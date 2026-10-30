@@ -1,0 +1,116 @@
+<view class="page {{themeCls}} res">
+
+  <!-- 顶部：方向过滤 + 统计 -->
+  <view class="bar">
+    <view class="bar__left">
+      <text class="bar__title serif">备考资源库</text>
+      <text class="bar__sub">{{totalCount}} 篇 · 计算机 408 专用</text>
+    </view>
+    <view class="bar__right" wx:if="{{myCode}}">
+      <view class="switch {{filterMine ? 'on' : ''}}" bindtap="toggleFilter">
+        <text class="switch__dot"></text>
+        <text class="switch__t">{{filterMine ? '只看' + codeText : '全部'}}</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="tip" wx:if="{{!myCode}}">
+    <text class="tip__t">未设置报考方向</text>
+    <text class="tip__s">资源库已按 11408（数一+英一+408·学硕）与 22408（数二+英二+408·专硕）分别标注，设置后可自动过滤掉与你无关的内容。</text>
+    <view class="btn btn--soft btn--sm tip__btn" bindtap="goTarget">去设置</view>
+  </view>
+
+  <!-- 搜索 -->
+  <view class="input-box search-box">
+    <input
+      class="input"
+      value="{{keyword}}"
+      placeholder="全文搜索：Cache / 快排 / 作文 / 调剂"
+      placeholder-class="ph"
+      confirm-type="search"
+      bindinput="onKeyword"
+      bindconfirm="doSearch"
+    />
+    <text class="search-box__clear" wx:if="{{keyword}}" bindtap="clearKeyword">×</text>
+    <text class="search-box__btn" bindtap="doSearch">搜索</text>
+  </view>
+
+  <!-- 分类 -->
+  <scroll-view scroll-x class="cats" wx:if="{{!searchMode}}">
+    <view class="cats__inner">
+      <view class="chip {{cat === 'all' ? 'on' : ''}}" data-key="all" bindtap="onCat">全部</view>
+      <view class="chip {{cat === c.key ? 'on' : ''}}" wx:for="{{cats}}" wx:key="key" wx:for-item="c" data-key="{{c.key}}" bindtap="onCat">{{c.name}}</view>
+      <view class="chip {{cat === 'fav' ? 'on' : ''}}" data-key="fav" bindtap="onCat">收藏 {{favCount ? '(' + favCount + ')' : ''}}</view>
+    </view>
+  </scroll-view>
+
+  <!-- 搜索结果提示 -->
+  <view class="resbar" wx:if="{{searchMode}}">
+    <text class="resbar__t">搜索「{{keyword}}」· {{list.length}} 条结果</text>
+    <text class="resbar__c" bindtap="clearKeyword">清除</text>
+  </view>
+
+  <!-- 热门 -->
+  <block wx:if="{{!searchMode && cat === 'all' && hotList.length}}">
+    <view class="card">
+      <view class="card__head"><text class="card__title">热门速查</text></view>
+      <view class="hot" wx:for="{{hotList}}" wx:key="id" data-id="{{item.id}}" bindtap="onItem">
+        <text class="hot__icon">{{item.catIcon}}</text>
+        <view class="hot__body">
+          <text class="hot__title">{{item.title}}</text>
+          <text class="hot__sub">{{item.sub}}</text>
+        </view>
+        <text class="hot__arrow">›</text>
+      </view>
+    </view>
+  </block>
+
+  <!-- 列表 -->
+  <block wx:if="{{list.length}}">
+    <view class="item" wx:for="{{list}}" wx:key="id" data-id="{{item.id}}" bindtap="onItem">
+      <view class="item__top">
+        <text class="item__cat">{{item.catName}}</text>
+        <text class="item__scope {{item.applies.length < 2 ? 'item__scope--one' : ''}}">{{item.scopeText}}</text>
+        <text class="item__fav" wx:if="{{item.fav}}">★</text>
+      </view>
+      <text class="item__title">{{item.title}}</text>
+      <text class="item__sub">{{item.sub}}</text>
+      <view class="item__foot">
+        <text class="item__meta">{{item.lines}} 段</text>
+        <text class="tag tag--line" wx:for="{{item.tags}}" wx:key="*this" wx:for-item="tg" wx:if="{{index < 3}}">{{tg}}</text>
+      </view>
+    </view>
+  </block>
+
+  <view class="card" wx:else>
+    <empty-state mark="◈" text="{{cat === 'fav' ? '还没有收藏' : '没有找到内容'}}" sub="{{cat === 'fav' ? '点开任意资源，点右上角星标收藏' : '换个关键词试试'}}"></empty-state>
+  </view>
+
+  <!-- 详情弹层 -->
+  <view class="mask" wx:if="{{showDetail}}" bindtap="closeDetail">
+    <!-- 背景层拦截滑动，避免拖动弹层时背后列表跟着滚 -->
+    <view class="mask__bg" catchtouchmove="noop"></view>
+    <view class="sheet" catchtap="noop">
+      <view class="sheet__head" catchtouchmove="noop">
+        <view class="sheet__titlebox">
+          <text class="sheet__cat">{{detail.catName}} · {{detail.scopeText}}</text>
+          <text class="sheet__title serif">{{detail.title}}</text>
+        </view>
+        <text class="sheet__fav {{detail.fav ? 'on' : ''}}" data-id="{{detail.id}}" catchtap="toggleFav">★</text>
+      </view>
+      <scroll-view scroll-y class="sheet__body">
+        <text class="sheet__sub" wx:if="{{detail.sub}}">{{detail.sub}}</text>
+        <view class="sheet__tags" wx:if="{{detail.tags.length}}">
+          <text class="tag tag--line" wx:for="{{detail.tags}}" wx:key="*this" wx:for-item="tg">{{tg}}</text>
+        </view>
+        <view class="sheet__lines">
+          <text class="sheet__line {{b === '' ? 'sheet__line--gap' : ''}}" wx:for="{{detail.body}}" wx:key="*this" wx:for-item="b">{{b}}</text>
+        </view>
+      </scroll-view>
+      <view class="sheet__foot" catchtouchmove="noop">
+        <view class="btn btn--soft btn--sm" data-id="{{detail.id}}" catchtap="copyText">复制全文</view>
+        <view class="btn btn--primary btn--sm" catchtap="saveAsNote">存入笔记</view>
+      </view>
+    </view>
+  </view>
+</view>

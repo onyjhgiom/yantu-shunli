@@ -1,0 +1,122 @@
+/* ============================================================
+   成就与打卡 —— 重排版 + 徽章质感重做
+   设计取向：深色「战绩板」立气势，徽章做成勋章（外环 + 底纹 + 进度条），
+   未解锁不再是灰扑扑，而是「待点亮」的低饱和 + 虚线环，保留辨识度的同时
+   传达"正在靠近"的向上感。
+   ============================================================ */
+
+/* ---------- 战绩板 ---------- */
+.board {
+  position: relative; overflow: hidden;
+  background: var(--surface-dark);
+  border-radius: 24rpx;
+  padding: 34rpx 32rpx 30rpx;
+  margin-bottom: 20rpx;
+  box-shadow: var(--shadow);
+}
+.board__glow {
+  position: absolute; top: -60rpx; right: -40rpx;
+  width: 260rpx; height: 260rpx; border-radius: 50%;
+  background: var(--primary-glow);
+}
+.board__main { position: relative; display: flex; align-items: baseline; gap: 12rpx; }
+.board__num { font-size: 84rpx; color: var(--on-dark); line-height: 1; }
+.board__unit { font-size: 24rpx; color: var(--on-dark); opacity: .82; }
+.board__side {
+  position: relative; display: flex; margin-top: 26rpx;
+  padding-top: 22rpx; border-top: 1rpx solid rgba(var(--on-dark-rgb), 0.22);
+}
+.board__cell { flex: 1; display: flex; flex-direction: column; }
+.board__v { font-size: 32rpx; color: var(--on-dark); font-weight: 600; line-height: 1.2; }
+.board__slash { font-size: 22rpx; opacity: .6; }
+.board__l { font-size: 19rpx; color: var(--on-dark); opacity: .7; margin-top: 6rpx; }
+
+/* ---------- 下一个目标 ---------- */
+.next__head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14rpx; }
+.next__t { font-size: 26rpx; color: var(--ink); font-weight: 600; }
+.next__b { font-size: 24rpx; color: var(--forest-deep); font-weight: 600; }
+.next__track { height: 16rpx; background: var(--paper-deep); border-radius: 8rpx; overflow: hidden; }
+.next__fill {
+  height: 100%; border-radius: 8rpx;
+  background: linear-gradient(90deg, var(--forest) 0%, var(--terracotta) 100%);
+}
+.next__p { display: block; font-size: 21rpx; color: var(--sub); margin-top: 10rpx; }
+.next--done { text-align: center; padding: 30rpx 20rpx; }
+
+/* ---------- 分组 ---------- */
+.grp { margin: 28rpx 0 8rpx; }
+.grp__head {
+  display: flex; align-items: flex-end; justify-content: space-between;
+  margin-bottom: 16rpx; padding-bottom: 12rpx;
+  border-bottom: 2rpx solid var(--card-line);
+}
+.grp__t { display: flex; align-items: baseline; gap: 14rpx; }
+.grp__name { font-size: 32rpx; color: var(--ink); }
+.grp__desc { font-size: 21rpx; color: var(--sub); }
+.grp__count {
+  font-size: 22rpx; color: var(--forest-deep); font-weight: 600;
+  background: var(--forest-soft); padding: 4rpx 14rpx; border-radius: 999rpx;
+}
+
+/* ---------- 徽章（勋章式） ---------- */
+.badges { display: flex; flex-direction: column; gap: 16rpx; }
+.badge {
+  position: relative; display: flex; align-items: center; gap: 20rpx;
+  padding: 22rpx 24rpx;
+  background: var(--card); border: 1rpx solid var(--card-line);
+  border-radius: 20rpx;
+  transition: all .2s ease;
+}
+/* 未解锁：降饱和但保留轮廓，虚线环暗示"待点亮" */
+.badge:not(.on) { background: var(--paper-deep); border-style: dashed; }
+.badge:not(.on) .badge__icon { filter: grayscale(1); opacity: .5; }
+.badge:not(.on) .badge__name { color: var(--ink-soft); }
+/* 已解锁：主色描边 + 光晕 */
+.badge.on {
+  background: var(--card); border-color: var(--forest);
+  box-shadow: 0 6rpx 20rpx rgba(var(--primary-rgb), 0.14);
+}
+
+/* 勋章外环 */
+.badge__emblem {
+  position: relative; width: 92rpx; height: 92rpx; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+}
+.badge__ring {
+  position: absolute; inset: 0; border-radius: 50%;
+  border: 3rpx solid var(--card-line);
+}
+.badge.on .badge__ring {
+  border-color: transparent;
+  background: linear-gradient(150deg, var(--forest-deep) 0%, var(--forest) 55%, var(--terracotta) 100%);
+  box-shadow: inset 0 0 0 4rpx var(--card), 0 4rpx 14rpx rgba(var(--primary-rgb), 0.28);
+}
+.badge:not(.on) .badge__ring { border-style: dashed; border-color: var(--line); }
+.badge__icon { position: relative; font-size: 42rpx; line-height: 1; }
+
+.badge__body { flex: 1; min-width: 0; }
+.badge__top { display: flex; align-items: center; gap: 12rpx; }
+.badge__name { font-size: 28rpx; font-weight: 600; color: var(--ink); }
+.badge__ribbon {
+  font-size: 18rpx; color: var(--on-primary); background: var(--forest);
+  padding: 3rpx 12rpx; border-radius: 999rpx; font-weight: 600;
+}
+.badge__desc { display: block; font-size: 21rpx; color: var(--sub); margin-top: 4rpx; }
+.badge__track {
+  height: 8rpx; background: var(--paper-deep); border-radius: 4rpx;
+  overflow: hidden; margin-top: 12rpx;
+}
+.badge.on .badge__track { background: var(--forest-soft); }
+.badge__fill { height: 100%; background: var(--forest); border-radius: 4rpx; }
+.badge:not(.on) .badge__fill { background: var(--sub); }
+.badge__prog { display: block; font-size: 19rpx; color: var(--ink-soft); margin-top: 6rpx; }
+
+/* ---------- 补签与请假 ---------- */
+.setting { padding: 16rpx 0; }
+.setting__l { flex: 1; }
+.setting__t { font-size: 28rpx; color: var(--ink); display: block; }
+.setting__s { font-size: 22rpx; color: var(--sub); display: block; margin-top: 4rpx; }
+.setting__act { display: flex; align-items: center; gap: 14rpx; }
+.setting__num { font-size: 24rpx; color: var(--ink-soft); }
+
+.disclaimer { font-size: 20rpx; color: var(--sub); text-align: center; margin: 20rpx 0 8rpx; line-height: 1.6; }

@@ -1,0 +1,64 @@
+/* ---------- 全口径背景卡 ---------- */
+.season__head { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 12rpx; }
+.season__t { font-size: 28rpx; font-weight: 700; color: var(--ink); }
+.season__season { font-size: 20rpx; color: var(--sub); }
+.season__live { color: var(--forest-deep); font-weight: 700; }
+.season__local { color: var(--sub); }
+.season__text { font-size: 23rpx; color: var(--ink-soft); line-height: 1.7; margin-top: 8rpx; }
+.season__text--policy { color: var(--forest-deep); }
+.season__text--caution { color: var(--terracotta); }
+.season__btns { display: flex; gap: 14rpx; margin-top: 18rpx; }
+.season__note {
+  margin-top: 16rpx; padding-top: 14rpx; border-top: 1rpx dashed var(--line);
+  font-size: 20rpx; color: var(--sub); line-height: 1.6;
+}
+
+/* ---------- 当前阶段 ---------- */
+.phase { margin-top: 16rpx; background: var(--forest-soft); }
+.phase__row { display: flex; align-items: center; }
+.phase__dot {
+  width: 14rpx; height: 14rpx; border-radius: 50%; background: var(--terracotta);
+  margin-right: 12rpx; flex-shrink: 0;
+}
+.phase__t { font-size: 27rpx; font-weight: 700; color: var(--forest-deep); }
+.phase__d { font-size: 22rpx; color: var(--ink-soft); line-height: 1.7; margin-top: 8rpx; margin-left: 26rpx; }
+
+/* ---------- 筛选 ---------- */
+.kinds { white-space: nowrap; margin: 20rpx 0 8rpx; }
+.kind {
+  display: inline-block; padding: 10rpx 26rpx; margin-right: 14rpx;
+  border-radius: 30rpx; font-size: 24rpx; background: var(--paper-deep);
+  color: var(--ink-soft);
+}
+.kind.on { background: var(--forest); color: var(--on-primary); }
+
+.cnt { font-size: 21rpx; color: var(--sub); margin: 6rpx 0 12rpx; }
+
+/* ---------- 动态条目 ---------- */
+.cg {
+  background: var(--on-fill); border: 1rpx solid var(--line); border-radius: 16rpx;
+  padding: 22rpx 24rpx; margin-bottom: 18rpx;
+}
+.cg__head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10rpx; }
+.cg__kind { font-size: 21rpx; padding: 4rpx 16rpx; border-radius: 18rpx; font-weight: 600; }
+.cg__kind--to408 { background: var(--terracotta-soft); color: var(--terracotta); }
+.cg__kind--back { background: var(--danger-soft); color: var(--danger); }
+.cg__kind--new { background: var(--forest-soft); color: var(--forest-deep); }
+.cg__date { font-size: 20rpx; color: var(--sub); }
+.cg__school { font-size: 28rpx; font-weight: 700; color: var(--ink); }
+.cg__major { font-size: 22rpx; color: var(--ink-soft); margin-top: 4rpx; }
+.cg__flow {
+  display: flex; align-items: center; flex-wrap: wrap; gap: 10rpx;
+  margin-top: 14rpx; padding: 14rpx 16rpx; border-radius: 12rpx; background: var(--paper-deep);
+}
+.cg__from { font-size: 22rpx; color: var(--sub); text-decoration: line-through; }
+.cg__arrow { font-size: 24rpx; color: var(--sub); }
+.cg__to { font-size: 23rpx; color: var(--forest-deep); font-weight: 600; }
+.cg__source { font-size: 20rpx; color: var(--sub); margin-top: 10rpx; line-height: 1.6; }
+.cg__note {
+  font-size: 21rpx; color: var(--terracotta); margin-top: 8rpx;
+  background: var(--terracotta-soft); border-radius: 8rpx; padding: 10rpx 14rpx; line-height: 1.6;
+}
+.cg__btns { display: flex; gap: 12rpx; margin-top: 16rpx; flex-wrap: wrap; }
+
+.disclaimer { font-size: 20rpx; color: var(--sub); text-align: center; margin: 20rpx 0 8rpx; line-height: 1.7; }

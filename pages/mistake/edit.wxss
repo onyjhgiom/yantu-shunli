@@ -1,0 +1,22 @@
+.picker { height: 72rpx; display: flex; align-items: center; font-size: 30rpx; color: var(--ink); }
+.reason {
+  padding: 12rpx 26rpx;
+  border-radius: 30rpx;
+  font-size: 24rpx;
+  background: var(--paper-deep);
+  color: var(--ink-soft);
+}
+.reason.on { background: var(--terracotta); color: var(--on-fill); }
+.del { margin-top: 20rpx; color: var(--danger); border-color: var(--danger); }
+
+/* ===== 拍照识题 ===== */
+.ocr__imgs { display: flex; flex-wrap: wrap; gap: 14rpx; margin-bottom: 16rpx; }
+.ocr__item { position: relative; width: 180rpx; height: 180rpx; }
+.ocr__img { width: 180rpx; height: 180rpx; border-radius: 14rpx; background: var(--paper-deep); }
+.ocr__x {
+  position: absolute; top: -8rpx; right: -8rpx; width: 36rpx; height: 36rpx; border-radius: 18rpx;
+  background: var(--ink); color: var(--paper); font-size: 24rpx; line-height: 36rpx; text-align: center;
+}
+.ocr__btns { display: flex; gap: 16rpx; flex-wrap: wrap; }
+.ocr__btns .btn.dis { opacity: .45; }
+.ocr__tip { display: block; font-size: 20rpx; color: var(--sub); margin-top: 12rpx; line-height: 1.55; }

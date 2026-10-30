@@ -1,0 +1,194 @@
+<view class="page {{themeCls}} page--tight">
+  <!-- 问候 -->
+  <view class="greet">
+    <text class="greet__t serif">{{greeting}}</text>
+    <text class="greet__s">{{dateText}} · {{phaseText}}</text>
+  </view>
+
+  <!-- ============ 驾驶舱头部（与上一版视觉保持一致） ============ -->
+  <view class="hero">
+    <view class="hero__top">
+      <text class="hero__target">{{targetLine}}</text>
+      <text class="hero__score" wx:if="{{scoreText}}">{{scoreText}}</text>
+    </view>
+
+    <view class="hero__mid">
+      <view class="hero__cd">
+        <block wx:if="{{countdown}}">
+          <view class="hero__days">
+            <text class="hero__num serif">{{countdown.totalDays}}</text>
+            <text class="hero__unit">天</text>
+          </view>
+          <text class="hero__label">距 {{countdown.examYear}} 初试</text>
+        </block>
+        <block wx:else>
+          <text class="hero__empty">还没有设定考试日期</text>
+          <view class="hero__cta" bindtap="goTarget">去设定目标 →</view>
+        </block>
+      </view>
+      <!-- 环形进度：今日目标完成度（Canvas 2D 自绘） -->
+      <canvas class="hero__ring" type="2d" id="ring"></canvas>
+    </view>
+
+    <!-- 四个指标都可点：带 scope 直达学习统计的对应范围 -->
+    <view class="hero__metrics">
+      <view class="metric" wx:for="{{metrics}}" wx:key="key"
+            data-url="{{item.url}}" bindtap="onMetric">
+        <text class="metric__v">{{item.value}}</text>
+        <text class="metric__k">{{item.label}}<text class="metric__go">›</text></text>
+      </view>
+    </view>
+
+    <!-- 招生季里程碑（报名 / 确认 / 初试 / 复试） -->
+    <view class="hero__ms" wx:if="{{milestones.length}}">
+      <text class="hero__ms-item" wx:for="{{milestones}}" wx:key="label">
+        {{item.label}} {{item.days >= 0 ? item.days + ' 天' : '已过'}}
+      </text>
+    </view>
+  </view>
+
+  <!-- 快捷动作 -->
+  <view class="acts">
+    <view class="act" wx:for="{{actions}}" wx:key="key"
+          data-url="{{item.url}}" data-tab="{{item.tab}}" bindtap="onAction">
+      <text class="act__icon">{{item.icon}}</text>
+      <text class="act__name">{{item.name}}</text>
+    </view>
+  </view>
+
+  <!-- 今日任务 -->
+  <view class="card">
+    <view class="card__head">
+      <text class="card__title">今日任务</text>
+      <text class="card__more" bindtap="goPlan">{{progress.done}}/{{progress.total}} 完成 ›</text>
+    </view>
+    <view class="taskbar" wx:if="{{progress.total}}">
+      <progress-bar percent="{{taskPercent}}" height="8" color="var(--forest)"></progress-bar>
+    </view>
+    <!-- 今日计划：快速添加（支持语音输入，转写结果可再编辑） -->
+    <view class="quick">
+      <view class="quick__field">
+        <input class="quick__input" value="{{quickText}}" placeholder="今日计划：说或写一项任务…" placeholder-class="ph"
+               disabled="{{quickRec}}" confirm-type="done" bindinput="onQuickInput" bindconfirm="addQuick" />
+        <view class="quick__mic {{quickRec ? 'quick__mic--rec' : ''}}" bindtap="onQuickMic">
+          <text class="quick__mic-i">{{quickRec ? '■' : '🎤'}}</text>
+        </view>
+      </view>
+      <view class="quick__add {{quickText && !quickAdding ? '' : 'dis'}}" bindtap="addQuick">{{quickAdding ? '…' : '添加'}}</view>
+    </view>
+    <view class="quick__bar" wx:if="{{quickRec}}">
+      <view class="quick__dot"></view>
+      <text class="quick__bar-t">正在聆听 · {{quickRecSec}}s，点 ■ 结束</text>
+      <text class="quick__bar-c" bindtap="cancelQuickVoice">取消</text>
+    </view>
+    <block wx:if="{{tasks.length}}">
+      <view class="tasks">
+        <task-card
+          wx:for="{{tasks}}"
+          wx:key="id"
+          task="{{item}}"
+          bind:tap="onTaskTap"
+          bind:toggle="onTaskToggle"
+        ></task-card>
+      </view>
+    </block>
+    <empty-state
+      wx:else
+      mark="✓"
+      text="今天还没有安排任务"
+      sub="把今天要做的事记下来，进度会自动同步到首页"
+      actionText="添加今日任务"
+      bind:action="addTask"
+    ></empty-state>
+  </view>
+
+  <!-- 今日学习分布 -->
+  <view class="card">
+    <view class="card__head">
+      <text class="card__title">今日学习分布</text>
+      <text class="card__more">按科目</text>
+    </view>
+    <view class="bars">
+      <view class="bar" wx:for="{{subjectBars}}" wx:key="key">
+        <text class="bar__name">{{item.name}}</text>
+        <view class="bar__track">
+          <view class="bar__fill" style="width:{{item.percent}}%;background:{{item.color}}"></view>
+        </view>
+        <text class="bar__val">{{item.text}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 今日重点（AI） -->
+  <view class="card focus-card">
+    <view class="card__head">
+      <text class="card__title">今日重点</text>
+      <text class="card__more" bindtap="goAi">AI 建议 ›</text>
+    </view>
+    <view class="advice__summary">{{advice.summary}}</view>
+    <view class="prio" wx:for="{{advice.priorities}}" wx:key="title">
+      <text class="prio__dot">◆</text>
+      <view class="prio__body">
+        <text class="prio__title">{{item.title}}</text>
+        <text class="prio__reason">{{item.reason}}</text>
+      </view>
+    </view>
+    <view class="tips" wx:if="{{advice.tips.length}}">
+      <view class="tips__item" wx:for="{{advice.tips}}" wx:key="*this">
+        <text class="tips__mark">·</text>
+        <text class="tips__text">{{item}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 智能推荐：下一步做什么 -->
+  <view class="card rec" wx:if="{{recommends.length}}">
+    <view class="card__head">
+      <text class="card__title">下一步做什么</text>
+      <text class="card__more">{{rhythmText}}</text>
+    </view>
+    <view class="risk" wx:if="{{topRisk}}">
+      <text class="risk__mark">!</text>
+      <view class="risk__body">
+        <text class="risk__title">{{topRisk.title}}</text>
+        <text class="risk__detail">{{topRisk.action}}</text>
+      </view>
+    </view>
+    <view class="rec__item" wx:for="{{recommends}}" wx:key="key" data-action="{{item.action}}" bindtap="onRecommend">
+      <view class="rec__icon" style="color:{{item.color}}">{{item.icon}}</view>
+      <view class="rec__body">
+        <text class="rec__title">{{item.title}}</text>
+        <text class="rec__desc">{{item.desc}}</text>
+      </view>
+      <text class="rec__arrow">›</text>
+    </view>
+  </view>
+
+  <!-- 今日复盘 -->
+  <view class="card review-entry" bindtap="goReview">
+    <view class="review-entry__l">
+      <text class="review-entry__t">今日复盘</text>
+      <text class="review-entry__s">{{reviewDone ? '已完成 · 点击查看' : '花 3 分钟记录今天'}}</text>
+    </view>
+    <text class="review-entry__arrow">{{reviewDone ? '✓' : '›'}}</text>
+  </view>
+
+  <!-- 备考工具：22 项分组宫格（数据驱动，同一界面内每项只出现一次） -->
+  <view class="card">
+    <view class="card__head">
+      <text class="card__title">备考工具</text>
+      <text class="card__more">常用工具</text>
+    </view>
+    <view class="tgroup" wx:for="{{toolGroups}}" wx:for-item="group" wx:key="title">
+      <text class="tgroup__title">{{group.title}}</text>
+      <view class="grid">
+        <view class="grid__item" wx:for="{{group.items}}" wx:for-item="tool" wx:key="label"
+              data-url="{{tool.url}}" data-tab="{{tool.tab}}" bindtap="onToolTap">
+          <text class="grid__icon">{{tool.icon}}</text>
+          <text class="grid__label">{{tool.label}}</text>
+          <text class="grid__badge" wx:if="{{tool.badge}}">{{tool.badge}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

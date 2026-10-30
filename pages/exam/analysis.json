@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "模考分析",
+  "usingComponents": {
+    "empty-state": "../../components/empty-state/empty-state"
+  }
+}

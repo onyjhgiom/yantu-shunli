@@ -1,0 +1,37 @@
+<view class="page {{themeCls}} page--tight">
+  <view class="hero">
+    <view class="hero__t serif">考研资讯</view>
+    <view class="hero__s">政策 · 院校动态 · 备考经验 · 复试调剂（408 专用）</view>
+  </view>
+
+  <view class="search">
+    <text class="search__icon">⌕</text>
+    <input class="search__input" placeholder="搜索资讯标题、标签、正文" placeholder-class="ph" value="{{keyword}}" bindinput="onSearch" />
+  </view>
+
+  <view class="bar">
+    <scroll-view scroll-x class="chips">
+      <view class="chip {{cat === item.key && !favOnly ? 'on' : ''}}" wx:for="{{tabs}}" wx:key="key" data-key="{{item.key}}" bindtap="onCat">{{item.name}}</view>
+    </scroll-view>
+    <view class="fav-toggle {{favOnly ? 'on' : ''}}" bindtap="toggleFavOnly">★ {{favCount}}</view>
+  </view>
+
+  <block wx:if="{{list.length}}">
+    <view class="nw" wx:for="{{list}}" wx:key="id" data-id="{{item.id}}" bindtap="onItem">
+      <view class="nw__head">
+        <text class="nw__cat">{{item.catIcon}} {{item.catName}}</text>
+        <view class="nw__fav {{item.fav ? 'on' : ''}}" catchtap="onFav" data-id="{{item.id}}">{{item.fav ? '★' : '☆'}}</view>
+      </view>
+      <text class="nw__title {{item.read ? 'read' : ''}}">{{item.title}}</text>
+      <text class="nw__sub">{{item.sub}}</text>
+      <view class="nw__foot">
+        <text class="nw__hot" wx:if="{{item.hot}}">热</text>
+        <text class="nw__date">{{item.date}}</text>
+      </view>
+    </view>
+  </block>
+
+  <view class="card" wx:else>
+    <empty-state mark="📰" text="没有匹配的资讯" sub="换个关键词或分类试试" />
+  </view>
+</view>

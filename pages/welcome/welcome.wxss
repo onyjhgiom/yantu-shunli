@@ -1,0 +1,73 @@
+/* 底部预留：避免最后一张卡片被固定行动条压住（覆盖 app.wxss 的 .page padding）。
+   逐条兜底：万一环境不认 env()，前面那条仍然生效，不至于卡片被压。 */
+.welcome {
+  padding-top: 48rpx;
+  padding-bottom: 260rpx;
+  padding-bottom: calc(260rpx + constant(safe-area-inset-bottom));
+  padding-bottom: calc(260rpx + env(safe-area-inset-bottom));
+}
+.welcome__hello {
+  font-size: 46rpx;
+  line-height: 1.5;
+  color: var(--ink);
+  letter-spacing: 0.5rpx;
+}
+.welcome__sub {
+  margin: 16rpx 0 32rpx;
+  font-size: 25rpx;
+  color: var(--sub);
+  line-height: 1.7;
+}
+.welcome__total { font-size: 40rpx; color: var(--terracotta); margin-left: 6rpx; }
+.welcome__skip {
+  text-align: center;
+  margin-bottom: 20rpx;
+  font-size: 26rpx;
+  color: var(--sub);
+  text-decoration: underline;
+}
+/* 底部固定行动条：整块始终贴在屏幕下方正中，滚动时可见、不跑偏。
+   两个踩过的坑：
+   1) 必须 position: fixed —— position: sticky 在小程序页面级滚动里不生效，
+      元素会退回内容流、跟着页面走，看着就像"按钮跑到左下角"。
+   2) 按钮真正的宽度问题在 app.wxss（.btn--block 必须带 !important）：
+      微信内置样式 button:not([size="mini"]){width:184px} 会顶掉 width:100%，
+      表现为按钮固定 184px 宽。这里用 flex 只是保证底栏内部布局稳定。 */
+.welcome__footer {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  padding: 16rpx 32rpx;
+  /* 逐条兜底：万一环境不支持 constant()/env()，前面那条 padding 仍然生效 */
+  padding-bottom: 16rpx;
+  padding-bottom: calc(16rpx + constant(safe-area-inset-bottom));
+  padding-bottom: calc(16rpx + env(safe-area-inset-bottom));
+  background: linear-gradient(to top, var(--paper) 76%, var(--paper-fade));
+  z-index: 20;
+}
+.picker { font-size: 30rpx; color: var(--ink); }
+.input--right { text-align: right; flex: 1; }
+.score-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20rpx;
+}
+.score-item {
+  width: calc(50% - 10rpx);
+  background: var(--paper-deep);
+  border-radius: 16rpx;
+  padding: 22rpx 24rpx;
+  box-sizing: border-box;
+}
+.score-item__label { font-size: 24rpx; font-weight: 600; }
+.score-item__input {
+  margin-top: 6rpx;
+  font-size: 44rpx;
+  color: var(--ink);
+  width: 100%;
+}

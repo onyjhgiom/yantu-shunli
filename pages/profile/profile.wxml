@@ -1,0 +1,233 @@
+<view class="page {{themeCls}} page--tight">
+  <!-- 用户 -->
+  <view class="card user">
+    <view class="user__avatar">{{avatarChar}}</view>
+    <view class="user__body">
+      <text class="user__name">{{name}}</text>
+      <text class="user__sub">{{targetLine}}</text>
+    </view>
+    <view class="user__days" wx:if="{{countdown}}">
+      <text class="user__days-num serif">{{countdown.totalDays}}</text>
+      <text class="user__days-label">天后初试</text>
+    </view>
+  </view>
+
+  <!-- 概览 -->
+  <view class="card brief">
+    <view class="brief__item">
+      <text class="brief__num serif">{{stats.totalText}}</text>
+      <text class="brief__label">累计学习</text>
+    </view>
+    <view class="brief__item">
+      <text class="brief__num serif">{{stats.studyDays}}</text>
+      <text class="brief__label">学习天数</text>
+    </view>
+    <view class="brief__item">
+      <text class="brief__num serif">{{stats.streak}}</text>
+      <text class="brief__label">连续学习</text>
+    </view>
+    <view class="brief__item">
+      <text class="brief__num serif">{{weekText}}</text>
+      <text class="brief__label">本周时长</text>
+    </view>
+  </view>
+
+  <!-- 常用入口（沿用原有宫格，保证原来的一键直达都还在） -->
+  <view class="card grid">
+    <view class="grid__item" bindtap="goTarget">
+      <text class="grid__icon">◎</text><text class="grid__label">我的目标</text>
+    </view>
+    <view class="grid__item" bindtap="goStatistics">
+      <text class="grid__icon">▨</text><text class="grid__label">学习统计</text>
+    </view>
+    <view class="grid__item" bindtap="goPlan">
+      <text class="grid__icon">☰</text><text class="grid__label">我的计划</text>
+    </view>
+    <view class="grid__item" bindtap="goReview">
+      <text class="grid__icon">✎</text><text class="grid__label">每日复盘</text>
+    </view>
+    <view class="grid__item" bindtap="goMaterials">
+      <text class="grid__icon">▤</text><text class="grid__label">资料笔记</text>
+    </view>
+    <view class="grid__item" bindtap="goAi">
+      <text class="grid__icon">✦</text><text class="grid__label">AI 助手</text>
+    </view>
+  </view>
+
+  <!-- 我的目标 -->
+  <view class="card goal" bindtap="goTarget">
+    <view class="card__head">
+      <text class="card__title">我的目标</text>
+      <text class="card__more">编辑 ›</text>
+    </view>
+    <view class="goal__grid">
+      <view class="goal__cell">
+        <text class="goal__k">目标院校</text>
+        <text class="goal__v">{{goal.school || '未设置'}}</text>
+      </view>
+      <view class="goal__cell">
+        <text class="goal__k">目标专业</text>
+        <text class="goal__v">{{goal.major || '未设置'}}</text>
+      </view>
+      <view class="goal__cell">
+        <text class="goal__k">考试方向</text>
+        <text class="goal__v">{{goal.codeText}}</text>
+      </view>
+      <view class="goal__cell">
+        <text class="goal__k">目标总分</text>
+        <text class="goal__v">{{goal.score ? goal.score + ' 分' : '未设置'}}</text>
+      </view>
+    </view>
+    <view class="goal__foot" wx:if="{{countdown}}">
+      <text class="muted">{{countdown.text}}</text>
+    </view>
+  </view>
+
+  <!-- 我的考研背景 -->
+  <view class="card bg" bindtap="goBackground">
+    <view class="card__head">
+      <text class="card__title">我的考研背景</text>
+      <text class="card__more">编辑 ›</text>
+    </view>
+    <view class="bg__row"><text class="bg__k">本科</text><text class="bg__v">{{background.undergradTier}} · {{background.undergradSchool}}</text></view>
+    <view class="bg__row"><text class="bg__k">竞赛</text><text class="bg__v">{{background.awards}}</text></view>
+    <view class="bg__row"><text class="bg__k">编程</text><text class="bg__v">{{background.codingLevelText}}</text></view>
+    <view class="bg__row"><text class="bg__k">方向</text><text class="bg__v">{{background.targetDegree}} · {{background.examPath}} · {{background.settleCity}}定居</text></view>
+    <view class="bg__row"><text class="bg__k">志愿</text><text class="bg__v">冲 {{background.primaryChoice}} / 保 {{background.backupChoice}}</text></view>
+  </view>
+
+  <!-- 学习数据 -->
+  <view class="card">
+    <view class="card__head">
+      <text class="card__title">学习数据</text>
+      <text class="card__more" bindtap="goStatistics">全部 ›</text>
+    </view>
+    <view class="subj" wx:for="{{subjects}}" wx:key="key">
+      <view class="subj__top">
+        <text class="subj__name">{{item.name}}</text>
+        <text class="subj__val">{{item.mastery}}% · {{item.timeText}}</text>
+      </view>
+      <view class="subj__bar">
+        <view class="subj__fill" style="width:{{item.mastery}}%;background:{{item.color}}"></view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 我的学习 -->
+  <view class="card">
+    <view class="card__head"><text class="card__title">我的学习</text></view>
+    <view
+      class="entry"
+      wx:for="{{learnRows}}"
+      wx:key="name"
+      data-url="{{item.url}}"
+      data-tab="{{item.tab}}"
+      bindtap="onEntry"
+    >
+      <text class="entry__icon">{{item.icon}}</text>
+      <view class="entry__body">
+        <text class="entry__name">{{item.name}}</text>
+        <text class="entry__desc">{{item.desc}}</text>
+      </view>
+      <text class="entry__badge" wx:if="{{item.badge}}">{{item.badge}}</text>
+      <text class="entry__arrow">›</text>
+    </view>
+  </view>
+
+  <!-- 我的收藏 -->
+  <view class="card">
+    <view class="card__head"><text class="card__title">我的收藏</text></view>
+    <view
+      class="entry"
+      wx:for="{{favRows}}"
+      wx:key="name"
+      data-url="{{item.url}}"
+      data-tab="{{item.tab}}"
+      bindtap="onEntry"
+    >
+      <text class="entry__icon">{{item.icon}}</text>
+      <view class="entry__body">
+        <text class="entry__name">{{item.name}}</text>
+        <text class="entry__desc">{{item.desc}}</text>
+      </view>
+      <text class="entry__badge" wx:if="{{item.badge}}">{{item.badge}}</text>
+      <text class="entry__arrow">›</text>
+    </view>
+  </view>
+
+  <!-- 通用 -->
+  <view class="card">
+    <view class="card__head"><text class="card__title">通用</text></view>
+    <view
+      class="entry"
+      wx:for="{{moreRows}}"
+      wx:key="name"
+      data-url="{{item.url}}"
+      data-tab="{{item.tab}}"
+      bindtap="onEntry"
+    >
+      <text class="entry__icon">{{item.icon}}</text>
+      <view class="entry__body">
+        <text class="entry__name">{{item.name}}</text>
+        <text class="entry__desc">{{item.desc}}</text>
+      </view>
+      <text class="entry__badge" wx:if="{{item.badge}}">{{item.badge}}</text>
+      <text class="entry__arrow">›</text>
+    </view>
+  </view>
+
+  <!-- 提醒 -->
+  <view class="card">
+    <view class="card__head"><text class="card__title">提醒</text></view>
+    <view class="row row--between setting">
+      <view class="setting__l">
+        <text class="setting__t">学习提醒</text>
+        <text class="setting__s">任务 / 截止 / 复习提醒</text>
+      </view>
+      <switch checked="{{settings.notifications}}" color="{{swColor}}" data-key="notifications" bindchange="onSwitch" />
+    </view>
+    <view class="row row--between setting">
+      <view class="setting__l">
+        <text class="setting__t">智能免打扰</text>
+        <text class="setting__s">夜间与专注时不打扰</text>
+      </view>
+      <switch checked="{{settings.quiet}}" color="{{swColor}}" data-key="quiet" bindchange="onSwitch" />
+    </view>
+  </view>
+
+  <!-- 隐私与 AI 权限 -->
+  <view class="card">
+    <view class="card__head"><text class="card__title">隐私与 AI 权限</text></view>
+    <view class="row row--between setting">
+      <view class="setting__l">
+        <text class="setting__t">允许 AI 读取学习数据</text>
+        <text class="setting__s">关闭后 AI 不读取目标 / 任务 / 时长 / 错题</text>
+      </view>
+      <switch checked="{{settings.aiEnabled}}" color="{{swColor}}" data-key="aiEnabled" bindchange="onSwitch" />
+    </view>
+  </view>
+
+  <!-- 数据 -->
+  <view class="card">
+    <view class="card__head"><text class="card__title">数据</text></view>
+    <view class="row row--between setting" bindtap="exportData">
+      <view class="setting__l">
+        <text class="setting__t">导出数据</text>
+        <text class="setting__s">生成 JSON 备份文件</text>
+      </view>
+      <text class="setting__arrow">›</text>
+    </view>
+    <view class="row row--between setting" bindtap="clearData">
+      <view class="setting__l">
+        <text class="setting__t danger">清空本地数据</text>
+        <text class="setting__s">重置全部任务 / 记录 / 笔记</text>
+      </view>
+      <text class="setting__arrow">›</text>
+    </view>
+  </view>
+
+  <view class="card about">
+    <text class="about__name serif">研途顺利 · 考研助手</text>
+    <text class="about__ver">v{{version}} · 本地优先，数据仅保存在本机</text>
+  </view>
+</view>

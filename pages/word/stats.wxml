@@ -1,0 +1,44 @@
+<view class="page {{themeCls}}">
+  <view class="card">
+    <view class="card__head"><text class="card__title">总览</text></view>
+    <view class="stat-row">
+      <view class="stat"><text class="stat__num serif">{{overview.total}}</text><text class="stat__label">总词数</text></view>
+      <view class="stat"><text class="stat__num serif">{{overview.learned}}</text><text class="stat__label">已学</text></view>
+      <view class="stat"><text class="stat__num serif">{{overview.mastered}}</text><text class="stat__label">已掌握</text></view>
+      <view class="stat"><text class="stat__num serif">{{overview.streak}}</text><text class="stat__label">连续天数</text></view>
+    </view>
+  </view>
+
+  <!-- 掌握度分布 -->
+  <view class="card">
+    <view class="card__head"><text class="card__title">掌握度分布</text></view>
+    <view class="dist">
+      <view class="dist__seg" style="width:{{dist.new ? (dist.new/(dist.new+dist.learning+dist.mastered)*100) : 0}}%;background:var(--sub)"></view>
+      <view class="dist__seg" style="width:{{dist.learning ? (dist.learning/(dist.new+dist.learning+dist.mastered)*100) : 0}}%;background:var(--warn)"></view>
+      <view class="dist__seg" style="width:{{dist.mastered ? (dist.mastered/(dist.new+dist.learning+dist.mastered)*100) : 0}}%;background:var(--ok)"></view>
+    </view>
+    <view class="legend">
+      <view class="legend__item"><text class="legend__dot" style="background:var(--sub)"></text>未学 {{dist.new}}</view>
+      <view class="legend__item"><text class="legend__dot" style="background:var(--warn)"></text>学习中 {{dist.learning}}</view>
+      <view class="legend__item"><text class="legend__dot" style="background:var(--ok)"></text>已掌握 {{dist.mastered}}</view>
+    </view>
+  </view>
+
+  <!-- 各词书 -->
+  <view class="card">
+    <view class="card__head"><text class="card__title">各词书进度</text></view>
+    <view class="bk" wx:for="{{books}}" wx:key="name">
+      <view class="bk__head">
+        <text class="bk__name">{{item.name}}</text>
+        <text class="bk__num">{{item.learned}}/{{item.total}} · 掌握 {{item.mastered}}</text>
+      </view>
+      <view class="bk__dist">
+        <view class="bk__seg" style="width:{{item.pNew}}%;background:var(--sub)"></view>
+        <view class="bk__seg" style="width:{{item.pLearning}}%;background:var(--warn)"></view>
+        <view class="bk__seg" style="width:{{item.pMastered}}%;background:var(--ok)"></view>
+      </view>
+    </view>
+  </view>
+
+  <view class="tip muted">记忆算法与背诵卡片共用艾宾浩斯引擎：答对的词间隔逐次拉长，答错的词当天重新见面；距初试越近，最大间隔被压缩，确保考前反复巩固。</view>
+</view>

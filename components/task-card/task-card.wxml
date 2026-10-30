@@ -1,0 +1,28 @@
+<view class="tc {{view.done ? 'tc--done' : ''}} {{view.undone ? 'tc--undone' : ''}}" bindtap="onTap">
+  <view
+    class="tc__check"
+    catchtap="onToggle"
+    style="background:{{view.done ? view.subjectColor : view.subjectBg}};border-color:{{view.subjectColor}}"
+  >
+    <text wx:if="{{view.done}}" class="tc__tick">✓</text>
+  </view>
+
+  <view class="tc__body">
+    <view class="tc__title">{{task.title}}</view>
+    <view class="tc__meta">
+      <text class="tc__dot" style="background:{{view.subjectColor}}"></text>
+      <text class="tc__sub">{{view.subjectName}}</text>
+      <text wx:if="{{task.estimatedMinutes}}" class="tc__sub">· 预计 {{view.estText}}</text>
+      <text wx:if="{{task.actualMinutes}}" class="tc__sub">· 已学 {{view.actualText}}</text>
+      <text wx:if="{{view.overdue}}" class="tc__overdue">· 逾期</text>
+      <text wx:if="{{view.childCount}}" class="tc__sub">· {{view.childCount}} 子任务</text>
+    </view>
+  </view>
+
+  <view class="tc__side">
+    <text
+      class="tc__pri"
+      style="background:{{view.priorityBg}};color:{{view.priorityColor}}"
+    >{{view.priorityLabel}}</text>
+  </view>
+</view>

@@ -1,0 +1,26 @@
+.hero { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 20rpx; }
+.hero__t { font-size: 48rpx; font-weight: 700; color: var(--ink); }
+.hero__s { font-size: 24rpx; color: var(--sub); }
+
+.chips { white-space: nowrap; margin-bottom: 20rpx; }
+.chip {
+  display: inline-block; padding: 10rpx 26rpx; margin-right: 14rpx;
+  font-size: 26rpx; color: var(--ink-soft);
+  background: var(--card); border: 1rpx solid var(--line); border-radius: 28rpx;
+}
+.chip.on { background: var(--forest); color: var(--on-primary); border-color: var(--forest); }
+
+.nt {
+  display: flex; align-items: stretch; background: var(--card);
+  border: 1rpx solid var(--card-line); border-radius: var(--radius-lg);
+  margin-bottom: 18rpx; overflow: hidden;
+}
+.nt__bar { width: 8rpx; flex-shrink: 0; }
+.nt__body { flex: 1; padding: 24rpx 24rpx 24rpx 0; min-width: 0; }
+.nt__top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8rpx; }
+.nt__sub { font-size: 24rpx; }
+.nt__time { font-size: 22rpx; color: var(--sub); }
+.nt__title { display: block; font-size: 30rpx; font-weight: 600; color: var(--ink); }
+.nt__preview { display: block; font-size: 24rpx; color: var(--ink-soft); margin-top: 8rpx; line-height: 1.4; }
+.nt__tags { display: flex; flex-wrap: wrap; gap: 10rpx; margin-top: 12rpx; }
+.nt__del { flex-shrink: 0; width: 72rpx; display: flex; align-items: center; justify-content: center; font-size: 32rpx; color: var(--sub); }

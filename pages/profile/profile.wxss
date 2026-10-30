@@ -1,0 +1,88 @@
+.user { display: flex; align-items: center; }
+.user__avatar {
+  width: 108rpx;
+  height: 108rpx;
+  border-radius: 32rpx;
+  background: var(--forest);
+  color: var(--on-primary);
+  font-size: 48rpx;
+  font-family: "Songti SC", serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 26rpx;
+  flex-shrink: 0;
+}
+.user__body { flex: 1; min-width: 0; }
+.user__name { font-size: 36rpx; font-weight: 600; color: var(--ink); }
+.user__sub { display: block; font-size: 24rpx; color: var(--sub); margin-top: 8rpx; }
+.user__days { text-align: right; }
+.user__days-num { font-size: 44rpx; color: var(--terracotta); }
+.user__days-label { display: block; font-size: 20rpx; color: var(--sub); }
+
+.brief { display: flex; }
+.brief__item { flex: 1; display: flex; flex-direction: column; align-items: center; }
+.brief__item + .brief__item { border-left: 1rpx solid var(--line); }
+.brief__num { font-size: 40rpx; color: var(--forest); }
+.brief__label { font-size: 22rpx; color: var(--sub); margin-top: 6rpx; }
+
+.grid { display: flex; flex-wrap: wrap; }
+.grid__item {
+  width: 33.33%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 26rpx 0;
+}
+.grid__icon { font-size: 40rpx; color: var(--forest); }
+.grid__label { font-size: 24rpx; color: var(--ink-soft); margin-top: 10rpx; }
+
+.setting { padding: 20rpx 0; }
+.setting__l { flex: 1; padding-right: 20rpx; }
+.setting__t { font-size: 28rpx; color: var(--ink); }
+.setting__t.danger { color: var(--danger); }
+.setting__s { display: block; font-size: 22rpx; color: var(--sub); margin-top: 4rpx; }
+.setting__arrow { font-size: 38rpx; color: var(--sub); }
+
+.about { display: flex; flex-direction: column; align-items: center; padding: 40rpx 32rpx; }
+.about__name { font-size: 30rpx; color: var(--ink); }
+.about__ver { font-size: 22rpx; color: var(--sub); margin-top: 10rpx; }
+
+/* 目标卡 */
+.goal__grid { display: flex; flex-wrap: wrap; }
+.goal__cell { width: 50%; box-sizing: border-box; padding: 12rpx 0; }
+.goal__k { display: block; font-size: 22rpx; color: var(--sub); }
+.goal__v { display: block; font-size: 28rpx; color: var(--ink); margin-top: 6rpx; }
+.goal__foot { margin-top: 12rpx; padding-top: 16rpx; border-top: 1rpx solid var(--line); }
+
+/* 考研背景卡 */
+.bg__row { display: flex; align-items: baseline; padding: 12rpx 0; }
+.bg__row + .bg__row { border-top: 1rpx solid var(--line); }
+.bg__k { width: 88rpx; flex-shrink: 0; font-size: 24rpx; color: var(--sub); }
+.bg__v { flex: 1; min-width: 0; font-size: 26rpx; color: var(--ink); }
+
+/* 科目进度 */
+.subj + .subj { margin-top: 20rpx; }
+.subj__top { display: flex; justify-content: space-between; align-items: baseline; }
+.subj__name { font-size: 26rpx; color: var(--ink); }
+.subj__val { font-size: 22rpx; color: var(--sub); }
+.subj__bar { height: 10rpx; border-radius: 999rpx; background: var(--line); margin-top: 8rpx; overflow: hidden; }
+.subj__fill { height: 100%; border-radius: 999rpx; }
+
+/* 列表式入口（与首页宫格区分开，避免同一批入口重复出现） */
+.entry { display: flex; align-items: center; padding: 20rpx 0; }
+.entry + .entry { border-top: 1rpx solid var(--line); }
+.entry__icon {
+  width: 64rpx; height: 64rpx; border-radius: 16rpx; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  background: rgba(var(--primary-rgb), 0.12); font-size: 30rpx; color: var(--forest);
+}
+.entry__body { flex: 1; min-width: 0; padding: 0 16rpx; }
+.entry__name { display: block; font-size: 28rpx; color: var(--ink); }
+.entry__desc { display: block; font-size: 22rpx; color: var(--sub); margin-top: 4rpx; }
+.entry__badge {
+  min-width: 36rpx; height: 36rpx; padding: 0 10rpx; box-sizing: border-box;
+  border-radius: 999rpx; background: var(--terracotta); color: var(--on-fill);
+  font-size: 22rpx; line-height: 36rpx; text-align: center; margin-right: 8rpx;
+}
+.entry__arrow { font-size: 38rpx; color: var(--sub); }

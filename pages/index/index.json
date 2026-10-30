@@ -1,0 +1,11 @@
+{
+  "navigationBarTitleText": "研途顺利",
+  "enablePullDownRefresh": true,
+  "backgroundTextStyle": "dark",
+  "usingComponents": {
+    "countdown-card": "../../components/countdown-card/countdown-card",
+    "task-card": "../../components/task-card/task-card",
+    "progress-bar": "../../components/progress-bar/progress-bar",
+    "empty-state": "../../components/empty-state/empty-state"
+  }
+}

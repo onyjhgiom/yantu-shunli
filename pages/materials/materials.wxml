@@ -1,0 +1,145 @@
+<view class="page {{themeCls}} page--tight">
+  <!-- 内置资源库入口 -->
+  <view class="card res-entry" bindtap="goResource">
+    <view class="res-entry__l">
+      <text class="res-entry__t">备考资源库</text>
+      <text class="res-entry__s">408 / 数一数二 / 英一英二 / 政治 / 复试调剂 · {{resourceCount}} 篇离线速查</text>
+    </view>
+    <text class="res-entry__arrow">›</text>
+  </view>
+
+  <!-- 教辅资料推荐入口 -->
+  <view class="card res-entry res-entry--book" bindtap="goBooks">
+    <view class="res-entry__l">
+      <text class="res-entry__t">教辅资料推荐</text>
+      <text class="res-entry__s">数学 / 408 / 英语 / 政治 · 按考型与教辅类型精选书单</text>
+    </view>
+    <text class="res-entry__arrow">›</text>
+  </view>
+
+  <!-- 备考工具 -->
+  <view class="card">
+    <view class="card__head">
+      <text class="card__title">备考工具</text>
+    </view>
+    <view class="grid">
+      <view class="grid__item" bindtap="goSchool"><text class="grid__icon">⊞</text><text class="grid__label">院校库</text></view>
+      <view class="grid__item" bindtap="goExam"><text class="grid__icon">◫</text><text class="grid__label">模考分析</text></view>
+      <view class="grid__item" bindtap="goMistake"><text class="grid__icon">✕</text><text class="grid__label">错题本</text></view>
+      <view class="grid__item" bindtap="goCard"><text class="grid__icon">▦</text><text class="grid__label">卡片复习</text></view>
+      <view class="grid__item" bindtap="goMood"><text class="grid__icon">♡</text><text class="grid__label">心态记录</text></view>
+      <view class="grid__item" bindtap="goAchievement"><text class="grid__icon">★</text><text class="grid__label">打卡成就</text></view>
+      <view class="grid__item" bindtap="goTimeline"><text class="grid__icon">◷</text><text class="grid__label">考研日历</text></view>
+      <view class="grid__item" bindtap="goResource"><text class="grid__icon">◈</text><text class="grid__label">资源库</text></view>
+    </view>
+  </view>
+
+  <view class="seg">
+    <view class="seg__item {{tab === 'files' ? 'on' : ''}}" data-key="files" bindtap="onTab">资料</view>
+    <view class="seg__item {{tab === 'notes' ? 'on' : ''}}" data-key="notes" bindtap="onTab">笔记</view>
+    <view class="seg__item {{tab === 'search' ? 'on' : ''}}" data-key="search" bindtap="onTab">搜索</view>
+  </view>
+
+  <!-- 资料 -->
+  <block wx:if="{{tab === 'files'}}">
+    <view class="card">
+      <view class="card__head">
+        <text class="card__title">我的资料</text>
+        <text class="card__more" bindtap="addFile">+ 上传文件</text>
+      </view>
+      <view class="muted">支持从聊天记录选择 PDF / 讲义 / 真题等；仅保存文件元数据与本地引用。</view>
+    </view>
+    <block wx:if="{{files.length}}">
+      <view class="item" wx:for="{{files}}" wx:key="id" data-id="{{item.id}}" bindtap="onFile">
+        <view class="item__ext" style="background:{{item.color}}">{{item.ext}}</view>
+        <view class="item__body">
+          <text class="item__title">{{item.name}}</text>
+          <text class="item__meta">{{item.category}} · {{item.sizeText}} · {{item.dateText}}</text>
+        </view>
+        <text class="item__del" catchtap="removeFile" data-id="{{item.id}}">删除</text>
+      </view>
+    </block>
+    <view class="card" wx:else>
+      <empty-state mark="▤" text="还没有资料" sub="把常用讲义、真题PDF上传进来，方便随时查阅" actionText="上传文件" bind:action="addFile"></empty-state>
+    </view>
+  </block>
+
+  <!-- 笔记 -->
+  <block wx:if="{{tab === 'notes'}}">
+    <view class="card">
+      <view class="card__head">
+        <text class="card__title">我的笔记 / 知识库</text>
+        <text class="card__more" bindtap="addNote">+ 新建笔记</text>
+      </view>
+      <view class="muted">笔记可关联科目与标签，形成个人知识库。</view>
+    </view>
+    <block wx:if="{{notes.length}}">
+      <view class="note" wx:for="{{notes}}" wx:key="id" data-id="{{item.id}}" bindtap="onNote">
+        <view class="note__top">
+          <text class="note__title">{{item.title}}</text>
+          <text class="note__subject" style="color:{{item.color}}">{{item.subjectName}}</text>
+        </view>
+        <text class="note__excerpt">{{item.excerpt}}</text>
+        <view class="note__tags" wx:if="{{item.tags.length}}">
+          <text class="tag tag--line" wx:for="{{item.tags}}" wx:key="*this" wx:for-item="tag">{{tag}}</text>
+        </view>
+      </view>
+    </block>
+    <view class="card" wx:else>
+      <empty-state mark="✎" text="还没有笔记" sub="把知识点、错题思路记下来，复习时一目了然" actionText="新建笔记" bind:action="addNote"></empty-state>
+    </view>
+  </block>
+
+  <!-- 搜索 -->
+  <block wx:if="{{tab === 'search'}}">
+    <view class="input-box search-box">
+      <input
+        class="input"
+        value="{{keyword}}"
+        placeholder="搜索任务 / 笔记 / 资料 / 知识点"
+        placeholder-class="ph"
+        confirm-type="search"
+        bindinput="onKeyword"
+        bindconfirm="doSearch"
+      />
+      <text class="search-box__btn" bindtap="doSearch">搜索</text>
+    </view>
+
+    <block wx:if="{{searched}}">
+      <view class="card" wx:if="{{results.tasks.length}}">
+        <view class="card__head"><text class="card__title">任务</text><text class="card__more">{{results.tasks.length}}</text></view>
+        <view class="res" wx:for="{{results.tasks}}" wx:key="id" data-id="{{item.id}}" bindtap="openTask">
+          <text class="res__t">{{item.title}}</text>
+          <text class="res__s">{{item.date}}</text>
+        </view>
+      </view>
+
+      <view class="card" wx:if="{{results.notes.length}}">
+        <view class="card__head"><text class="card__title">笔记</text><text class="card__more">{{results.notes.length}}</text></view>
+        <view class="res" wx:for="{{results.notes}}" wx:key="id" data-id="{{item.id}}" bindtap="onNote">
+          <text class="res__t">{{item.title}}</text>
+          <text class="res__s">{{item.content}}</text>
+        </view>
+      </view>
+
+      <view class="card" wx:if="{{results.files.length}}">
+        <view class="card__head"><text class="card__title">资料</text><text class="card__more">{{results.files.length}}</text></view>
+        <view class="res" wx:for="{{results.files}}" wx:key="id">
+          <text class="res__t">{{item.name}}</text>
+        </view>
+      </view>
+
+      <view class="card" wx:if="{{results.points.length}}">
+        <view class="card__head"><text class="card__title">知识点</text><text class="card__more">{{results.points.length}}</text></view>
+        <view class="res" wx:for="{{results.points}}" wx:key="id" data-key="{{item.subjectKey}}" bindtap="openSubject">
+          <text class="res__t">{{item.name}}</text>
+          <text class="res__s">{{item.subject}} · {{item.chapter}}</text>
+        </view>
+      </view>
+
+      <view class="card" wx:if="{{emptyResult}}">
+        <empty-state mark="○" text="没有找到相关内容" sub="换个关键词试试"></empty-state>
+      </view>
+    </block>
+  </block>
+</view>

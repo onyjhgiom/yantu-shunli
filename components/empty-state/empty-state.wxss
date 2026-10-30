@@ -1,0 +1,23 @@
+.es {
+  padding: 80rpx 40rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+.es__mark {
+  font-size: 60rpx;
+  color: var(--ink-soft);
+  margin-bottom: 20rpx;
+  font-family: "Songti SC", serif;
+}
+.es__text { font-size: 28rpx; color: var(--ink-soft); }
+.es__sub { font-size: 24rpx; color: var(--sub); margin-top: 10rpx; }
+.es__btn {
+  margin-top: 28rpx;
+  padding: 16rpx 40rpx;
+  border-radius: 14rpx;
+  background: var(--forest);
+  color: var(--on-primary);
+  font-size: 26rpx;
+}

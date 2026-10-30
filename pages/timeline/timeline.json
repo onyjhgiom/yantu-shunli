@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "考研日历",
+  "usingComponents": {
+    "empty-state": "/components/empty-state/empty-state"
+  }
+}

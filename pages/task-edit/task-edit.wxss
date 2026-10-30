@@ -1,0 +1,5 @@
+.picker { font-size: 30rpx; color: var(--ink); }
+.input--right { text-align: right; flex: 1; }
+.children { display: flex; flex-direction: column; gap: 16rpx; }
+.actions { margin-top: 32rpx; display: flex; flex-direction: column; gap: 20rpx; }
+.parent-hint { margin-top: 20rpx; font-size: 23rpx; color: var(--sub); }

@@ -1,0 +1,78 @@
+<view class="page {{themeCls}} page--tight">
+  <view class="hero">
+    <view class="hero__t serif">复习统计</view>
+    <view class="hero__s">每一次翻卡，都是在夯实地基</view>
+  </view>
+
+  <block wx:if="{{hasRecords}}">
+    <!-- 四个概览 -->
+    <view class="ov">
+      <view class="ov__i" wx:for="{{overview}}" wx:key="key">
+        <text class="ov__v serif">{{item.value}}</text>
+        <text class="ov__u">{{item.unit}}</text>
+        <text class="ov__l">{{item.label}}</text>
+      </view>
+    </view>
+
+    <!-- 近 14 天活跃度 -->
+    <view class="card">
+      <view class="card__head">
+        <text class="card__title">近 14 天复习量</text>
+        <text class="card__more">峰值 {{maxDay}} 次/天</text>
+      </view>
+      <view class="bars">
+        <view class="bar" wx:for="{{days}}" wx:key="date">
+          <view class="bar__col">
+            <view class="bar__fill" style="height:{{item.percent}}%"></view>
+          </view>
+          <text class="bar__n">{{item.n}}</text>
+          <text class="bar__x">{{item.label}}</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 卡片库存 -->
+    <view class="card">
+      <view class="card__head"><text class="card__title">卡片库存</text></view>
+      <view class="stock">
+        <view class="stock__i"><text class="stock__v serif">{{stat.totalCards}}</text><text class="stock__l">卡片总数</text></view>
+        <view class="stock__i"><text class="stock__v serif">{{stat.totalDecks}}</text><text class="stock__l">牌组数</text></view>
+        <view class="stock__i"><text class="stock__v serif">{{stat.due}}</text><text class="stock__l">待复习</text></view>
+        <view class="stock__i"><text class="stock__v serif">{{stat.mastered}}</text><text class="stock__l">已掌握</text></view>
+      </view>
+      <view class="prog">
+        <view class="prog__track">
+          <view class="prog__fill" style="width:{{masteryPercent}}%"></view>
+        </view>
+        <text class="prog__t">掌握进度 {{masteryPercent}}%</text>
+      </view>
+    </view>
+
+    <!-- 按科目 -->
+    <view class="card" wx:if="{{subjects.length}}">
+      <view class="card__head"><text class="card__title">复习量 · 按科目</text></view>
+      <view class="srow" wx:for="{{subjects}}" wx:key="key">
+        <text class="srow__n" style="color:{{item.color}}">{{item.name}}</text>
+        <view class="srow__track"><view class="srow__fill" style="width:{{item.percent}}%;background:{{item.color}}"></view></view>
+        <text class="srow__v">{{item.n}} 次</text>
+      </view>
+    </view>
+
+    <!-- 按牌组 -->
+    <view class="card" wx:if="{{decks.length}}">
+      <view class="card__head"><text class="card__title">复习量 · 按牌组</text></view>
+      <view class="drow" wx:for="{{decks}}" wx:key="id">
+        <text class="drow__n">{{item.name}}</text>
+        <text class="drow__m">{{item.total}} 张</text>
+        <text class="drow__v">{{item.reviews}} 次</text>
+      </view>
+    </view>
+
+    <view class="btn btn--ghost btn--block" bindtap="clearLogs">清空复习流水</view>
+    <view class="disclaimer">复习流水仅用于本页统计，不影响卡片内容与复习进度（间隔重复状态照常工作）。</view>
+  </block>
+
+  <view class="card" wx:else>
+    <empty-state mark="▤" text="还没有复习记录" sub="去复习几张卡片，这里就会记录你的坚持轨迹" actionText="去复习" bind:action="goCards"></empty-state>
+  </view>
+</view>

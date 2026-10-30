@@ -1,0 +1,79 @@
+<view class="page {{themeCls}}">
+  <!-- 顶部：学科切换 -->
+  <view class="subj-bar">
+    <view class="subj {{activeSubject === item.id ? 'on' : ''}}" wx:for="{{subjects}}" wx:key="id" data-id="{{item.id}}" bindtap="selectSubject">
+      <text class="subj__icon">{{item.icon}}</text>
+      <text class="subj__name">{{item.name}}</text>
+    </view>
+  </view>
+
+  <!-- 个性化提示 -->
+  <view class="track-hint" wx:if="{{trackOk && !searched}}">
+    <text class="track-hint__dot">●</text>
+    <text class="track-hint__txt">{{trackHint}}</text>
+  </view>
+
+  <!-- 搜索 -->
+  <view class="input-box search-box">
+    <input class="input" value="{{keyword}}" placeholder="搜书名 / 类型 / 适用教材（如 王道、肖秀荣、660）" placeholder-class="ph" confirm-type="search" bindinput="onKeyword" bindconfirm="doSearch" />
+    <text class="search-box__btn" bindtap="doSearch">搜索</text>
+    <text class="search-box__clear" wx:if="{{searched}}" bindtap="clearSearch">清除</text>
+  </view>
+
+  <!-- 考型 / 年级选择 -->
+  <block wx:if="{{!searched}}">
+    <scroll-view scroll-x class="grades">
+      <view class="grade__chip {{activeGrade === g.id ? 'on' : ''}}" wx:for="{{activeGrades}}" wx:key="id" wx:for-item="g" data-id="{{g.id}}" bindtap="selectGrade">{{g.name}}</view>
+    </scroll-view>
+    <text class="grade__note" wx:if="{{activeGrade === 'math2'}}">数学二不考概率论，无需额外概率教材</text>
+    <text class="grade__note" wx:elif="{{activeGrade === 'math1'}}">数学一含概率论，需补王式安等概率讲义</text>
+
+    <!-- 教辅类型筛选 -->
+    <view class="chips">
+      <view class="chip {{activeType === 'all' ? 'on' : ''}}" data-key="all" bindtap="selectType">全部</view>
+      <view class="chip {{activeType === item.key ? 'on' : ''}}" wx:for="{{types}}" wx:key="key" data-key="{{item.key}}" bindtap="selectType">{{item.name}}</view>
+    </view>
+  </block>
+
+  <!-- 搜索结果（扁平） -->
+  <block wx:if="{{searched}}">
+    <view class="card" wx:if="{{flatList.length}}">
+      <view class="card__head"><text class="card__title">搜索结果</text><text class="card__more">{{flatList.length}} 本</text></view>
+      <view class="book" wx:for="{{flatList}}" wx:key="name">
+        <view class="book__head">
+          <text class="book__name">{{item.name}}</text>
+          <text class="book__hot" wx:if="{{item.hot}}">热门</text>
+        </view>
+        <view class="book__tags">
+          <text class="book__tag book__tag--subj">{{item.subjectName}}·{{item.gradeName}}</text>
+          <text class="book__tag book__tag--type">{{item.typeName}}</text>
+          <text class="book__tag book__tag--lv" style="color:{{item.levelColor}}">{{item.level}}</text>
+        </view>
+        <text class="book__ver">适用：{{item.version}}</text>
+        <text class="book__feat">{{item.feature}}</text>
+      </view>
+    </view>
+    <view class="card" wx:else>
+      <view class="muted" style="padding:40rpx 0;text-align:center;">没有匹配的教辅，换个关键词试试</view>
+    </view>
+  </block>
+
+  <!-- 分类书单 -->
+  <block wx:else>
+    <view class="card" wx:for="{{groups}}" wx:key="type" wx:for-item="grp">
+      <view class="card__head"><text class="card__title">{{grp.typeName}}</text><text class="card__more">{{grp.list.length}} 本</text></view>
+      <view class="book" wx:for="{{grp.list}}" wx:key="name" wx:for-item="book">
+        <view class="book__head">
+          <text class="book__name">{{book.name}}</text>
+          <text class="book__hot" wx:if="{{book.hot}}">热门</text>
+        </view>
+        <view class="book__tags">
+          <text class="book__tag book__tag--lv" style="color:{{book.levelColor}}">{{book.levelName}}</text>
+        </view>
+        <text class="book__ver">适用：{{book.version}}</text>
+        <text class="book__feat">{{book.feature}}</text>
+      </view>
+    </view>
+    <view class="muted disc">书目为市面长期口碑教辅，版本随年份更新，仅作选购参考，请以当年最新版为准。</view>
+  </block>
+</view>

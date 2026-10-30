@@ -1,0 +1,10 @@
+.page { padding: 24rpx; }
+.card { background: var(--card, #fff); border-radius: 24rpx; padding: 8rpx 28rpx; }
+.field { display: flex; align-items: center; padding: 24rpx 0; border-bottom: 1rpx solid var(--line, #ecec); }
+.field--col { flex-direction: column; align-items: stretch; }
+.field--col .input--left { margin-top: 14rpx; text-align: left; }
+.label { width: 168rpx; flex-shrink: 0; font-size: 28rpx; color: var(--ink, #2E2A22); }
+.input { flex: 1; font-size: 28rpx; color: var(--ink, #2E2A22); text-align: right; }
+.picker { flex: 1; text-align: right; font-size: 28rpx; color: var(--forest, #2E4F3E); }
+.save { margin: 32rpx 8rpx 0; background: var(--forest, #2E4F3E); color: #fff; border-radius: 16rpx; font-size: 30rpx; }
+.tip { margin: 20rpx 16rpx; font-size: 22rpx; color: var(--sub, #8C877B); line-height: 1.6; }

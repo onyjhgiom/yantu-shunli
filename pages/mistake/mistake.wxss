@@ -1,0 +1,40 @@
+.review-cta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--forest-soft);
+  border: none;
+}
+.review-cta__t { font-size: 30rpx; font-weight: 600; color: var(--forest-deep); }
+.review-cta__s { font-size: 22rpx; color: var(--ink-soft); }
+.review-cta__arrow { color: var(--forest); font-size: 36rpx; }
+
+.chips { white-space: nowrap; margin: 8rpx 0 16rpx; }
+.chip {
+  display: inline-block;
+  padding: 10rpx 26rpx;
+  margin-right: 14rpx;
+  border-radius: 30rpx;
+  font-size: 24rpx;
+  background: var(--paper-deep);
+  color: var(--ink-soft);
+}
+.chip.on { background: var(--forest); color: var(--on-primary); }
+
+.mq {
+  display: flex;
+  background: var(--card);
+  border: 1rpx solid var(--card-line);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  margin-bottom: 16rpx;
+}
+.mq__bar { width: 8rpx; flex-shrink: 0; }
+.mq__body { padding: 22rpx 24rpx; flex: 1; min-width: 0; }
+.mq__top { display: flex; align-items: center; gap: 14rpx; margin-bottom: 8rpx; }
+.mq__sub { font-size: 24rpx; font-weight: 600; }
+.mq__diff { font-size: 22rpx; color: var(--sub); }
+.mq__ok { font-size: 22rpx; color: var(--ok); margin-left: auto; }
+.mq__q { font-size: 28rpx; color: var(--ink); display: block; line-height: 1.5; }
+.mq__tags { margin-top: 10rpx; }
+.mq__src { font-size: 22rpx; color: var(--sub); display: block; margin-top: 8rpx; }

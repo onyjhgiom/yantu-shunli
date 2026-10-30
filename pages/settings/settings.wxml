@@ -1,0 +1,77 @@
+<view class="page {{themeCls}} page--tight">
+  <view class="hero">
+    <view class="hero__t serif">设置</view>
+    <view class="hero__s">考研目标与学习偏好</view>
+  </view>
+
+  <view class="card">
+    <view class="card__head"><text class="card__title">考研目标</text></view>
+    <view class="field">
+      <view class="field__label">目标院校</view>
+      <input class="input" placeholder="如：浙江大学" placeholder-class="ph" value="{{t.university}}" data-f="university" bindinput="onInput" />
+    </view>
+    <view class="field">
+      <view class="field__label">目标专业</view>
+      <input class="input" placeholder="如：计算机技术" placeholder-class="ph" value="{{t.major}}" data-f="major" bindinput="onInput" />
+    </view>
+    <view class="field">
+      <view class="field__label">初试日期</view>
+      <picker mode="date" value="{{t.examDate}}" start="2026-01-01" end="2029-12-31" bindchange="onDate">
+        <view class="input-box">{{t.examDate || '选择考试日期'}}</view>
+      </picker>
+    </view>
+    <view class="field" wx:for="{{scoreKeys}}" wx:key="key" wx:for-item="sk">
+      <view class="field__label">目标分 · {{sk.name}}</view>
+      <input class="input" type="number" value="{{t.scores[sk.key]}}" data-k="{{sk.key}}" bindinput="onScore" />
+    </view>
+    <view class="btn btn--primary btn--block" bindtap="saveTarget">保存目标</view>
+  </view>
+
+  <view class="card">
+    <view class="card__head">
+      <text class="card__title">外观主题</text>
+      <text class="card__more">换肤即时生效</text>
+    </view>
+    <view class="th-grid">
+      <view
+        class="th-item {{themeKey === item.key ? 'on' : ''}}"
+        wx:for="{{themes}}"
+        wx:key="key"
+        wx:for-item="item"
+        data-k="{{item.key}}"
+        bindtap="pickTheme"
+      >
+        <view class="th-prev" style="background:{{item.paper}};border-color:{{item.line}}">
+          <view class="th-prev__bar" style="background:{{item.card}}"></view>
+          <view class="th-prev__row">
+            <view class="th-prev__dot" style="background:{{item.primary}}"></view>
+            <text class="th-prev__txt" style="color:{{item.ink}}">Aa</text>
+          </view>
+        </view>
+        <text class="th-name">{{item.name}}</text>
+        <text class="th-desc">{{item.desc}}</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="card">
+    <view class="card__head"><text class="card__title">学习偏好</text></view>
+    <view class="sw">
+      <text class="sw__label">学习提醒</text>
+      <switch checked="{{s.notifications}}" color="{{swColor}}" data-f="notifications" bindchange="toggle" />
+    </view>
+    <view class="sw">
+      <text class="sw__label">AI 建议</text>
+      <switch checked="{{s.aiEnabled}}" color="{{swColor}}" data-f="aiEnabled" bindchange="toggle" />
+    </view>
+    <view class="sw">
+      <text class="sw__label">智能免打扰</text>
+      <switch checked="{{s.quiet}}" color="{{swColor}}" data-f="quiet" bindchange="toggle" />
+    </view>
+  </view>
+
+  <view class="card about" bindtap="goAbout">
+    <text class="about__t">关于研途顺利</text>
+    <text class="about__arrow">›</text>
+  </view>
+</view>

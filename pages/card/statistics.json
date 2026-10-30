@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "复习统计",
+  "usingComponents": {
+    "empty-state": "../../components/empty-state/empty-state"
+  }
+}

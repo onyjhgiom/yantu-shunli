@@ -1,0 +1,38 @@
+<view class="page {{themeCls}}">
+  <view class="card">
+    <view class="input-box">
+      <input class="input" value="{{title}}" placeholder="笔记标题" placeholder-class="ph" data-field="title" bindinput="onInput" maxlength="50" />
+    </view>
+    <view class="field">
+      <textarea
+        class="textarea-box note-area"
+        value="{{content}}"
+        placeholder="写下知识点、错题思路或背诵要点…（支持 Markdown 语法书写）"
+        placeholder-class="ph"
+        data-field="content"
+        bindinput="onInput"
+        maxlength="5000"
+        auto-height
+      ></textarea>
+    </view>
+    <attach-bar value="{{attachments}}" bind:change="onAttachChange" bind:asr="onAsr"></attach-bar>
+  </view>
+
+  <view class="card">
+    <view class="field row row--between">
+      <text class="field__label">关联科目</text>
+      <picker mode="selector" range="{{subjectLabels}}" value="{{subjectIndex}}" bindchange="onSubject">
+        <view class="picker" style="color:{{subjects[subjectIndex].color}}">{{subjects[subjectIndex].name}} ▾</view>
+      </picker>
+    </view>
+    <view class="field row row--between">
+      <text class="field__label">标签</text>
+      <input class="input input--right" value="{{tagsText}}" placeholder="逗号分隔" placeholder-class="ph" data-field="tagsText" bindinput="onInput" />
+    </view>
+  </view>
+
+  <view class="actions">
+    <button class="btn btn--primary btn--block" bindtap="save">保存笔记</button>
+    <button class="btn btn--ghost btn--block" bindtap="remove" wx:if="{{isEdit}}">删除笔记</button>
+  </view>
+</view>

@@ -1,0 +1,71 @@
+<view class="page {{themeCls}} page--tight">
+  <!-- 计划周期切换 -->
+  <view class="seg">
+    <view
+      class="seg__item {{activeType === item.key ? 'on' : ''}}"
+      wx:for="{{planTypes}}"
+      wx:key="key"
+      data-key="{{item.key}}"
+      bindtap="onType"
+    >{{item.label}}</view>
+  </view>
+
+  <!-- 日期选择（仅日计划） -->
+  <view class="datebar" wx:if="{{activeType === 'day'}}">
+    <text class="datebar__step" bindtap="prevDay">‹</text>
+    <picker mode="date" value="{{date}}" bindchange="onDate">
+      <view class="datebar__center">
+        <text class="datebar__label">{{dateLabel}}</text>
+        <text class="datebar__date">{{date}}</text>
+      </view>
+    </picker>
+    <text class="datebar__step" bindtap="nextDay">›</text>
+  </view>
+
+  <!-- 概览 -->
+  <view class="card overview">
+    <view class="card__head">
+      <text class="card__title">{{typeLabel}}任务</text>
+      <text class="card__more">{{stat.done}} / {{stat.total}} 完成</text>
+    </view>
+    <progress-bar percent="{{stat.rate}}" height="14" color="var(--forest)"></progress-bar>
+    <view class="overview__foot">
+      <text class="muted">预计 {{estText}}</text>
+      <text class="muted">已完成 {{doneText}}</text>
+    </view>
+  </view>
+
+  <!-- 任务列表 -->
+  <view class="list" wx:if="{{tasks.length}}">
+    <task-card
+      wx:for="{{tasks}}"
+      wx:key="id"
+      task="{{item}}"
+      bind:tap="onTaskTap"
+      bind:toggle="onTaskToggle"
+    ></task-card>
+  </view>
+  <view class="card" wx:else>
+    <empty-state
+      mark="◇"
+      text="{{typeLabel}}还没有任务"
+      sub="点右下角 + 添加，或把大目标拆成小任务"
+      actionText="添加任务"
+      bind:action="addTask"
+    ></empty-state>
+  </view>
+
+  <!-- 快捷入口 -->
+  <view class="quick">
+    <view class="quick__item" bindtap="goFocus">
+      <text class="quick__t">番茄钟</text>
+      <text class="quick__s">专注并记录时长</text>
+    </view>
+    <view class="quick__item" bindtap="goTarget">
+      <text class="quick__t">目标拆解</text>
+      <text class="quick__s">总目标 → 阶段 → 周 → 日</text>
+    </view>
+  </view>
+</view>
+
+<view class="fab" bindtap="addTask">＋</view>

@@ -1,0 +1,74 @@
+<view class="page {{themeCls}}">
+  <view class="hero">
+    <view class="hero__t serif">今日复盘</view>
+    <view class="hero__s">{{dateLabel}} · 花 3 分钟，把今天收好</view>
+  </view>
+
+  <view class="card">
+    <view class="field">
+      <view class="field__row">
+        <text class="field__label">今天完成了什么？</text>
+        <view class="field__mic {{recField === 'done' ? 'on' : ''}}" data-f="done" catchtap="onMic">{{recField === 'done' ? '■' : '🎤'}}</view>
+      </view>
+      <textarea class="textarea-box" value="{{done}}" disabled="{{recField === 'done'}}" placeholder="例如：高数第三章例题、英语阅读2篇" placeholder-class="ph" data-field="done" bindinput="onInput" auto-height></textarea>
+    </view>
+
+    <view class="field row row--between">
+      <text class="field__label">今天学习了多久（分钟）</text>
+      <input class="input input--right" type="number" value="{{minutes}}" placeholder="0" placeholder-class="ph" data-field="minutes" bindinput="onInput" />
+    </view>
+
+    <view class="field">
+      <view class="field__row">
+        <text class="field__label">哪些任务没完成？</text>
+        <view class="field__mic {{recField === 'undone' ? 'on' : ''}}" data-f="undone" catchtap="onMic">{{recField === 'undone' ? '■' : '🎤'}}</view>
+      </view>
+      <textarea class="textarea-box small" value="{{undone}}" disabled="{{recField === 'undone'}}" placeholder="没完成的事，写下来明天带走" placeholder-class="ph" data-field="undone" bindinput="onInput" auto-height></textarea>
+    </view>
+
+    <view class="field">
+      <view class="field__row">
+        <text class="field__label">为什么没完成？</text>
+        <view class="field__mic {{recField === 'reason' ? 'on' : ''}}" data-f="reason" catchtap="onMic">{{recField === 'reason' ? '■' : '🎤'}}</view>
+      </view>
+      <textarea class="textarea-box small" value="{{reason}}" disabled="{{recField === 'reason'}}" placeholder="是计划太大，还是被打断了？" placeholder-class="ph" data-field="reason" bindinput="onInput" auto-height></textarea>
+    </view>
+
+    <view class="field">
+      <view class="field__row">
+        <text class="field__label">今天最大的收获？</text>
+        <view class="field__mic {{recField === 'gain' ? 'on' : ''}}" data-f="gain" catchtap="onMic">{{recField === 'gain' ? '■' : '🎤'}}</view>
+      </view>
+      <textarea class="textarea-box small" value="{{gain}}" disabled="{{recField === 'gain'}}" placeholder="一个知识点、一个方法、一次顿悟" placeholder-class="ph" data-field="gain" bindinput="onInput" auto-height></textarea>
+    </view>
+  </view>
+
+  <view class="rec-tip" wx:if="{{recField}}">
+    <view class="rec-tip__dot"></view>
+    <text class="rec-tip__t">正在聆听 · {{recSec}}s，说完再点一次 🎤 结束并转写</text>
+  </view>
+
+  <view class="card">
+    <view class="card__head"><text class="card__title">明天最重要的三件事</text></view>
+    <view class="input-box three" wx:for="{{tomorrow}}" wx:key="index" wx:for-item="v" wx:for-index="idx">
+      <text class="three__no">{{idx + 1}}</text>
+      <input class="input" value="{{v}}" placeholder="第 {{idx + 1}} 件" placeholder-class="ph" data-idx="{{idx}}" bindinput="onTomorrow" />
+    </view>
+  </view>
+
+  <view class="card review-tools">
+    <view class="card__head"><text class="card__title">顺手复习</text></view>
+    <view class="review-tools__acts">
+      <view class="review-tools__btn" bindtap="goMistake">复习错题<text class="review-tools__n" wx:if="{{mistakeDue}}">{{mistakeDue}}</text></view>
+      <view class="review-tools__btn" bindtap="goCard">背卡片<text class="review-tools__n" wx:if="{{cardDue}}">{{cardDue}}</text></view>
+    </view>
+  </view>
+
+  <button class="btn btn--primary btn--block" bindtap="save">保存复盘</button>
+
+  <view class="card ai-summary" wx:if="{{aiText}}">
+    <view class="card__head"><text class="card__title">整理成日报</text></view>
+    <view class="ai-summary__text">{{aiText}}</view>
+    <view class="ai-summary__btn" bindtap="copy">复制日报</view>
+  </view>
+</view>

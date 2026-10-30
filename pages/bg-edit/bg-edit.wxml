@@ -1,0 +1,55 @@
+<view class="page">
+  <view class="card">
+    <view class="field">
+      <text class="label">本科院校</text>
+      <input class="input" value="{{form.undergradSchool}}" data-field="undergradSchool" bindinput="onInput" placeholder="如 江汉大学" />
+    </view>
+    <view class="field">
+      <text class="label">本科层次</text>
+      <picker mode="selector" range="{{tiers}}" value="{{tierIdx}}" bindchange="onTier">
+        <view class="picker">{{form.undergradTier}} ›</view>
+      </picker>
+    </view>
+    <view class="field">
+      <text class="label">竞赛 / 科研</text>
+      <input class="input" value="{{form.awards}}" data-field="awards" bindinput="onInput" placeholder="如 蓝桥杯省赛二等奖" />
+    </view>
+    <view class="field">
+      <text class="label">编程水平</text>
+      <picker mode="selector" range="{{codingTexts}}" value="{{codingIdx}}" bindchange="onCoding">
+        <view class="picker">{{form.codingLevelText}} ›</view>
+      </picker>
+    </view>
+    <view class="field">
+      <text class="label">目标学历</text>
+      <picker mode="selector" range="{{degrees}}" value="{{degreeIdx}}" bindchange="onDegree">
+        <view class="picker">{{form.targetDegree}} ›</view>
+      </picker>
+    </view>
+    <view class="field">
+      <text class="label">考试方向</text>
+      <picker mode="selector" range="{{paths}}" value="{{pathIdx}}" bindchange="onPath">
+        <view class="picker">{{form.examPath}} ›</view>
+      </picker>
+    </view>
+    <view class="field">
+      <text class="label">定居城市</text>
+      <input class="input" value="{{form.settleCity}}" data-field="settleCity" bindinput="onInput" placeholder="如 杭州" />
+    </view>
+    <view class="field">
+      <text class="label">一志愿</text>
+      <input class="input" value="{{form.primaryChoice}}" data-field="primaryChoice" bindinput="onInput" placeholder="如 杭州电子科技大学·计算机科学与技术(学硕)" />
+    </view>
+    <view class="field">
+      <text class="label">保底志愿</text>
+      <input class="input" value="{{form.backupChoice}}" data-field="backupChoice" bindinput="onInput" placeholder="如 浙江工业大学·计算机科学与技术(学硕)" />
+    </view>
+    <view class="field field--col">
+      <text class="label">家庭支持备注</text>
+      <input class="input input--left" value="{{form.familySupport}}" data-field="familySupport" bindinput="onInput" placeholder="选填，如 家人支持全职备考" />
+    </view>
+  </view>
+
+  <button class="save" bindtap="save">保存</button>
+  <view class="tip">这些信息仅保存在本机，用于让 AI 规划 / 院校推荐 / 风险预警贴合你的真实情况。</view>
+</view>
